@@ -1,0 +1,10 @@
+{
+  "name" : "BBM_MyRASIC",
+  "label" : "BBM_MyRASIC",
+  "shares" : [
+    {
+      "accessType" : "View",
+      "shareType" : "Organization"
+    }
+  ]
+}

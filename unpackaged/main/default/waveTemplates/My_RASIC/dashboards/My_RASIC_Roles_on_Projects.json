@@ -1,0 +1,1530 @@
+{
+  "name" : "My_RASIC_Roles_on_Projects_tp",
+  "label" : "My RASIC Roles on Projects",
+  "folder" : {
+    "id" : "${App.Folder.Id}"
+  },
+  "dateVersion" : 1,
+  "mobileDisabled" : false,
+  "xmd" : {
+    "measures" : [
+      {
+        "conditionalFormatting" : {
+          "chartColor" : {
+            "referenceField" : "UP2GO_2T__pkl_RasicRole__c",
+            "type" : "categories",
+            "parameters" : {
+              "values" : [
+                {
+                  "formatValue" : "rgb(255, 204, 51)",
+                  "value" : "A (Accountable)"
+                },
+                {
+                  "formatValue" : "rgb(187, 187, 187)",
+                  "value" : "I (Informed)"
+                },
+                {
+                  "formatValue" : "rgb(204, 0, 0)",
+                  "value" : "R (Responsible)"
+                },
+                {
+                  "formatValue" : "rgb(65, 146, 73)",
+                  "value" : "S (Supporter)"
+                }
+              ]
+            }
+          }
+        },
+        "field" : "Count_of_Roles_on_Pr_1.count",
+        "format" : {
+          "delimiters" : { }
+        }
+      },
+      {
+        "conditionalFormatting" : {
+          "chartColor" : {
+            "referenceField" : "UP2GO_2T__pkl_RasicRole__c",
+            "type" : "categories",
+            "parameters" : {
+              "values" : [
+                {
+                  "formatValue" : "rgb(255, 204, 51)",
+                  "value" : "A (Accountable)"
+                },
+                {
+                  "formatValue" : "rgb(187, 187, 187)",
+                  "value" : "I (Informed)"
+                },
+                {
+                  "formatValue" : "rgb(204, 0, 0)",
+                  "value" : "R (Responsible)"
+                },
+                {
+                  "formatValue" : "rgb(65, 146, 73)",
+                  "value" : "S (Supporter)"
+                }
+              ]
+            }
+          }
+        },
+        "field" : "Count_of_Roles_on_Pr_2.count",
+        "format" : {
+          "delimiters" : { }
+        }
+      }
+    ],
+    "derivedDimensions" : [ ],
+    "organizations" : [ ],
+    "showDetailsDefaultFields" : [ ],
+    "dates" : [ ],
+    "derivedMeasures" : [ ],
+    "dimensions" : [
+      {
+        "recordDisplayFields" : [ ],
+        "conditionalFormatting" : {
+          "chartColor" : {
+            "referenceField" : "UP2GO_2T__pkl_RasicRole__c",
+            "type" : "categories",
+            "parameters" : {
+              "values" : [
+                {
+                  "formatValue" : "rgb(255, 204, 51)",
+                  "value" : "A (Accountable)"
+                },
+                {
+                  "formatValue" : "rgb(187, 187, 187)",
+                  "value" : "I (Informed)"
+                },
+                {
+                  "formatValue" : "rgb(204, 0, 0)",
+                  "value" : "R (Responsible)"
+                },
+                {
+                  "formatValue" : "rgb(65, 146, 73)",
+                  "value" : "S (Supporter)"
+                }
+              ]
+            }
+          }
+        },
+        "salesforceActions" : [ ],
+        "field" : "Count_of_Roles_on_Pr_1.ALL",
+        "members" : [ ],
+        "customActions" : [ ]
+      },
+      {
+        "recordDisplayFields" : [ ],
+        "conditionalFormatting" : { },
+        "defaultAction" : "openSfdcRecord",
+        "salesforceActions" : [ ],
+        "field" : "Roles_on_Projects_wi_1.PRJ.Name",
+        "members" : [ ],
+        "customActions" : [ ]
+      },
+      {
+        "recordDisplayFields" : [ ],
+        "conditionalFormatting" : {
+          "backgroundColor" : {
+            "referenceField" : "A",
+            "type" : "categories",
+            "parameters" : {
+              "values" : [
+                {
+                  "formatValue" : "rgb(255, 204, 51)",
+                  "value" : "A"
+                },
+                {
+                  "formatValue" : "rgb(187, 187, 187)",
+                  "value" : "I"
+                },
+                {
+                  "formatValue" : "rgb(204, 0, 0)",
+                  "value" : "R"
+                },
+                {
+                  "formatValue" : "rgb(65, 146, 73)",
+                  "value" : "S"
+                }
+              ]
+            }
+          },
+          "color" : {
+            "referenceField" : "A",
+            "type" : "categories",
+            "parameters" : {
+              "values" : [
+                {
+                  "formatValue" : "#091A3E",
+                  "value" : "A"
+                },
+                {
+                  "formatValue" : "#091A3E",
+                  "value" : "I"
+                },
+                {
+                  "formatValue" : "#091A3E",
+                  "value" : "R"
+                },
+                {
+                  "formatValue" : "#091A3E",
+                  "value" : "S"
+                }
+              ]
+            }
+          }
+        },
+        "salesforceActions" : [ ],
+        "field" : "Roles_on_Projects_wi_1.A",
+        "members" : [ ],
+        "customActions" : [ ]
+      },
+      {
+        "recordDisplayFields" : [ ],
+        "conditionalFormatting" : {
+          "backgroundColor" : {
+            "referenceField" : "UP2GO_2T__pkl_RasicRole__c",
+            "type" : "categories",
+            "parameters" : {
+              "values" : [
+                {
+                  "formatValue" : "rgb(255, 204, 51)",
+                  "value" : "A"
+                },
+                {
+                  "formatValue" : "rgb(187, 187, 187)",
+                  "value" : "I"
+                },
+                {
+                  "formatValue" : "rgb(204, 0, 0)",
+                  "value" : "R"
+                },
+                {
+                  "formatValue" : "rgb(65, 146, 73)",
+                  "value" : "S"
+                }
+              ]
+            }
+          },
+          "color" : {
+            "referenceField" : "UP2GO_2T__pkl_RasicRole__c",
+            "type" : "categories",
+            "parameters" : {
+              "values" : [
+                {
+                  "formatValue" : "#091A3E",
+                  "value" : "A"
+                },
+                {
+                  "formatValue" : "#091A3E",
+                  "value" : "I"
+                },
+                {
+                  "formatValue" : "#091A3E",
+                  "value" : "R"
+                },
+                {
+                  "formatValue" : "#091A3E",
+                  "value" : "S"
+                }
+              ]
+            }
+          }
+        },
+        "salesforceActions" : [ ],
+        "field" : "Roles_on_Projects_wi_1.UP2GO_2T__pkl_RasicRole__c",
+        "members" : [ ],
+        "customActions" : [ ]
+      },
+      {
+        "recordDisplayFields" : [ ],
+        "conditionalFormatting" : { },
+        "defaultAction" : "openSfdcRecord",
+        "salesforceActions" : [ ],
+        "field" : "Roles_on_Projects_wi_1.Gate.Name",
+        "members" : [ ],
+        "customActions" : [ ]
+      },
+      {
+        "recordDisplayFields" : [ ],
+        "conditionalFormatting" : {
+          "chartColor" : {
+            "referenceField" : "UP2GO_2T__pkl_RasicRole__c",
+            "type" : "categories",
+            "parameters" : {
+              "values" : [
+                {
+                  "formatValue" : "rgb(255, 204, 51)",
+                  "value" : "A (Accountable)"
+                },
+                {
+                  "formatValue" : "rgb(187, 187, 187)",
+                  "value" : "I (Informed)"
+                },
+                {
+                  "formatValue" : "rgb(204, 0, 0)",
+                  "value" : "R (Responsible)"
+                },
+                {
+                  "formatValue" : "rgb(65, 146, 73)",
+                  "value" : "S (Supporter)"
+                }
+              ]
+            }
+          }
+        },
+        "salesforceActions" : [ ],
+        "field" : "Count_of_Roles_on_Pr_2.ALL",
+        "members" : [ ],
+        "customActions" : [ ]
+      }
+    ]
+  },
+  "state" : {
+    "dataSourceLinks" : [ ],
+    "filters" : [ ],
+    "gridLayouts" : [
+      {
+        "name" : "Default",
+        "numColumns" : 12,
+        "pages" : [
+          {
+            "label" : "Untitled",
+            "name" : "4a26a376-9771-4c02-9781-f2b264fb29df",
+            "navigationHidden" : false,
+            "widgets" : [
+              {
+                "colspan" : 12,
+                "column" : 0,
+                "name" : "chart_2",
+                "row" : 3,
+                "rowspan" : 7,
+                "widgetStyle" : {
+                  "backgroundColor" : "#FFFFFF",
+                  "borderColor" : "#C6D3E1",
+                  "borderEdges" : [
+                    "all"
+                  ],
+                  "borderRadius" : 0,
+                  "borderWidth" : 1
+                }
+              },
+              {
+                "colspan" : 12,
+                "column" : 0,
+                "name" : "table_1",
+                "row" : 10,
+                "rowspan" : 6,
+                "widgetStyle" : {
+                  "backgroundColor" : "#FFFFFF",
+                  "borderColor" : "#C6D3E1",
+                  "borderEdges" : [
+                    "all"
+                  ],
+                  "borderRadius" : 0,
+                  "borderWidth" : 1
+                }
+              },
+              {
+                "colspan" : 12,
+                "column" : 0,
+                "name" : "text_1",
+                "row" : 0,
+                "rowspan" : 1,
+                "widgetStyle" : {
+                  "borderEdges" : [ ]
+                }
+              },
+              {
+                "colspan" : 12,
+                "column" : 0,
+                "name" : "pillbox_1",
+                "row" : 1,
+                "rowspan" : 1,
+                "widgetStyle" : {
+                  "backgroundColor" : "#FFFFFF",
+                  "borderColor" : "#C6D3E1",
+                  "borderEdges" : [
+                    "all"
+                  ],
+                  "borderRadius" : 0,
+                  "borderWidth" : 1
+                }
+              },
+              {
+                "colspan" : 5,
+                "column" : 0,
+                "name" : "pillbox_2",
+                "row" : 2,
+                "rowspan" : 1,
+                "widgetStyle" : {
+                  "backgroundColor" : "#FFFFFF",
+                  "borderColor" : "#C6D3E1",
+                  "borderEdges" : [
+                    "all"
+                  ],
+                  "borderRadius" : 0,
+                  "borderWidth" : 1
+                }
+              },
+              {
+                "colspan" : 3,
+                "column" : 5,
+                "name" : "listselector_1",
+                "row" : 2,
+                "rowspan" : 1,
+                "widgetStyle" : {
+                  "backgroundColor" : "#FFFFFF",
+                  "borderColor" : "#C6D3E1",
+                  "borderEdges" : [
+                    "all"
+                  ],
+                  "borderRadius" : 0,
+                  "borderWidth" : 1
+                }
+              },
+              {
+                "colspan" : 4,
+                "column" : 8,
+                "name" : "listselector_3",
+                "row" : 2,
+                "rowspan" : 1,
+                "widgetStyle" : {
+                  "backgroundColor" : "#FFFFFF",
+                  "borderColor" : "#C6D3E1",
+                  "borderEdges" : [
+                    "all"
+                  ],
+                  "borderRadius" : 0,
+                  "borderWidth" : 1
+                }
+              }
+            ]
+          }
+        ],
+        "rowHeight" : "normal",
+        "selectors" : [ ],
+        "style" : {
+          "alignmentX" : "left",
+          "alignmentY" : "top",
+          "backgroundColor" : "#FFFFFF",
+          "cellSpacingX" : 8,
+          "cellSpacingY" : 8,
+          "fit" : "original",
+          "gutterColor" : "#FFFFFF"
+        },
+        "version" : 1.0
+      }
+    ],
+    "layouts" : [ ],
+    "steps" : {
+      "List_MemberStatus_1" : {
+        "broadcastFacet" : true,
+        "datasets" : [
+          {
+            "name" : "${App.Datasets.MyRASICMemberswithProject_tp.Name}"
+          }
+        ],
+        "isGlobal" : false,
+        "label" : "List_MemberStatus",
+        "query" : {
+          "query" : {
+            "measures" : [
+              [
+                "count",
+                "*"
+              ]
+            ],
+            "groups" : [
+              "UP2GO_2T__pkl_Status__c"
+            ]
+          },
+          "version" : -1.0
+        },
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "single",
+        "type" : "aggregateflex",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "parameters" : {
+            "autoFitMode" : "keepLabels",
+            "showValues" : true,
+            "bins" : {
+              "breakpoints" : {
+                "high" : 100,
+                "low" : 0
+              },
+              "bands" : {
+                "high" : {
+                  "color" : "#008000",
+                  "label" : ""
+                },
+                "low" : {
+                  "color" : "#B22222",
+                  "label" : ""
+                },
+                "medium" : {
+                  "color" : "#ffa500",
+                  "label" : ""
+                }
+              }
+            },
+            "legend" : {
+              "descOrder" : false,
+              "showHeader" : true,
+              "show" : true,
+              "customSize" : "auto",
+              "position" : "right-top",
+              "inside" : false
+            },
+            "axisMode" : "multi",
+            "tooltip" : {
+              "showBinLabel" : true,
+              "measures" : "",
+              "showNullValues" : true,
+              "showPercentage" : true,
+              "showDimensions" : true,
+              "showMeasures" : true,
+              "customizeTooltip" : false,
+              "dimensions" : ""
+            },
+            "visualizationType" : "hbar",
+            "title" : {
+              "fontSize" : 14,
+              "subtitleFontSize" : 11,
+              "label" : "",
+              "align" : "center",
+              "subtitleLabel" : ""
+            },
+            "binValues" : false,
+            "trellis" : {
+              "flipLabels" : false,
+              "showGridLines" : true,
+              "size" : [
+                100,
+                100
+              ],
+              "enable" : false,
+              "type" : "x",
+              "chartsPerLine" : 4
+            },
+            "columnMap" : {
+              "trellis" : [ ],
+              "dimensionAxis" : [
+                "UP2GO_2T__pkl_Status__c"
+              ],
+              "plots" : [
+                "count"
+              ]
+            },
+            "showActionMenu" : true,
+            "measureAxis2" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "measureAxis1" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "theme" : "wave",
+            "dimensionAxis" : {
+              "showTitle" : true,
+              "customSize" : "auto",
+              "showAxis" : true,
+              "title" : "",
+              "icons" : {
+                "useIcons" : false,
+                "iconProps" : {
+                  "fit" : "cover",
+                  "column" : "",
+                  "type" : "round"
+                }
+              }
+            },
+            "applyConditionalFormatting" : true
+          },
+          "type" : "chart"
+        }
+      },
+      "PRJ_Status_1" : {
+        "broadcastFacet" : false,
+        "datasets" : [
+          {
+            "name" : "${App.Datasets.MyRASICMemberswithProject_tp.Name}"
+          }
+        ],
+        "isGlobal" : false,
+        "query" : {
+          "query" : {
+            "measures" : [
+              [
+                "count",
+                "*"
+              ]
+            ],
+            "groups" : [
+              "PRJ.Status"
+            ]
+          },
+          "version" : -1.0
+        },
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "multirequired",
+        "start" : [
+          "Closed",
+          "Closed - Series",
+          "In Acquisition",
+          "In Development",
+          "In Post Series",
+          "In Progress",
+          "In Project / In Series",
+          "In Series"
+        ],
+        "type" : "aggregateflex",
+        "useGlobal" : true,
+        "visualizationParameters" : { }
+      },
+      "RASIC_Roles_1" : {
+        "broadcastFacet" : true,
+        "datasets" : [
+          {
+            "name" : "${App.Datasets.MyRASICMemberswithProject_tp.Name}"
+          }
+        ],
+        "isGlobal" : false,
+        "label" : "RASIC Roles",
+        "query" : {
+          "query" : {
+            "measures" : [
+              [
+                "count",
+                "*"
+              ]
+            ],
+            "groups" : [
+              "RasicOrder",
+              "UP2GO_2T__pkl_RasicRole__c"
+            ]
+          },
+          "version" : -1.0
+        },
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "single",
+        "type" : "aggregateflex",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "parameters" : {
+            "autoFitMode" : "keepLabels",
+            "showValues" : true,
+            "bins" : {
+              "breakpoints" : {
+                "high" : 100,
+                "low" : 0
+              },
+              "bands" : {
+                "high" : {
+                  "color" : "#008000",
+                  "label" : ""
+                },
+                "low" : {
+                  "color" : "#B22222",
+                  "label" : ""
+                },
+                "medium" : {
+                  "color" : "#ffa500",
+                  "label" : ""
+                }
+              }
+            },
+            "legend" : {
+              "descOrder" : false,
+              "showHeader" : true,
+              "show" : true,
+              "customSize" : "auto",
+              "position" : "right-top",
+              "inside" : false
+            },
+            "axisMode" : "multi",
+            "tooltip" : {
+              "showBinLabel" : true,
+              "measures" : "",
+              "showNullValues" : true,
+              "showPercentage" : true,
+              "showDimensions" : true,
+              "showMeasures" : true,
+              "customizeTooltip" : false,
+              "dimensions" : ""
+            },
+            "visualizationType" : "hbar",
+            "title" : {
+              "fontSize" : 14,
+              "subtitleFontSize" : 11,
+              "label" : "",
+              "align" : "center",
+              "subtitleLabel" : ""
+            },
+            "binValues" : false,
+            "trellis" : {
+              "flipLabels" : false,
+              "showGridLines" : true,
+              "size" : [
+                100,
+                100
+              ],
+              "enable" : false,
+              "type" : "x",
+              "chartsPerLine" : 4
+            },
+            "columnMap" : {
+              "trellis" : [ ],
+              "dimensionAxis" : [
+                "UP2GO_2T__pkl_RasicRole__c"
+              ],
+              "plots" : [
+                "count"
+              ]
+            },
+            "showActionMenu" : true,
+            "measureAxis2" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "measureAxis1" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "theme" : "wave",
+            "dimensionAxis" : {
+              "showTitle" : true,
+              "customSize" : "auto",
+              "showAxis" : true,
+              "title" : "",
+              "icons" : {
+                "useIcons" : false,
+                "iconProps" : {
+                  "fit" : "cover",
+                  "column" : "",
+                  "type" : "round"
+                }
+              }
+            },
+            "applyConditionalFormatting" : true
+          },
+          "type" : "chart"
+        }
+      },
+      "Project_Types_1" : {
+        "broadcastFacet" : true,
+        "datasets" : [
+          {
+            "name" : "${App.Datasets.MyRASICMemberswithProject_tp.Name}"
+          }
+        ],
+        "isGlobal" : false,
+        "label" : "Project Types",
+        "query" : {
+          "query" : {
+            "measures" : [
+              [
+                "count",
+                "*"
+              ]
+            ],
+            "groups" : [
+              "ProjectType"
+            ]
+          },
+          "version" : -1.0
+        },
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "single",
+        "type" : "aggregateflex",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "parameters" : {
+            "autoFitMode" : "keepLabels",
+            "showValues" : true,
+            "bins" : {
+              "breakpoints" : {
+                "high" : 100,
+                "low" : 0
+              },
+              "bands" : {
+                "high" : {
+                  "color" : "#008000",
+                  "label" : ""
+                },
+                "low" : {
+                  "color" : "#B22222",
+                  "label" : ""
+                },
+                "medium" : {
+                  "color" : "#ffa500",
+                  "label" : ""
+                }
+              }
+            },
+            "legend" : {
+              "descOrder" : false,
+              "showHeader" : true,
+              "show" : true,
+              "customSize" : "auto",
+              "position" : "right-top",
+              "inside" : false
+            },
+            "axisMode" : "multi",
+            "tooltip" : {
+              "showBinLabel" : true,
+              "measures" : "",
+              "showNullValues" : true,
+              "showPercentage" : true,
+              "showDimensions" : true,
+              "showMeasures" : true,
+              "customizeTooltip" : false,
+              "dimensions" : ""
+            },
+            "visualizationType" : "hbar",
+            "title" : {
+              "fontSize" : 14,
+              "subtitleFontSize" : 11,
+              "label" : "",
+              "align" : "center",
+              "subtitleLabel" : ""
+            },
+            "binValues" : false,
+            "trellis" : {
+              "flipLabels" : false,
+              "showGridLines" : true,
+              "size" : [
+                100,
+                100
+              ],
+              "enable" : false,
+              "type" : "x",
+              "chartsPerLine" : 4
+            },
+            "columnMap" : {
+              "trellis" : [ ],
+              "dimensionAxis" : [
+                "ProjectType"
+              ],
+              "plots" : [
+                "count"
+              ]
+            },
+            "showActionMenu" : true,
+            "measureAxis2" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "measureAxis1" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "theme" : "wave",
+            "dimensionAxis" : {
+              "showTitle" : true,
+              "customSize" : "auto",
+              "showAxis" : true,
+              "title" : "",
+              "icons" : {
+                "useIcons" : false,
+                "iconProps" : {
+                  "fit" : "cover",
+                  "column" : "",
+                  "type" : "round"
+                }
+              }
+            },
+            "applyConditionalFormatting" : true
+          },
+          "type" : "chart"
+        }
+      },
+      "List_IsRemoved_1" : {
+        "broadcastFacet" : true,
+        "datasets" : [
+          {
+            "name" : "${App.Datasets.MyRASICMemberswithProject_tp.Name}"
+          }
+        ],
+        "isGlobal" : false,
+        "label" : "List_IsRemoved",
+        "query" : {
+          "query" : {
+            "measures" : [
+              [
+                "count",
+                "*"
+              ]
+            ],
+            "groups" : [
+              "IsRemoved"
+            ]
+          },
+          "version" : -1.0
+        },
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "single",
+        "type" : "aggregateflex",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "parameters" : {
+            "autoFitMode" : "keepLabels",
+            "showValues" : true,
+            "bins" : {
+              "breakpoints" : {
+                "high" : 100,
+                "low" : 0
+              },
+              "bands" : {
+                "high" : {
+                  "color" : "#008000",
+                  "label" : ""
+                },
+                "low" : {
+                  "color" : "#B22222",
+                  "label" : ""
+                },
+                "medium" : {
+                  "color" : "#ffa500",
+                  "label" : ""
+                }
+              }
+            },
+            "legend" : {
+              "descOrder" : false,
+              "showHeader" : true,
+              "show" : true,
+              "customSize" : "auto",
+              "position" : "right-top",
+              "inside" : false
+            },
+            "axisMode" : "multi",
+            "tooltip" : {
+              "showBinLabel" : true,
+              "measures" : "",
+              "showNullValues" : true,
+              "showPercentage" : true,
+              "showDimensions" : true,
+              "showMeasures" : true,
+              "customizeTooltip" : false,
+              "dimensions" : ""
+            },
+            "visualizationType" : "hbar",
+            "title" : {
+              "fontSize" : 14,
+              "subtitleFontSize" : 11,
+              "label" : "",
+              "align" : "center",
+              "subtitleLabel" : ""
+            },
+            "binValues" : false,
+            "trellis" : {
+              "flipLabels" : false,
+              "showGridLines" : true,
+              "size" : [
+                100,
+                100
+              ],
+              "enable" : false,
+              "type" : "x",
+              "chartsPerLine" : 4
+            },
+            "columnMap" : {
+              "trellis" : [ ],
+              "dimensionAxis" : [
+                "IsRemoved"
+              ],
+              "plots" : [
+                "count"
+              ]
+            },
+            "showActionMenu" : true,
+            "measureAxis2" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "measureAxis1" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "theme" : "wave",
+            "dimensionAxis" : {
+              "showTitle" : true,
+              "customSize" : "auto",
+              "showAxis" : true,
+              "title" : "",
+              "icons" : {
+                "useIcons" : false,
+                "iconProps" : {
+                  "fit" : "cover",
+                  "column" : "",
+                  "type" : "round"
+                }
+              }
+            },
+            "applyConditionalFormatting" : true
+          },
+          "type" : "chart"
+        }
+      },
+      "Count_of_Roles_on_Pr_2" : {
+        "broadcastFacet" : true,
+        "groups" : [ ],
+        "label" : "Count of Roles on Projects",
+        "numbers" : [ ],
+        "query" : "q = load \"${App.Datasets.MyRASICMemberswithProject_tp.FullyQualifiedName}\";\nq = filter q by ('ProjectType' == \"CPj\")|| ('PRJ.Status' in [\"Closed\",\"Closed - Series\",\"In Acquisition\",\"In Development\",\"In Progress\"]) ;\nq = filter q by 'UP2GO_2T__pkl_Status__c' != \"Removed\";\nq = group q by ('RasicOrder',  'UP2GO_2T__pkl_RasicRole__c','ProjectType');\nq = foreach q generate 'RasicOrder' as 'RasicOrder',  'UP2GO_2T__pkl_RasicRole__c' as 'UP2GO_2T__pkl_RasicRole__c','ProjectType' as 'ProjectType', count() as 'count';\nq = order q by 'RasicOrder' asc;\nq = limit q 2000;",
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "single",
+        "strings" : [ ],
+        "type" : "saql",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "parameters" : {
+            "autoFitMode" : "keepLabels",
+            "showValues" : true,
+            "legend" : {
+              "descOrder" : false,
+              "showHeader" : true,
+              "show" : false,
+              "customSize" : "auto",
+              "position" : "right-top",
+              "inside" : false
+            },
+            "axisMode" : "multi",
+            "totalSumMode" : "none",
+            "tooltip" : {
+              "showBinLabel" : true,
+              "measures" : "",
+              "showNullValues" : true,
+              "showPercentage" : true,
+              "showDimensions" : true,
+              "showMeasures" : true,
+              "customizeTooltip" : false,
+              "dimensions" : ""
+            },
+            "visualizationType" : "stackhbar",
+            "title" : {
+              "fontSize" : 14,
+              "subtitleFontSize" : 11,
+              "label" : "",
+              "align" : "center",
+              "subtitleLabel" : ""
+            },
+            "trellis" : {
+              "flipLabels" : false,
+              "showGridLines" : true,
+              "size" : [
+                100,
+                100
+              ],
+              "enable" : false,
+              "type" : "x",
+              "parameters" : { },
+              "chartsPerLine" : 4
+            },
+            "showActionMenu" : false,
+            "measureAxis2" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "measureAxis1" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "normalize" : false,
+            "theme" : "wave",
+            "dimensionAxis" : {
+              "showTitle" : true,
+              "customSize" : "auto",
+              "showAxis" : true,
+              "title" : "",
+              "icons" : {
+                "useIcons" : false,
+                "iconProps" : {
+                  "fit" : "cover",
+                  "column" : "",
+                  "type" : "round",
+                  "parameters" : { }
+                }
+              }
+            },
+            "applyConditionalFormatting" : true
+          },
+          "type" : "chart"
+        }
+      },
+      "Count_of_Roles_on_Pr_1" : {
+        "broadcastFacet" : true,
+        "groups" : [ ],
+        "label" : "Count of Roles on Projects",
+        "numbers" : [ ],
+        "query" : "q = load \"${App.Datasets.MyRASICMemberswithProject_tp.FullyQualifiedName}\";\nq = filter q by ('ProjectType' == \"CPj\")||({{column(PRJ_Status_1.selection, [\"PRJ.Status\"]).asEquality('PRJ.Status')}});{{cell(Static_IncludeRemove_1.selection, 0, \"Filter\").asString()}}\nq = group q by ('RasicOrder',  'UP2GO_2T__pkl_RasicRole__c','ProjectType');\nq = foreach q generate 'RasicOrder' as 'RasicOrder',  'UP2GO_2T__pkl_RasicRole__c' as 'UP2GO_2T__pkl_RasicRole__c','ProjectType' as 'ProjectType', count() as 'count';\nq = order q by 'RasicOrder' asc;\nq = limit q 2000;",
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "single",
+        "strings" : [ ],
+        "type" : "saql",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "parameters" : {
+            "autoFitMode" : "keepLabels",
+            "showValues" : true,
+            "legend" : {
+              "descOrder" : false,
+              "showHeader" : true,
+              "show" : true,
+              "customSize" : "auto",
+              "position" : "right-top",
+              "inside" : false
+            },
+            "axisMode" : "multi",
+            "totalSumMode" : "none",
+            "tooltip" : {
+              "showBinLabel" : true,
+              "measures" : "",
+              "showNullValues" : true,
+              "showPercentage" : true,
+              "showDimensions" : true,
+              "showMeasures" : true,
+              "customizeTooltip" : false,
+              "dimensions" : ""
+            },
+            "visualizationType" : "stackhbar",
+            "title" : {
+              "fontSize" : 14,
+              "subtitleFontSize" : 11,
+              "label" : "",
+              "align" : "center",
+              "subtitleLabel" : ""
+            },
+            "trellis" : {
+              "flipLabels" : false,
+              "showGridLines" : true,
+              "size" : [
+                100,
+                100
+              ],
+              "enable" : false,
+              "type" : "x",
+              "chartsPerLine" : 4
+            },
+            "columnMap" : {
+              "split" : [
+                "ProjectType"
+              ],
+              "trellis" : [ ],
+              "dimensionAxis" : [
+                "UP2GO_2T__pkl_RasicRole__c"
+              ],
+              "plots" : [
+                "count"
+              ]
+            },
+            "showActionMenu" : true,
+            "measureAxis2" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "measureAxis1" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "normalize" : false,
+            "theme" : "wave",
+            "dimensionAxis" : {
+              "showTitle" : true,
+              "customSize" : "auto",
+              "showAxis" : true,
+              "title" : "",
+              "icons" : {
+                "useIcons" : false,
+                "iconProps" : {
+                  "fit" : "cover",
+                  "column" : "",
+                  "type" : "round"
+                }
+              }
+            },
+            "applyConditionalFormatting" : true
+          },
+          "type" : "chart"
+        }
+      },
+      "Static_IncludeRemove_1" : {
+        "broadcastFacet" : true,
+        "columns" : {
+          "Filter" : {
+            "type" : "string"
+          },
+          "Display" : {
+            "type" : "string"
+          }
+        },
+        "label" : "Static_IncludeRemovedMembers",
+        "selectMode" : "singlerequired",
+        "type" : "staticflex",
+        "values" : [
+          {
+            "Display" : "No",
+            "Filter" : "\nq = filter q by 'UP2GO_2T__pkl_Status__c' != \"Removed\";"
+          },
+          {
+            "Display" : "Yes",
+            "Filter" : ""
+          }
+        ]
+      },
+      "Roles_on_Projects_wi_1" : {
+        "broadcastFacet" : true,
+        "groups" : [ ],
+        "label" : "Roles on Projects with Type and Gate",
+        "numbers" : [ ],
+        "query" : "q = load \"${App.Datasets.MyRASICMemberswithProject_tp.FullyQualifiedName}\";\nq = filter q by ('ProjectType' == \"CPj\")||({{column(PRJ_Status_1.selection, [\"PRJ.Status\"]).asEquality('PRJ.Status')}});{{cell(Static_IncludeRemove_1.selection, 0, \"Filter\").asString()}}\nq = foreach q generate 'ProjectType' as 'ProjectType', 'RasicOrder' as 'RasicOrder', 'Delegate.Name' as 'Delegate.Name', 'PRJ.Name' as 'PRJ.Name', 'Gate.Name' as 'Gate.Name', 'UP2GO_2T__lkp_Delegate__c' as 'UP2GO_2T__lkp_Delegate__c', 'UP2GO_2T__pkl_RasicRole__c' as 'UP2GO_2T__pkl_RasicRole__c';\nq = order q by 'RasicOrder' asc;\nq = foreach q generate  'UP2GO_2T__pkl_RasicRole__c' as 'UP2GO_2T__pkl_RasicRole__c', 'ProjectType' as 'ProjectType', 'PRJ.Name' as 'PRJ.Name', 'Gate.Name' as 'Gate.Name', 'Delegate.Name' as 'R-Delegate';\nq = limit q 2000;",
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "single",
+        "strings" : [ ],
+        "type" : "saql",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "parameters" : {
+            "borderColor" : "#e0e5ee",
+            "borderWidth" : 1,
+            "cell" : {
+              "backgroundColor" : "#ffffff",
+              "fontColor" : "#16325c",
+              "fontSize" : 12
+            },
+            "columnProperties" : { },
+            "columns" : [ ],
+            "customBulkActions" : [ ],
+            "header" : {
+              "backgroundColor" : "#f4f6f9",
+              "fontColor" : "#16325c",
+              "fontSize" : 12
+            },
+            "innerMajorBorderColor" : "#a8b7c7",
+            "innerMinorBorderColor" : "#e0e5ee",
+            "maxColumnWidth" : 300,
+            "minColumnWidth" : 40,
+            "mode" : "variable",
+            "numberOfLines" : 1,
+            "showActionMenu" : true,
+            "showRowIndexColumn" : false,
+            "totals" : true,
+            "verticalPadding" : 8
+          },
+          "type" : "table"
+        }
+      }
+    },
+    "widgetStyle" : {
+      "backgroundColor" : "#FFFFFF",
+      "borderColor" : "#E6ECF2",
+      "borderEdges" : [ ],
+      "borderRadius" : 0,
+      "borderWidth" : 1
+    },
+    "widgets" : {
+      "table_1" : {
+        "parameters" : {
+          "borderColor" : "#e0e5ee",
+          "borderWidth" : 1,
+          "cell" : {
+            "backgroundColor" : "#ffffff",
+            "fontColor" : "#16325c",
+            "fontSize" : 12
+          },
+          "columnProperties" : { },
+          "columns" : [ ],
+          "customBulkActions" : [ ],
+          "exploreLink" : true,
+          "header" : {
+            "backgroundColor" : "#f4f6f9",
+            "fontColor" : "#16325c",
+            "fontSize" : 12
+          },
+          "innerMajorBorderColor" : "#a8b7c7",
+          "innerMinorBorderColor" : "#e0e5ee",
+          "mode" : "fittocontainer",
+          "numberOfLines" : 1,
+          "showActionMenu" : false,
+          "showRowIndexColumn" : false,
+          "step" : "Roles_on_Projects_wi_1",
+          "totals" : true,
+          "verticalPadding" : 4
+        },
+        "type" : "table"
+      },
+      "pillbox_2" : {
+        "parameters" : {
+          "compact" : false,
+          "exploreLink" : false,
+          "fontSize" : 14,
+          "measureField" : "none",
+          "selectedTab" : {
+            "backgroundColor" : "#C6D3E1",
+            "borderColor" : "#7D98B3",
+            "borderEdges" : [
+              "all"
+            ],
+            "borderWidth" : 1,
+            "textColor" : "#4269E9"
+          },
+          "showActionMenu" : false,
+          "step" : "Project_Types_1",
+          "textColor" : "#091A3E"
+        },
+        "type" : "pillbox"
+      },
+      "listselector_3" : {
+        "parameters" : {
+          "compact" : false,
+          "displayMode" : "filter",
+          "exploreLink" : false,
+          "filterStyle" : {
+            "titleColor" : "#091A3E",
+            "valueColor" : "#4269E9"
+          },
+          "instant" : true,
+          "showActionMenu" : false,
+          "step" : "Static_IncludeRemove_1",
+          "title" : "Include removed Memberships?"
+        },
+        "type" : "listselector"
+      },
+      "pillbox_1" : {
+        "parameters" : {
+          "compact" : false,
+          "displayTemplate" : "[UP2GO_2T__pkl_RasicRole__c]",
+          "exploreLink" : false,
+          "fontSize" : 14,
+          "measureField" : "none",
+          "selectedTab" : {
+            "backgroundColor" : "#C6D3E1",
+            "borderColor" : "#C6D3E1",
+            "borderEdges" : [
+              "all"
+            ],
+            "borderWidth" : 1,
+            "textColor" : "#4269E9"
+          },
+          "showActionMenu" : false,
+          "step" : "RASIC_Roles_1",
+          "textColor" : "#091A3E"
+        },
+        "type" : "pillbox"
+      },
+      "text_1" : {
+        "parameters" : {
+          "content" : {
+            "displayTemplate" : "My RASIC Roles on Projects\nThis chart will only update once every 4 hours.\n"
+          },
+          "fontSize" : 16,
+          "showActionMenu" : false,
+          "textAlignment" : "left",
+          "textColor" : "#091A3E"
+        },
+        "type" : "text"
+      },
+      "listselector_1" : {
+        "parameters" : {
+          "compact" : false,
+          "displayMode" : "filter",
+          "exploreLink" : false,
+          "filterStyle" : {
+            "titleColor" : "#091A3E",
+            "valueColor" : "#4269E9"
+          },
+          "instant" : false,
+          "measureField" : "none",
+          "showActionMenu" : false,
+          "step" : "PRJ_Status_1",
+          "title" : "SPJ Status Filter"
+        },
+        "type" : "listselector"
+      },
+      "chart_2" : {
+        "parameters" : {
+          "autoFitMode" : "keepLabels",
+          "showValues" : true,
+          "legend" : {
+            "descOrder" : false,
+            "showHeader" : true,
+            "show" : false,
+            "customSize" : "auto",
+            "position" : "right-top",
+            "inside" : false
+          },
+          "axisMode" : "multi",
+          "totalSumMode" : "none",
+          "tooltip" : {
+            "showBinLabel" : true,
+            "measures" : "",
+            "showNullValues" : true,
+            "showPercentage" : true,
+            "showDimensions" : true,
+            "showMeasures" : true,
+            "customizeTooltip" : false,
+            "dimensions" : ""
+          },
+          "visualizationType" : "stackhbar",
+          "exploreLink" : true,
+          "title" : {
+            "fontSize" : 14,
+            "subtitleFontSize" : 11,
+            "label" : "",
+            "align" : "center",
+            "subtitleLabel" : ""
+          },
+          "trellis" : {
+            "flipLabels" : false,
+            "showGridLines" : true,
+            "size" : [
+              100,
+              100
+            ],
+            "enable" : false,
+            "type" : "x",
+            "parameters" : { },
+            "chartsPerLine" : 4
+          },
+          "columnMap" : {
+            "split" : [
+              "ProjectType"
+            ],
+            "trellis" : [ ],
+            "dimensionAxis" : [
+              "UP2GO_2T__pkl_RasicRole__c"
+            ],
+            "plots" : [
+              "count"
+            ]
+          },
+          "showActionMenu" : false,
+          "measureAxis2" : {
+            "sqrtScale" : false,
+            "showTitle" : true,
+            "showAxis" : true,
+            "title" : "",
+            "customDomain" : {
+              "showDomain" : false
+            }
+          },
+          "measureAxis1" : {
+            "sqrtScale" : false,
+            "showTitle" : true,
+            "showAxis" : true,
+            "title" : "",
+            "customDomain" : {
+              "showDomain" : false
+            }
+          },
+          "normalize" : false,
+          "theme" : "wave",
+          "step" : "Count_of_Roles_on_Pr_1",
+          "dimensionAxis" : {
+            "showTitle" : true,
+            "customSize" : "auto",
+            "showAxis" : true,
+            "title" : "",
+            "icons" : {
+              "useIcons" : false,
+              "iconProps" : {
+                "fit" : "cover",
+                "column" : "",
+                "type" : "round",
+                "parameters" : { }
+              }
+            }
+          },
+          "applyConditionalFormatting" : true
+        },
+        "type" : "chart"
+      }
+    }
+  }
+}

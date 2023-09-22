@@ -1,0 +1,61 @@
+{
+    "dates": [],
+    "derivedDimensions": [],
+    "derivedMeasures": [{
+        "conditionalFormatting": {},
+        "field": "EMV Before Measure",
+        "format": {
+            "customFormat": "[\"€#,###.#\",1]",
+            "delimiters": {}
+        },
+        "label": "EMV Before Measure",
+        "showInExplorer": true
+    }, {
+        "conditionalFormatting": {},
+        "field": "EMV After Measure",
+        "format": {
+            "customFormat": "[\"€#,###.#\",1]",
+            "delimiters": {}
+        },
+        "label": "EMV After Measure",
+        "showInExplorer": true
+    }],
+    "dimensions": [{
+        "conditionalFormatting": {},
+        "customActions": [],
+        "field": "Risk.Risk.Name",
+        "label": "Name",
+        "members": [],
+        "recordDisplayFields": [],
+        "salesforceActions": []
+    }, {
+        "conditionalFormatting": {},
+        "customActions": [],
+        "field": "Risk.UP2GO_2T__pkl_CurrentOrAfterMeasure__c",
+        "members": [{
+            "label": "Before Measure",
+            "member": "Current"
+        }],
+        "recordDisplayFields": [],
+        "salesforceActions": []
+    }],
+    "measures": [{
+        "field": "Risk.Risk.fcur_ExpectedMonetaryValueCurrent__c",
+        "format": {
+            "customFormat": "[\"€#,###.#\",1]",
+            "delimiters": {}
+        },
+        "label": "EMV Before Measure",
+        "showInExplorer": true
+    }, {
+        "field": "Risk.Risk.fcur_ExpectedMonetaryValueAfterMeasure__c",
+        "format": {
+            "customFormat": "[\"€#,###.#\",1]",
+            "delimiters": {}
+        },
+        "label": "EMV After Measure",
+        "showInExplorer": true
+    }],
+    "organizations": [],
+    "showDetailsDefaultFields": []
+}

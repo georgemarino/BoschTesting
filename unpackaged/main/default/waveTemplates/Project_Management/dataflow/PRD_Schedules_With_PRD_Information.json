@@ -1,0 +1,146 @@
+{
+  "notificationLevel": "",
+  "workflowDefinition": {
+    "GetPRD": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "ftxt_Level2__c"}
+        ],
+        "object": "UP2GO_CPRM_BM__Product__c"
+      }
+    },
+    "AppendData": {
+      "action": "append",
+      "parameters": {
+        "enableDisjointedSchemaMerge": false,
+        "sources": [
+          "NormalizePrdData",
+          "NormalizeSerData"
+        ]
+      }
+    },
+    "NormalizePrdData": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "drop",
+        "source": "ComputePrdBU",
+        "fields": [
+          {"name": "PRD.ftxt_Level2__c"},
+          {"name": "UP2GO_CPRM_BM__mdr_Product__c"}
+        ]
+      }
+    },
+    "RegisterPRDSchedulesWithPRDInformation": {
+      "action": "sfdcRegister",
+      "parameters": {
+        "name": "PRD Schedules With PRD Information",
+        "alias": "${App.Datasets.PRD_Schedules_With_PRD_Information_tp.FullyQualifiedName}",
+        "source": "AppendData"
+      }
+    },
+    "GetSER": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "ftxt_Level2__c"},
+          {"name": "Id"}
+        ],
+        "object": "UP2GO_CPRM_BM__Service__c"
+      }
+    },
+    "GetSERSchedules": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "UP2GO_CPRM_BM__mdr_Service__c"}
+        ],
+        "object": "UP2GO_CPRM_BM__ServiceSchedule__c"
+      }
+    },
+    "ComputeSerBU": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "JoinSer2SerSchedules",
+        "mergeWithSource": true,
+        "computedFields": [{
+          "saqlExpression": "'SER.ftxt_Level2__c'",
+          "name": "BU",
+          "label": "Business Unit",
+          "type": "Text"
+        }]
+      }
+    },
+    "NormalizeSerData": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "drop",
+        "source": "ComputeSerBU",
+        "fields": [
+          {"name": "SER.ftxt_Level2__c"},
+          {"name": "UP2GO_CPRM_BM__mdr_Service__c"}
+        ]
+      }
+    },
+    "JoinPrd2PrdSchedules": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "GetPRDSchedules",
+        "left_key": ["UP2GO_CPRM_BM__mdr_Product__c"],
+        "right_select": ["ftxt_Level2__c"],
+        "right": "GetPRD",
+        "relationship": "PRD",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "GetPRDSchedules": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "UP2GO_CPRM_BM__mdr_Product__c"}
+        ],
+        "object": "UP2GO_CPRM_BM__ProductSchedule__c"
+      }
+    },
+    "ComputePrdBU": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "JoinPrd2PrdSchedules",
+        "mergeWithSource": true,
+        "computedFields": [{
+          "name": "BU",
+          "saqlExpression": "'PRD.ftxt_Level2__c'",
+          "label": "Business Unit",
+          "type": "Text"
+        }]
+      }
+    },
+    "JoinSer2SerSchedules": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "GetSERSchedules",
+        "left_key": ["UP2GO_CPRM_BM__mdr_Service__c"],
+        "right_select": ["ftxt_Level2__c"],
+        "right": "GetSER",
+        "relationship": "SER",
+        "operation": "LookupSingleValue"
+      }
+    }
+  },
+  "_type": "dataflow",
+  "description": "PRD Schedules With PRD Information",
+  "MasterLabel": "PRD Schedules With PRD Information",
+  "nextRun": "",
+  "WorkflowStatus": "Inactive",
+  "isDeletable": true,
+  "longRunningAlertInMins": "",
+  "DataflowType": "USER",
+  "name": "PRD_Schedules_With_PRD_Information",
+  "_url": "/insights/internal_api/v1.0/esObject/workflow//json",
+  "_uid": ""
+}

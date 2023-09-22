@@ -1,0 +1,3182 @@
+{
+  "name" : "Assessment_Status_Report_tp",
+  "label" : "Assessment Status Report",
+  "folder" : {
+    "id" : "${App.Folder.Id}"
+  },
+  "dateVersion" : 1,
+  "mobileDisabled" : false,
+  "xmd" : {
+    "measures" : [
+      {
+        "conditionalFormatting" : { },
+        "field" : "Cover_Sheet__Chapter_1.C",
+        "format" : {
+          "delimiters" : { },
+          "customFormat" : "[\"#,###\",1]"
+        }
+      },
+      {
+        "conditionalFormatting" : { },
+        "field" : "Cover_Sheet__Chapter_1.B",
+        "format" : {
+          "delimiters" : { },
+          "customFormat" : "[\"#,###\",1]"
+        }
+      },
+      {
+        "conditionalFormatting" : { },
+        "field" : "Cover_Sheet__Assessm_1.C",
+        "format" : {
+          "delimiters" : { },
+          "customFormat" : "[\"#,###\",1]"
+        }
+      },
+      {
+        "conditionalFormatting" : { },
+        "field" : "Cover_Sheet__Assessm_1.B",
+        "format" : {
+          "delimiters" : { },
+          "customFormat" : "[\"#,###\",1]"
+        }
+      },
+      {
+        "conditionalFormatting" : { },
+        "field" : "Cover_Sheet__Assessm_1.D",
+        "format" : {
+          "delimiters" : { },
+          "customFormat" : "[\"#,###\",1]"
+        }
+      },
+      {
+        "conditionalFormatting" : {
+          "chartColor" : {
+            "referenceField" : "C",
+            "type" : "multiple",
+            "parameters" : {
+              "bins" : [
+                {
+                  "formatValue" : "#F71979",
+                  "bin" : "*"
+                },
+                {
+                  "formatValue" : "#FED444",
+                  "bin" : "1"
+                }
+              ]
+            }
+          }
+        },
+        "field" : "Butterfly_Chart_1.A",
+        "format" : {
+          "delimiters" : { }
+        }
+      },
+      {
+        "conditionalFormatting" : {
+          "chartColor" : {
+            "referenceField" : "Sum of Color",
+            "type" : "multiple",
+            "parameters" : {
+              "bins" : [
+                {
+                  "formatValue" : "#E84340",
+                  "bin" : "*"
+                },
+                {
+                  "formatValue" : "#E8963B",
+                  "bin" : "-1"
+                },
+                {
+                  "formatValue" : "#FFFFFF",
+                  "bin" : "0"
+                },
+                {
+                  "formatValue" : "#3AE867",
+                  "bin" : "1"
+                },
+                {
+                  "formatValue" : "#00B531",
+                  "bin" : "2"
+                },
+                {
+                  "formatValue" : "#80ABC8",
+                  "bin" : "3"
+                },
+                {
+                  "formatValue" : "#005691",
+                  "bin" : "9998"
+                }
+              ]
+            }
+          }
+        },
+        "field" : "Butterfly_Chart_1.Sum of Color",
+        "format" : {
+          "delimiters" : { }
+        }
+      },
+      {
+        "conditionalFormatting" : { },
+        "field" : "Risk_Table_1.B",
+        "format" : {
+          "delimiters" : { },
+          "customFormat" : "[\"#,###\",1]"
+        }
+      },
+      {
+        "conditionalFormatting" : { },
+        "field" : "Risk_Table_1.C",
+        "format" : {
+          "delimiters" : { },
+          "customFormat" : "[\"#,###\",1]"
+        }
+      },
+      {
+        "conditionalFormatting" : {
+          "backgroundColor" : {
+            "referenceField" : "InviteeParticipant",
+            "type" : "multiple",
+            "parameters" : {
+              "bins" : [
+                {
+                  "formatValue" : "#FFCD95",
+                  "bin" : "*"
+                },
+                {
+                  "formatValue" : "#3AE867",
+                  "bin" : "1"
+                }
+              ]
+            }
+          },
+          "color" : {
+            "referenceField" : "InviteeParticipant",
+            "type" : "multiple",
+            "parameters" : {
+              "bins" : [
+                {
+                  "formatValue" : "#FFCD95",
+                  "bin" : "*"
+                },
+                {
+                  "formatValue" : "#3AE867",
+                  "bin" : "1"
+                }
+              ]
+            }
+          }
+        },
+        "field" : "Meeting_Participatio_1.InviteeParticipant",
+        "format" : {
+          "delimiters" : { }
+        }
+      },
+      {
+        "conditionalFormatting" : {
+          "chartColor" : {
+            "referenceField" : "Sum of Color",
+            "type" : "multiple",
+            "parameters" : {
+              "bins" : [
+                {
+                  "formatValue" : "#E84340",
+                  "bin" : "*"
+                },
+                {
+                  "formatValue" : "#E8963B",
+                  "bin" : "-1"
+                },
+                {
+                  "formatValue" : "#FFFFFF",
+                  "bin" : "0"
+                },
+                {
+                  "formatValue" : "#3AE867",
+                  "bin" : "1"
+                },
+                {
+                  "formatValue" : "#00B531",
+                  "bin" : "2"
+                },
+                {
+                  "formatValue" : "#80ABC8",
+                  "bin" : "3"
+                },
+                {
+                  "formatValue" : "#005691",
+                  "bin" : "9998"
+                }
+              ]
+            }
+          }
+        },
+        "field" : "Butterfly_Chart_1.BubbleSize",
+        "format" : {
+          "delimiters" : { }
+        }
+      },
+      {
+        "conditionalFormatting" : { },
+        "field" : "Risk_Table_1.SumExpectedMonetaryValue",
+        "format" : {
+          "delimiters" : { },
+          "customFormat" : "[\"#,###\",1]"
+        }
+      }
+    ],
+    "derivedDimensions" : [ ],
+    "organizations" : [ ],
+    "showDetailsDefaultFields" : [ ],
+    "dates" : [ ],
+    "derivedMeasures" : [ ],
+    "dimensions" : [
+      {
+        "recordDisplayFields" : [ ],
+        "conditionalFormatting" : {
+          "chartColor" : {
+            "referenceField" : "Sum of Color",
+            "type" : "multiple",
+            "parameters" : {
+              "bins" : [
+                {
+                  "formatValue" : "#E84340",
+                  "bin" : "*"
+                },
+                {
+                  "formatValue" : "#E8963B",
+                  "bin" : "-1"
+                },
+                {
+                  "formatValue" : "#FFFFFF",
+                  "bin" : "0"
+                },
+                {
+                  "formatValue" : "#3AE867",
+                  "bin" : "1"
+                },
+                {
+                  "formatValue" : "#00B531",
+                  "bin" : "2"
+                },
+                {
+                  "formatValue" : "#80ABC8",
+                  "bin" : "3"
+                },
+                {
+                  "formatValue" : "#005691",
+                  "bin" : "9998"
+                }
+              ]
+            }
+          }
+        },
+        "salesforceActions" : [ ],
+        "field" : "Butterfly_Chart_1.ALL",
+        "members" : [ ],
+        "customActions" : [ ]
+      },
+      {
+        "recordDisplayFields" : [ ],
+        "conditionalFormatting" : {
+          "backgroundColor" : {
+            "referenceField" : "Rating",
+            "type" : "categories",
+            "parameters" : {
+              "values" : [
+                {
+                  "formatValue" : "#E84340",
+                  "value" : "Red"
+                },
+                {
+                  "formatValue" : "#FFFF93",
+                  "value" : "Yellow"
+                },
+                {
+                  "formatValue" : "#3AE867",
+                  "value" : "Green"
+                }
+              ]
+            }
+          }
+        },
+        "salesforceActions" : [ ],
+        "field" : "Cover_Sheet__Assessm_1.Rating",
+        "members" : [ ],
+        "customActions" : [ ]
+      },
+      {
+        "recordDisplayFields" : [ ],
+        "conditionalFormatting" : {
+          "backgroundColor" : {
+            "referenceField" : "Rating",
+            "type" : "categories",
+            "parameters" : {
+              "values" : [
+                {
+                  "formatValue" : "#E84340",
+                  "value" : "Red"
+                },
+                {
+                  "formatValue" : "#00B531",
+                  "value" : "Green"
+                },
+                {
+                  "formatValue" : "#FFFF93",
+                  "value" : "Yellow"
+                }
+              ]
+            }
+          },
+          "color" : {
+            "referenceField" : "Rating",
+            "type" : "categories",
+            "parameters" : {
+              "values" : [
+                {
+                  "formatValue" : "#091A3E",
+                  "value" : "Red"
+                },
+                {
+                  "formatValue" : "#091A3E",
+                  "value" : "Yellow"
+                },
+                {
+                  "formatValue" : "#091A3E",
+                  "value" : "Green"
+                }
+              ]
+            }
+          }
+        },
+        "salesforceActions" : [ ],
+        "field" : "Cover_Sheet__Chapter_1.Rating",
+        "members" : [ ],
+        "customActions" : [ ]
+      },
+      {
+        "recordDisplayFields" : [ ],
+        "conditionalFormatting" : {
+          "backgroundColor" : {
+            "referenceField" : "UP2GO_2T__pkl_Rating__c",
+            "type" : "categories",
+            "parameters" : {
+              "values" : [
+                {
+                  "formatValue" : "#00B531",
+                  "value" : "Green"
+                },
+                {
+                  "formatValue" : "#E6ECF2",
+                  "value" : "Not Rated"
+                },
+                {
+                  "formatValue" : "#E84340",
+                  "value" : "Red"
+                },
+                {
+                  "formatValue" : "#FFFF93",
+                  "value" : "Yellow"
+                }
+              ]
+            }
+          },
+          "color" : {
+            "referenceField" : "UP2GO_2T__pkl_Rating__c",
+            "type" : "categories",
+            "parameters" : {
+              "values" : [
+                {
+                  "formatValue" : "#091A3E",
+                  "value" : "Green"
+                },
+                {
+                  "formatValue" : "#091A3E",
+                  "value" : "Not Rated"
+                },
+                {
+                  "formatValue" : "#091A3E",
+                  "value" : "Red"
+                },
+                {
+                  "formatValue" : "#091A3E",
+                  "value" : "Yellow"
+                }
+              ]
+            }
+          }
+        },
+        "salesforceActions" : [ ],
+        "field" : "Criterion_Table_1.UP2GO_2T__pkl_Rating__c",
+        "members" : [ ],
+        "customActions" : [ ]
+      }
+    ]
+  },
+  "state" : {
+    "dataSourceLinksInfo" : {
+      "enableAutomaticLinking" : false,
+      "excludeRelationships" : [ ],
+      "links" : [
+        {
+          "fields" : [
+            {
+              "dataSourceName" : "${App.Datasets.Riskmarker_for_Background_tp.Name}",
+              "dataSourceNamespace" : "${Org.Namespace}",
+              "dataSourceType" : "dataset",
+              "fieldName" : "ftxt_EAXAlphabetical__c"
+            },
+            {
+              "dataSourceName" : "${App.Datasets.PACCRM_PACCRM_Freeze_tp.Name}",
+              "dataSourceNamespace" : "${Org.Namespace}",
+              "dataSourceType" : "dataset",
+              "fieldName" : "Risk.ftxt_EAXAlphabetical__c"
+            }
+          ],
+          "label" : "Risk X",
+          "name" : "Link_518"
+        },
+        {
+          "fields" : [
+            {
+              "dataSourceName" : "${App.Datasets.Riskmarker_for_Background_tp.Name}",
+              "dataSourceNamespace" : "${Org.Namespace}",
+              "dataSourceType" : "dataset",
+              "fieldName" : "ftxt_EAYAlphabetical__c"
+            },
+            {
+              "dataSourceName" : "${App.Datasets.PACCRM_PACCRM_Freeze_tp.Name}",
+              "dataSourceNamespace" : "${Org.Namespace}",
+              "dataSourceType" : "dataset",
+              "fieldName" : "Risk.ftxt_EAYAlphabetical__c"
+            }
+          ],
+          "label" : "Risk Y",
+          "name" : "Link_536"
+        },
+        {
+          "fields" : [
+            {
+              "dataSourceName" : "${App.Datasets.PACCRM_PACC_Freeze_tp.Name}",
+              "dataSourceNamespace" : "${Org.Namespace}",
+              "dataSourceType" : "dataset",
+              "fieldName" : "ADFR.SnapshotDate"
+            },
+            {
+              "dataSourceName" : "${App.Datasets.PACCRM_PACCRM_Freeze_tp.Name}",
+              "dataSourceNamespace" : "${Org.Namespace}",
+              "dataSourceType" : "dataset",
+              "fieldName" : "ADFR.SnapshotDate"
+            },
+            {
+              "dataSourceName" : "${App.Datasets.PACCRM_Meeting_Freeze_tp.Name}",
+              "dataSourceNamespace" : "${Org.Namespace}",
+              "dataSourceType" : "dataset",
+              "fieldName" : "ADFR.SnapshotDate"
+            },
+            {
+              "dataSourceName" : "${App.Datasets.CriterionWithMeasure_tp.Name}",
+              "dataSourceNamespace" : "${Org.Namespace}",
+              "dataSourceType" : "dataset",
+              "fieldName" : "Criterion.ADFR.SnapshotDate"
+            }
+          ],
+          "label" : "SnapshotDate",
+          "name" : "Link_155"
+        },
+        {
+          "fields" : [
+            {
+              "dataSourceName" : "${App.Datasets.PACCRM_PACC_Freeze_tp.Name}",
+              "dataSourceNamespace" : "${Org.Namespace}",
+              "dataSourceType" : "dataset",
+              "fieldName" : "Chapter.UP2GO_2T__txt_Rating__c"
+            },
+            {
+              "dataSourceName" : "${App.Datasets.CriterionWithMeasure_tp.Name}",
+              "dataSourceNamespace" : "${Org.Namespace}",
+              "dataSourceType" : "dataset",
+              "fieldName" : "Criterion.Chapter.UP2GO_2T__txt_Rating__c"
+            }
+          ],
+          "label" : "Rating",
+          "name" : "Link_8012"
+        },
+        {
+          "fields" : [
+            {
+              "dataSourceName" : "${App.Datasets.CriterionWithMeasure_tp.Name}",
+              "dataSourceNamespace" : "${Org.Namespace}",
+              "dataSourceType" : "dataset",
+              "fieldName" : "Criterion.UP2GO_2T__pkl_Rating__c"
+            },
+            {
+              "dataSourceName" : "${App.Datasets.PACCRM_PACC_Freeze_tp.Name}",
+              "dataSourceNamespace" : "${Org.Namespace}",
+              "dataSourceType" : "dataset",
+              "fieldName" : "UP2GO_2T__pkl_Rating__c"
+            }
+          ],
+          "label" : "Criterion Rating",
+          "name" : "Link_11851"
+        }
+      ]
+    },
+    "filters" : [ ],
+    "gridLayouts" : [
+      {
+        "name" : "Default",
+        "numColumns" : 50,
+        "pages" : [
+          {
+            "label" : "QG Cover Sheet & Assessment Report",
+            "name" : "ef6dd177-b533-4f57-9296-50bf4d4177e9",
+            "navigationHidden" : false,
+            "widgets" : [
+              {
+                "colspan" : 11,
+                "column" : 0,
+                "name" : "listselector_1",
+                "row" : 0,
+                "rowspan" : 4,
+                "widgetStyle" : {
+                  "backgroundColor" : "#7D98B3",
+                  "borderColor" : "#E6ECF2",
+                  "borderEdges" : [ ],
+                  "borderRadius" : 16,
+                  "borderWidth" : 1
+                }
+              },
+              {
+                "colspan" : 50,
+                "column" : 0,
+                "name" : "navigation_1",
+                "row" : 4,
+                "rowspan" : 4,
+                "widgetStyle" : {
+                  "backgroundColor" : "#FFFFFF",
+                  "borderEdges" : [
+                    "all"
+                  ],
+                  "borderRadius" : 4,
+                  "borderWidth" : 1
+                }
+              },
+              {
+                "colspan" : 25,
+                "column" : 0,
+                "name" : "table_1",
+                "row" : 9,
+                "rowspan" : 8,
+                "widgetStyle" : {
+                  "backgroundColor" : "#FFFFFF",
+                  "borderColor" : "#E6ECF2",
+                  "borderEdges" : [
+                    "all"
+                  ],
+                  "borderRadius" : 0,
+                  "borderWidth" : 1
+                }
+              },
+              {
+                "colspan" : 17,
+                "column" : 33,
+                "name" : "text_1",
+                "row" : 9,
+                "rowspan" : 2,
+                "widgetStyle" : {
+                  "borderEdges" : [ ]
+                }
+              },
+              {
+                "colspan" : 17,
+                "column" : 33,
+                "name" : "pillbox_2",
+                "row" : 12,
+                "rowspan" : 3,
+                "widgetStyle" : {
+                  "backgroundColor" : "#E6ECF2",
+                  "borderColor" : "#E6ECF2",
+                  "borderEdges" : [
+                    "all"
+                  ],
+                  "borderRadius" : 16,
+                  "borderWidth" : 1
+                }
+              },
+              {
+                "colspan" : 5,
+                "column" : 25,
+                "name" : "text_5",
+                "row" : 11,
+                "rowspan" : 4,
+                "widgetStyle" : {
+                  "borderEdges" : [ ]
+                }
+              },
+              {
+                "colspan" : 25,
+                "column" : 25,
+                "name" : "table_4",
+                "row" : 16,
+                "rowspan" : 36,
+                "widgetStyle" : {
+                  "borderEdges" : [ ]
+                }
+              },
+              {
+                "colspan" : 25,
+                "column" : 25,
+                "name" : "text_4",
+                "row" : 53,
+                "rowspan" : 3,
+                "widgetStyle" : {
+                  "borderEdges" : [ ]
+                }
+              },
+              {
+                "colspan" : 25,
+                "column" : 25,
+                "name" : "pillbox_1",
+                "row" : 56,
+                "rowspan" : 3,
+                "widgetStyle" : {
+                  "backgroundColor" : "#E6ECF2",
+                  "borderColor" : "#E6ECF2",
+                  "borderEdges" : [ ],
+                  "borderRadius" : 16,
+                  "borderWidth" : 1
+                }
+              },
+              {
+                "colspan" : 25,
+                "column" : 0,
+                "name" : "text_2",
+                "row" : 55,
+                "rowspan" : 4,
+                "widgetStyle" : {
+                  "borderEdges" : [ ]
+                }
+              },
+              {
+                "colspan" : 50,
+                "column" : 0,
+                "name" : "table_2",
+                "row" : 60,
+                "rowspan" : 60,
+                "widgetStyle" : {
+                  "borderEdges" : [ ]
+                }
+              },
+              {
+                "colspan" : 9,
+                "column" : 0,
+                "name" : "text_9",
+                "row" : 121,
+                "rowspan" : 4,
+                "widgetStyle" : {
+                  "borderEdges" : [ ]
+                }
+              },
+              {
+                "colspan" : 50,
+                "column" : 0,
+                "name" : "table_5",
+                "row" : 125,
+                "rowspan" : 32,
+                "widgetStyle" : {
+                  "borderEdges" : [ ]
+                }
+              },
+              {
+                "colspan" : 50,
+                "column" : 0,
+                "name" : "container_1",
+                "row" : 121,
+                "rowspan" : 36,
+                "widgetStyle" : {
+                  "backgroundColor" : "#FFFFFF",
+                  "borderColor" : "#E6ECF2",
+                  "borderEdges" : [
+                    "all"
+                  ],
+                  "borderRadius" : 0,
+                  "borderWidth" : 1
+                }
+              },
+              {
+                "colspan" : 50,
+                "column" : 0,
+                "name" : "container_2",
+                "row" : 53,
+                "rowspan" : 67,
+                "widgetStyle" : {
+                  "backgroundColor" : "#FFFFFF",
+                  "borderColor" : "#E6ECF2",
+                  "borderEdges" : [
+                    "all"
+                  ],
+                  "borderRadius" : 0,
+                  "borderWidth" : 1
+                }
+              },
+              {
+                "colspan" : 25,
+                "column" : 25,
+                "name" : "container_3",
+                "row" : 9,
+                "rowspan" : 43,
+                "widgetStyle" : {
+                  "backgroundColor" : "#FFFFFF",
+                  "borderColor" : "#E6ECF2",
+                  "borderEdges" : [
+                    "all"
+                  ],
+                  "borderRadius" : 0,
+                  "borderWidth" : 1
+                }
+              }
+            ]
+          },
+          {
+            "label" : "Risk Assessment Report",
+            "name" : "ac3b750d-24f6-4191-a0b1-ea792e7d0f27",
+            "navigationHidden" : false,
+            "widgets" : [
+              {
+                "colspan" : 11,
+                "column" : 0,
+                "name" : "listselector_1",
+                "row" : 0,
+                "rowspan" : 4,
+                "widgetStyle" : {
+                  "backgroundColor" : "#7D98B3",
+                  "borderColor" : "#E6ECF2",
+                  "borderEdges" : [ ],
+                  "borderRadius" : 16,
+                  "borderWidth" : 1
+                }
+              },
+              {
+                "colspan" : 50,
+                "column" : 0,
+                "name" : "navigation_1",
+                "row" : 4,
+                "rowspan" : 4,
+                "widgetStyle" : {
+                  "backgroundColor" : "#FFFFFF",
+                  "borderEdges" : [
+                    "all"
+                  ],
+                  "borderRadius" : 4,
+                  "borderWidth" : 1
+                }
+              },
+              {
+                "colspan" : 50,
+                "column" : 0,
+                "name" : "text_3",
+                "row" : 9,
+                "rowspan" : 3,
+                "widgetStyle" : {
+                  "borderEdges" : [ ]
+                }
+              },
+              {
+                "colspan" : 50,
+                "column" : 0,
+                "name" : "pillbox_3",
+                "row" : 12,
+                "rowspan" : 4,
+                "widgetStyle" : {
+                  "backgroundColor" : "#E6ECF2",
+                  "borderEdges" : [ ],
+                  "borderRadius" : 16
+                }
+              },
+              {
+                "colspan" : 25,
+                "column" : 0,
+                "name" : "text_6",
+                "row" : 16,
+                "rowspan" : 4,
+                "widgetStyle" : {
+                  "borderEdges" : [ ]
+                }
+              },
+              {
+                "colspan" : 25,
+                "column" : 25,
+                "name" : "text_7",
+                "row" : 16,
+                "rowspan" : 4,
+                "widgetStyle" : {
+                  "borderEdges" : [ ]
+                }
+              },
+              {
+                "colspan" : 25,
+                "column" : 0,
+                "name" : "pillbox_4",
+                "row" : 20,
+                "rowspan" : 3,
+                "widgetStyle" : {
+                  "backgroundColor" : "#E6ECF2",
+                  "borderColor" : "#E6ECF2",
+                  "borderEdges" : [ ],
+                  "borderRadius" : 16,
+                  "borderWidth" : 1
+                }
+              },
+              {
+                "colspan" : 25,
+                "column" : 25,
+                "name" : "pillbox_5",
+                "row" : 20,
+                "rowspan" : 3,
+                "widgetStyle" : {
+                  "backgroundColor" : "#E6ECF2",
+                  "borderColor" : "#E6ECF2",
+                  "borderEdges" : [ ],
+                  "borderRadius" : 16,
+                  "borderWidth" : 1
+                }
+              },
+              {
+                "colspan" : 48,
+                "column" : 1,
+                "name" : "chart_1",
+                "row" : 24,
+                "rowspan" : 32,
+                "widgetStyle" : {
+                  "backgroundColor" : "#FFFFFF",
+                  "borderColor" : "#E6ECF2",
+                  "borderEdges" : [
+                    "all"
+                  ],
+                  "borderRadius" : 0,
+                  "borderWidth" : 1
+                }
+              },
+              {
+                "colspan" : 24,
+                "column" : 0,
+                "name" : "text_8",
+                "row" : 57,
+                "rowspan" : 4,
+                "widgetStyle" : {
+                  "borderEdges" : [ ]
+                }
+              },
+              {
+                "colspan" : 50,
+                "column" : 0,
+                "name" : "table_3",
+                "row" : 61,
+                "rowspan" : 32,
+                "widgetStyle" : {
+                  "borderEdges" : [ ]
+                }
+              },
+              {
+                "colspan" : 50,
+                "column" : 0,
+                "name" : "container_4",
+                "row" : 57,
+                "rowspan" : 36,
+                "widgetStyle" : {
+                  "backgroundColor" : "#FFFFFF",
+                  "borderColor" : "#E6ECF2",
+                  "borderEdges" : [
+                    "all"
+                  ],
+                  "borderRadius" : 0,
+                  "borderWidth" : 1
+                }
+              }
+            ]
+          }
+        ],
+        "rowHeight" : "fine",
+        "selectors" : [ ],
+        "style" : {
+          "alignmentX" : "left",
+          "alignmentY" : "top",
+          "backgroundColor" : "#FFFFFF",
+          "cellSpacingX" : 8,
+          "cellSpacingY" : 0,
+          "fit" : "original",
+          "gutterColor" : "#FFFFFF"
+        },
+        "version" : 1.0
+      }
+    ],
+    "layouts" : [ ],
+    "steps" : {
+      "Static_Illustration__1" : {
+        "broadcastFacet" : true,
+        "columns" : {
+          "Value" : {
+            "type" : "string"
+          },
+          "Display" : {
+            "type" : "string"
+          }
+        },
+        "label" : "Static Illustration Option",
+        "selectMode" : "singlerequired",
+        "type" : "staticflex",
+        "values" : [
+          {
+            "Display" : "Number of Risks",
+            "Value" : "count(q2)"
+          },
+          {
+            "Display" : "Sum of Expected Monetary Value",
+            "Value" : "coalesce(sum(q2.'Risk.fcur_ExpectedMonetaryValue__c'), 0)"
+          }
+        ]
+      },
+      "Meeting_Participatio_1" : {
+        "broadcastFacet" : true,
+        "groups" : [
+          "Invitee.Subject",
+          "User.Name",
+          "Date & Time"
+        ],
+        "label" : "Meeting Participation Table",
+        "numbers" : [
+          "Inv. (0) / Par. (1)"
+        ],
+        "query" : "q = load \"${App.Datasets.PACCRM_Meeting_Freeze_tp.FullyQualifiedName}\";\nq = filter q by 'IsInvitee' == \"true\";\nresult = group q by ('Invitee.Subject', 'Invitee.StartDateTime_Year', 'Invitee.StartDateTime_Month', 'Invitee.StartDateTime_Day', 'Invitee.StartDateTime_Hour', 'Invitee.StartDateTime_Minute', 'User.Name');\nresult = foreach result generate q.'Invitee.Subject' as 'Invitee.Subject', q.'Invitee.StartDateTime_Day' + \".\" + q.'Invitee.StartDateTime_Month' + \".\" + q.'Invitee.StartDateTime_Year' + \" \" + q.'Invitee.StartDateTime_Hour' + \":\" + q.'Invitee.StartDateTime_Minute' as 'Date & Time', q.'User.Name' as 'User.Name', unique(q.'Participant.User.Name') as 'Inv. (0) / Par. (1)';\nresult = order result by ('Date & Time' desc);\nresult = limit result 2000;",
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "single",
+        "strings" : [
+          "Invitee.Subject",
+          "Date & Time",
+          "User.Name"
+        ],
+        "type" : "saql",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "parameters" : {
+            "borderColor" : "#e0e5ee",
+            "borderWidth" : 1,
+            "cell" : {
+              "backgroundColor" : "#ffffff",
+              "fontColor" : "#16325c",
+              "fontSize" : 12
+            },
+            "columnProperties" : { },
+            "columns" : [
+              "Inv. (0) / Par. (1)",
+              "Invitee.Subject",
+              "Date & Time",
+              "User.Name"
+            ],
+            "customBulkActions" : [ ],
+            "header" : {
+              "backgroundColor" : "#f4f6f9",
+              "fontColor" : "#16325c",
+              "fontSize" : 12
+            },
+            "innerMajorBorderColor" : "#a8b7c7",
+            "innerMinorBorderColor" : "#e0e5ee",
+            "interactions" : [ ],
+            "maxColumnWidth" : 300,
+            "minColumnWidth" : 40,
+            "mode" : "variable",
+            "numberOfLines" : 1,
+            "pivoted" : true,
+            "showActionMenu" : true,
+            "showRowIndexColumn" : false,
+            "verticalPadding" : 8
+          },
+          "type" : "table"
+        }
+      },
+      "Cover_Sheet__Criteri_1" : {
+        "broadcastFacet" : true,
+        "datasets" : [
+          {
+            "name" : "${App.Datasets.PACCRM_PACC_Freeze_tp.Name}"
+          }
+        ],
+        "isGlobal" : false,
+        "label" : "Cover Sheet: Criterion Rating",
+        "query" : {
+          "query" : {
+            "measures" : [
+              [
+                "count",
+                "*"
+              ]
+            ],
+            "groups" : [
+              "UP2GO_2T__pkl_Rating__c"
+            ]
+          },
+          "version" : -1.0
+        },
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "single",
+        "type" : "aggregateflex",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "parameters" : {
+            "autoFitMode" : "keepLabels",
+            "bins" : {
+              "breakpoints" : {
+                "high" : 100,
+                "low" : 0
+              },
+              "bands" : {
+                "high" : {
+                  "color" : "#008000",
+                  "label" : ""
+                },
+                "low" : {
+                  "color" : "#B22222",
+                  "label" : ""
+                },
+                "medium" : {
+                  "color" : "#ffa500",
+                  "label" : ""
+                }
+              }
+            },
+            "legend" : {
+              "descOrder" : false,
+              "showHeader" : true,
+              "show" : true,
+              "customSize" : "auto",
+              "position" : "right-top",
+              "inside" : false
+            },
+            "axisMode" : "multi",
+            "tooltip" : {
+              "content" : {
+                "legend" : {
+                  "showBinLabel" : true,
+                  "measures" : [ ],
+                  "showNullValues" : true,
+                  "customizeLegend" : false,
+                  "showPercentage" : true,
+                  "showDimensions" : true,
+                  "showMeasures" : true,
+                  "dimensions" : [ ]
+                }
+              }
+            },
+            "visualizationType" : "hbar",
+            "title" : {
+              "fontSize" : 14,
+              "subtitleFontSize" : 11,
+              "label" : "",
+              "align" : "center",
+              "subtitleLabel" : ""
+            },
+            "binValues" : false,
+            "trellis" : {
+              "flipLabels" : false,
+              "showGridLines" : true,
+              "size" : [
+                100,
+                100
+              ],
+              "enable" : false,
+              "type" : "x",
+              "chartsPerLine" : 4
+            },
+            "columnMap" : {
+              "trellis" : [ ],
+              "dimensionAxis" : [
+                "UP2GO_2T__pkl_Rating__c"
+              ],
+              "plots" : [
+                "count"
+              ]
+            },
+            "showActionMenu" : true,
+            "measureAxis2" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "measureAxis1" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "valueType" : "compactNumber",
+            "theme" : "wave",
+            "compactDecimalDigits" : -1,
+            "dimensionAxis" : {
+              "showTitle" : true,
+              "customSize" : "auto",
+              "showAxis" : true,
+              "title" : "",
+              "icons" : {
+                "useIcons" : false,
+                "iconProps" : {
+                  "fit" : "cover",
+                  "column" : "",
+                  "type" : "round"
+                }
+              }
+            },
+            "applyConditionalFormatting" : true
+          },
+          "type" : "chart"
+        }
+      },
+      "Butterfly_Chart_1" : {
+        "broadcastFacet" : true,
+        "groups" : [
+          "ftxt_EAXAlphabetical__c",
+          "ftxt_EAYAlphabetical__c"
+        ],
+        "label" : "Butterfly Chart",
+        "numbers" : [
+          "BubbleSize",
+          "Sum of Color",
+          "Sum of Expected Monetary Value",
+          "Number of Risks"
+        ],
+        "query" : "q1 = load \"${App.Datasets.Riskmarker_for_Background_tp.FullyQualifiedName}\";\nq2 = load \"${App.Datasets.PACCRM_PACCRM_Freeze_tp.FullyQualifiedName}\";\nq = cogroup q1 by ('ftxt_EAXAlphabetical__c', 'ftxt_EAYAlphabetical__c') full, q2 by ('Risk.ftxt_EAXAlphabetical__c', 'Risk.ftxt_EAYAlphabetical__c');\nq = foreach q generate coalesce(q1.'ftxt_EAXAlphabetical__c', q2.'Risk.ftxt_EAXAlphabetical__c') as 'ftxt_EAXAlphabetical__c', coalesce(q1.'ftxt_EAYAlphabetical__c', q2.'Risk.ftxt_EAYAlphabetical__c') as 'ftxt_EAYAlphabetical__c', coalesce(sum(q2.'Risk.fnum_Color__c'), 0) + coalesce(sum(q1.'fnum_Color__c'), 0) as 'Sum of Color', count(q2) as 'BubbleSize', coalesce(sum(q2.'Risk.fcur_ExpectedMonetaryValue__c'), 0) + coalesce(sum(q1.'fcur_ExpectedMonetaryValue__c'), 0) as 'Sum of Expected Monetary Value', count(q2) as 'Number of Risks';\nq = order q by ('ftxt_EAXAlphabetical__c' asc, 'ftxt_EAYAlphabetical__c' asc);\nq = limit q 2000;",
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "single",
+        "strings" : [
+          "ftxt_EAXAlphabetical__c",
+          "ftxt_EAYAlphabetical__c"
+        ],
+        "type" : "saql",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "parameters" : {
+            "autoFitMode" : "keepLabels",
+            "legend" : {
+              "descOrder" : false,
+              "showHeader" : true,
+              "show" : true,
+              "customSize" : "auto",
+              "position" : "right-top",
+              "inside" : false
+            },
+            "highColor" : "#009DDF",
+            "tooltip" : {
+              "content" : {
+                "legend" : {
+                  "showBinLabel" : true,
+                  "measures" : [
+                    "Sum of Expected Monetary Value",
+                    "Number of Risks"
+                  ],
+                  "showNullValues" : true,
+                  "customizeLegend" : true,
+                  "showPercentage" : true,
+                  "showDimensions" : false,
+                  "showMeasures" : true,
+                  "dimensions" : [
+                    "ftxt_EAXAlphabetical__c",
+                    "ftxt_EAYAlphabetical__c"
+                  ]
+                }
+              }
+            },
+            "lowColor" : "#E2F4FC",
+            "visualizationType" : "matrix",
+            "title" : {
+              "fontSize" : 14,
+              "subtitleFontSize" : 11,
+              "label" : "",
+              "align" : "center",
+              "subtitleLabel" : ""
+            },
+            "columnMap" : {
+              "r" : [
+                "BubbleSize"
+              ],
+              "color" : [
+                "Sum of Color"
+              ],
+              "x" : [
+                "ftxt_EAXAlphabetical__c"
+              ],
+              "y" : [
+                "ftxt_EAYAlphabetical__c"
+              ]
+            },
+            "showActionMenu" : true,
+            "x" : {
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : ""
+            },
+            "y" : {
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : ""
+            },
+            "theme" : "wave",
+            "applyConditionalFormatting" : true
+          },
+          "type" : "chart"
+        }
+      },
+      "Risk_Table_1" : {
+        "broadcastFacet" : true,
+        "datasets" : [
+          {
+            "name" : "${App.Datasets.PACCRM_PACCRM_Freeze_tp.Name}"
+          }
+        ],
+        "isGlobal" : false,
+        "label" : "Risk Table",
+        "query" : {
+          "query" : {
+            "measures" : [
+              [
+                "count",
+                "*",
+                "Type"
+              ],
+              [
+                "count",
+                "*",
+                "Category"
+              ],
+              [
+                "count",
+                "*",
+                "SumExpectedMonetaryValue"
+              ]
+            ],
+            "columns" : [
+              {
+                "query" : {
+                  "measures" : [
+                    [
+                      "count",
+                      "*"
+                    ]
+                  ],
+                  "groups" : [
+                    "Risk.Risk.Name"
+                  ],
+                  "formula" : "first('Risk.Risk.UP2GO_2T__pkl_Type__c')"
+                },
+                "name" : "Type",
+                "header" : "Type"
+              },
+              {
+                "query" : {
+                  "measures" : [
+                    [
+                      "count",
+                      "*"
+                    ]
+                  ],
+                  "groups" : [
+                    "Risk.Risk.Name"
+                  ],
+                  "formula" : "first('Risk.Risk.pkl_Category__c')"
+                },
+                "name" : "Category",
+                "header" : "Category"
+              },
+              {
+                "query" : {
+                  "measures" : [
+                    [
+                      "count",
+                      "*"
+                    ]
+                  ],
+                  "groups" : [
+                    "Risk.Risk.Name"
+                  ],
+                  "formula" : "sum('Risk.fcur_ExpectedMonetaryValue__c')"
+                },
+                "name" : "SumExpectedMonetaryValue",
+                "header" : "Sum of Expected Monetary Value"
+              }
+            ],
+            "groups" : [
+              "Risk.Risk.Name"
+            ]
+          },
+          "version" : -1.0
+        },
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "single",
+        "type" : "aggregateflex",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "options" : { },
+          "parameters" : {
+            "borderColor" : "#e0e5ee",
+            "borderWidth" : 1,
+            "cell" : {
+              "backgroundColor" : "#ffffff",
+              "fontColor" : "#16325c",
+              "fontSize" : 12
+            },
+            "columnProperties" : { },
+            "columns" : [
+              "Type",
+              "Category",
+              "Risk.Risk.Name",
+              "SumExpectedMonetaryValue"
+            ],
+            "customBulkActions" : [ ],
+            "header" : {
+              "backgroundColor" : "#f4f6f9",
+              "fontColor" : "#16325c",
+              "fontSize" : 12
+            },
+            "innerMajorBorderColor" : "#a8b7c7",
+            "innerMinorBorderColor" : "#e0e5ee",
+            "interactions" : [ ],
+            "maxColumnWidth" : 300,
+            "minColumnWidth" : 40,
+            "mode" : "variable",
+            "numberOfLines" : 1,
+            "pivoted" : false,
+            "showActionMenu" : true,
+            "showRowIndexColumn" : false,
+            "totals" : true,
+            "verticalPadding" : 8
+          },
+          "type" : "table"
+        }
+      },
+      "ADFR_Id_ADFR_txt_Ass_1" : {
+        "broadcastFacet" : true,
+        "datasets" : [
+          {
+            "name" : "${App.Datasets.PACCRM_PACC_Freeze_tp.Name}"
+          }
+        ],
+        "isGlobal" : false,
+        "query" : {
+          "query" : {
+            "measures" : [
+              [
+                "count",
+                "*",
+                "A"
+              ],
+              [
+                "count",
+                "*",
+                "B"
+              ]
+            ],
+            "columns" : [
+              {
+                "query" : {
+                  "measures" : [
+                    [
+                      "count",
+                      "*"
+                    ]
+                  ],
+                  "groups" : [
+                    "ADFR.Id",
+                    "ADFR.txt_AssessmentLevel__c",
+                    "Assessment.UP2GO_2T__txt_Rating__c",
+                    "Assessment.ftxt_CurrentProjectGate__c",
+                    "Assessment.Id",
+                    "Name"
+                  ]
+                }
+              },
+              {
+                "query" : {
+                  "measures" : [
+                    [
+                      "count",
+                      "*"
+                    ]
+                  ],
+                  "groups" : [
+                    "ADFR.Id",
+                    "ADFR.txt_AssessmentLevel__c",
+                    "Assessment.UP2GO_2T__txt_Rating__c",
+                    "Assessment.ftxt_CurrentProjectGate__c",
+                    "Assessment.Id",
+                    "Name"
+                  ]
+                }
+              }
+            ],
+            "groups" : [
+              "ADFR.Id",
+              "ADFR.txt_AssessmentLevel__c",
+              "Assessment.UP2GO_2T__txt_Rating__c",
+              "Assessment.ftxt_CurrentProjectGate__c",
+              "Assessment.Id",
+              "Name"
+            ]
+          },
+          "version" : -1.0
+        },
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "single",
+        "type" : "aggregateflex",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "options" : { },
+          "parameters" : {
+            "borderColor" : "#e0e5ee",
+            "borderWidth" : 1,
+            "cell" : {
+              "backgroundColor" : "#ffffff",
+              "fontColor" : "#16325c",
+              "fontSize" : 12
+            },
+            "columnProperties" : { },
+            "columns" : [ ],
+            "customBulkActions" : [ ],
+            "header" : {
+              "backgroundColor" : "#f4f6f9",
+              "fontColor" : "#16325c",
+              "fontSize" : 12
+            },
+            "innerMajorBorderColor" : "#a8b7c7",
+            "innerMinorBorderColor" : "#e0e5ee",
+            "interactions" : [ ],
+            "maxColumnWidth" : 300,
+            "minColumnWidth" : 40,
+            "mode" : "variable",
+            "numberOfLines" : 1,
+            "showActionMenu" : true,
+            "showRowIndexColumn" : false,
+            "totals" : true,
+            "verticalPadding" : 8
+          },
+          "type" : "table"
+        }
+      },
+      "Criterion_Table_1" : {
+        "broadcastFacet" : true,
+        "groups" : [ ],
+        "label" : "Criterion Table",
+        "numbers" : [ ],
+        "query" : "mea = load \"${App.Datasets.CriterionWithMeasure_tp.FullyQualifiedName}\";\nmea = foreach mea generate\ncoalesce('Criterion.txt_Numbering__c', \"-\") as 'Criterion.txt_Numbering__c', \ncoalesce('Criterion.Name', \"-\") as 'Criterion.Name', \ncoalesce('Criterion.txl_Content__c', \"-\") as 'Criterion.txl_Content__c', \ncoalesce('Criterion.txl_Description__c', \"-\") as 'Criterion.txl_Description__c', \ncoalesce('Criterion.pkl_Relevance__c', \"-\") as 'Criterion.pkl_Relevance__c', \ncoalesce('Criterion.txl_Statement__c', \"-\") as 'Criterion.txl_Statement__c',\ncoalesce('Criterion.UP2GO_2T__pkl_Rating__c', \"-\") as 'Criterion.UP2GO_2T__pkl_Rating__c',\ncoalesce('Measure.Name', \"-\") as 'Measure.Name',\ncoalesce('Measure.UP2GO_2T__txa_Description__c', \"-\") as 'Measure.UP2GO_2T__txa_Description__c',\ncoalesce('Measure.AssignedTo.Name', \"-\") as 'Measure.AssignedTo.Name',\ncoalesce(substr('Measure.UP2GO_2T__dat_DueDate__c', 1, 10), \"-\") as 'Measure.UP2GO_2T__dat_DueDate__c';\nmea = group mea by (\n'Criterion.txt_Numbering__c', \n'Criterion.Name', \n'Criterion.txl_Content__c', \n'Criterion.txl_Description__c', \n'Criterion.pkl_Relevance__c', \n'Criterion.txl_Statement__c',\n'Criterion.UP2GO_2T__pkl_Rating__c',\n'Measure.Name',\n'Measure.UP2GO_2T__txa_Description__c',\n'Measure.AssignedTo.Name',\n'Measure.UP2GO_2T__dat_DueDate__c');\n\nmea = foreach mea generate \n'Criterion.txt_Numbering__c' as 'Criterion.txt_Numbering__c', \n'Criterion.Name' as 'Criterion.Name', \n'Criterion.txl_Content__c' as 'Criterion.txl_Content__c', \n'Criterion.txl_Description__c' as 'Criterion.txl_Description__c', \n'Criterion.pkl_Relevance__c' as 'Criterion.pkl_Relevance__c', \n'Criterion.txl_Statement__c' as 'Criterion.txl_Statement__c',\n'Criterion.UP2GO_2T__pkl_Rating__c' as 'Criterion.UP2GO_2T__pkl_Rating__c',\n'Measure.Name'as 'Measure.Name',\n'Measure.UP2GO_2T__txa_Description__c' as 'Measure.UP2GO_2T__txa_Description__c',\n'Measure.AssignedTo.Name' as 'Measure.AssignedTo.Name',\n'Measure.UP2GO_2T__dat_DueDate__c' as 'Measure.UP2GO_2T__dat_DueDate__c',\ncount() as 'count';\n\ncri = load \"${App.Datasets.PACCRM_PACC_Freeze_tp.FullyQualifiedName}\";\ncri = foreach cri generate \ncoalesce('txt_Numbering__c', \"-\") as 'Criterion.txt_Numbering__c', \ncoalesce('Name', \"-\") as 'Criterion.Name', \ncoalesce('txl_Content__c', \"-\") as 'Criterion.txl_Content__c', \ncoalesce('txl_Description__c', \"-\") as 'Criterion.txl_Description__c', \ncoalesce('pkl_Relevance__c', \"-\") as 'Criterion.pkl_Relevance__c', \ncoalesce('txl_Statement__c', \"-\") as 'Criterion.txl_Statement__c',\ncoalesce('UP2GO_2T__pkl_Rating__c', \"-\") as 'Criterion.UP2GO_2T__pkl_Rating__c',\n\"-⠀\" as 'Measure.Name',\n\"-\" as 'Measure.UP2GO_2T__txa_Description__c',\n\"-\" as 'Measure.AssignedTo.Name',\n\"-\" as 'Measure.UP2GO_2T__dat_DueDate__c',\ncount() as 'count';\n\nfinal = union mea, cri;\nfinal = group final by (\n'Criterion.txt_Numbering__c', \n'Criterion.Name', \n'Criterion.txl_Content__c', \n'Criterion.txl_Description__c', \n'Criterion.pkl_Relevance__c', \n'Criterion.txl_Statement__c',\n'Criterion.UP2GO_2T__pkl_Rating__c',\n'Measure.Name',\n'Measure.UP2GO_2T__txa_Description__c',\n'Measure.AssignedTo.Name',\n'Measure.UP2GO_2T__dat_DueDate__c');\nfinal = foreach final generate\n'Criterion.txt_Numbering__c', \n'Criterion.Name', \n'Criterion.txl_Content__c', \n'Criterion.txl_Description__c', \n'Criterion.pkl_Relevance__c', \n'Criterion.txl_Statement__c',\n'Criterion.UP2GO_2T__pkl_Rating__c',\n'Measure.Name',\n'Measure.UP2GO_2T__txa_Description__c',\n'Measure.AssignedTo.Name',\n'Measure.UP2GO_2T__dat_DueDate__c',\nsum('count')/sum(sum('count')) over ([..] partition by 'Criterion.txt_Numbering__c') as 'No of Measures';\nfinal = filter final by ('No of Measures' == 1 && 'Measure.Name' == \"-⠀\") || 'Measure.Name' == \"-\" || 'Measure.Name' != \"-⠀\";\nfinal = foreach final generate\n'Criterion.txt_Numbering__c', \n'Criterion.Name', \n'Criterion.txl_Content__c', \n'Criterion.txl_Description__c', \n'Criterion.pkl_Relevance__c', \n'Criterion.txl_Statement__c',\n'Criterion.UP2GO_2T__pkl_Rating__c',\n'Measure.Name',\n'Measure.UP2GO_2T__txa_Description__c',\n'Measure.AssignedTo.Name',\n'Measure.UP2GO_2T__dat_DueDate__c';\nfinal = order final by ('Criterion.txt_Numbering__c' desc, 'Measure.UP2GO_2T__dat_DueDate__c' asc);",
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "single",
+        "strings" : [ ],
+        "type" : "saql",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "parameters" : {
+            "borderColor" : "#e0e5ee",
+            "borderWidth" : 1,
+            "cell" : {
+              "backgroundColor" : "#ffffff",
+              "fontColor" : "#16325c",
+              "fontSize" : 12
+            },
+            "columnProperties" : { },
+            "columns" : [ ],
+            "customBulkActions" : [ ],
+            "header" : {
+              "backgroundColor" : "#f4f6f9",
+              "fontColor" : "#16325c",
+              "fontSize" : 12
+            },
+            "innerMajorBorderColor" : "#a8b7c7",
+            "innerMinorBorderColor" : "#e0e5ee",
+            "interactions" : [ ],
+            "maxColumnWidth" : 300,
+            "minColumnWidth" : 40,
+            "mode" : "variable",
+            "numberOfLines" : 1,
+            "showActionMenu" : false,
+            "totals" : true,
+            "verticalPadding" : 8
+          },
+          "type" : "table"
+        }
+      },
+      "Cover_Sheet__Chapter_1" : {
+        "broadcastFacet" : true,
+        "datasets" : [
+          {
+            "name" : "${App.Datasets.PACCRM_PACC_Freeze_tp.Name}"
+          }
+        ],
+        "isGlobal" : false,
+        "label" : "Cover Sheet: Chapter Table",
+        "query" : {
+          "query" : {
+            "measures" : [
+              [
+                "count",
+                "*",
+                "Statement"
+              ],
+              [
+                "count",
+                "*",
+                "Rating"
+              ]
+            ],
+            "columns" : [
+              {
+                "query" : {
+                  "measures" : [
+                    [
+                      "count",
+                      "*"
+                    ]
+                  ],
+                  "groups" : [
+                    "Chapter.Name"
+                  ],
+                  "formula" : "first('Chapter.UP2GO_2T__txa_Statement__c')"
+                },
+                "name" : "Statement",
+                "header" : "Statement"
+              },
+              {
+                "query" : {
+                  "measures" : [
+                    [
+                      "count",
+                      "*"
+                    ]
+                  ],
+                  "groups" : [
+                    "Chapter.Name"
+                  ],
+                  "formula" : "first('Chapter.UP2GO_2T__txt_Rating__c')"
+                },
+                "name" : "Rating",
+                "header" : "Rating"
+              }
+            ],
+            "groups" : [
+              "Chapter.Name"
+            ]
+          },
+          "version" : -1.0
+        },
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "single",
+        "type" : "aggregateflex",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "options" : { },
+          "parameters" : {
+            "borderColor" : "#e0e5ee",
+            "borderWidth" : 1,
+            "cell" : {
+              "backgroundColor" : "#ffffff",
+              "fontColor" : "#16325c",
+              "fontSize" : 12
+            },
+            "columnProperties" : { },
+            "columns" : [ ],
+            "customBulkActions" : [ ],
+            "header" : {
+              "backgroundColor" : "#f4f6f9",
+              "fontColor" : "#16325c",
+              "fontSize" : 12
+            },
+            "innerMajorBorderColor" : "#a8b7c7",
+            "innerMinorBorderColor" : "#e0e5ee",
+            "interactions" : [ ],
+            "maxColumnWidth" : 300,
+            "minColumnWidth" : 40,
+            "mode" : "variable",
+            "numberOfLines" : 1,
+            "pivoted" : false,
+            "showActionMenu" : false,
+            "showRowIndexColumn" : false,
+            "totals" : true,
+            "verticalPadding" : 8
+          },
+          "type" : "table"
+        }
+      },
+      "to_delete_1" : {
+        "broadcastFacet" : true,
+        "datasets" : [
+          {
+            "name" : "${App.Datasets.CriterionWithMeasure_tp.Name}"
+          }
+        ],
+        "isGlobal" : false,
+        "label" : "to delete",
+        "query" : {
+          "query" : {
+            "measures" : [
+              [
+                "count",
+                "*"
+              ]
+            ]
+          },
+          "version" : -1.0
+        },
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "single",
+        "type" : "aggregateflex",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "parameters" : {
+            "autoFitMode" : "keepLabels",
+            "bins" : {
+              "breakpoints" : {
+                "high" : 100,
+                "low" : 0
+              },
+              "bands" : {
+                "high" : {
+                  "color" : "#008000",
+                  "label" : ""
+                },
+                "low" : {
+                  "color" : "#B22222",
+                  "label" : ""
+                },
+                "medium" : {
+                  "color" : "#ffa500",
+                  "label" : ""
+                }
+              }
+            },
+            "legend" : {
+              "descOrder" : false,
+              "showHeader" : true,
+              "show" : true,
+              "customSize" : "auto",
+              "position" : "right-top",
+              "inside" : false
+            },
+            "axisMode" : "multi",
+            "tooltip" : {
+              "content" : {
+                "legend" : {
+                  "showBinLabel" : true,
+                  "measures" : [ ],
+                  "showNullValues" : true,
+                  "customizeLegend" : false,
+                  "showPercentage" : true,
+                  "showDimensions" : true,
+                  "showMeasures" : true,
+                  "dimensions" : [ ]
+                }
+              }
+            },
+            "visualizationType" : "hbar",
+            "title" : {
+              "fontSize" : 14,
+              "subtitleFontSize" : 11,
+              "label" : "",
+              "align" : "center",
+              "subtitleLabel" : ""
+            },
+            "binValues" : false,
+            "trellis" : {
+              "flipLabels" : false,
+              "showGridLines" : true,
+              "size" : [
+                100,
+                100
+              ],
+              "enable" : false,
+              "type" : "x",
+              "chartsPerLine" : 4
+            },
+            "columnMap" : {
+              "trellis" : [ ],
+              "dimensionAxis" : [ ],
+              "plots" : [
+                "count"
+              ]
+            },
+            "showActionMenu" : true,
+            "measureAxis2" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "measureAxis1" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "valueType" : "compactNumber",
+            "theme" : "wave",
+            "compactDecimalDigits" : -1,
+            "dimensionAxis" : {
+              "showTitle" : true,
+              "customSize" : "auto",
+              "showAxis" : true,
+              "title" : "",
+              "icons" : {
+                "useIcons" : false,
+                "iconProps" : {
+                  "fit" : "cover",
+                  "column" : "",
+                  "type" : "round"
+                }
+              }
+            },
+            "applyConditionalFormatting" : true
+          },
+          "type" : "chart"
+        }
+      },
+      "Cover_Sheet__Chapter_2" : {
+        "broadcastFacet" : true,
+        "datasets" : [
+          {
+            "name" : "${App.Datasets.PACCRM_PACC_Freeze_tp.Name}"
+          }
+        ],
+        "isGlobal" : false,
+        "label" : "Cover Sheet: Chapter Rating",
+        "query" : {
+          "query" : {
+            "measures" : [
+              [
+                "count",
+                "*"
+              ]
+            ],
+            "groups" : [
+              "Chapter.UP2GO_2T__txt_Rating__c"
+            ]
+          },
+          "version" : -1.0
+        },
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "single",
+        "type" : "aggregateflex",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "parameters" : {
+            "autoFitMode" : "keepLabels",
+            "bins" : {
+              "breakpoints" : {
+                "high" : 100,
+                "low" : 0
+              },
+              "bands" : {
+                "high" : {
+                  "color" : "#008000",
+                  "label" : ""
+                },
+                "low" : {
+                  "color" : "#B22222",
+                  "label" : ""
+                },
+                "medium" : {
+                  "color" : "#ffa500",
+                  "label" : ""
+                }
+              }
+            },
+            "legend" : {
+              "descOrder" : false,
+              "showHeader" : true,
+              "show" : true,
+              "customSize" : "auto",
+              "position" : "right-top",
+              "inside" : false
+            },
+            "axisMode" : "multi",
+            "tooltip" : {
+              "content" : {
+                "legend" : {
+                  "showBinLabel" : true,
+                  "measures" : [ ],
+                  "showNullValues" : true,
+                  "customizeLegend" : false,
+                  "showPercentage" : true,
+                  "showDimensions" : true,
+                  "showMeasures" : true,
+                  "dimensions" : [ ]
+                }
+              }
+            },
+            "visualizationType" : "hbar",
+            "title" : {
+              "fontSize" : 14,
+              "subtitleFontSize" : 11,
+              "label" : "",
+              "align" : "center",
+              "subtitleLabel" : ""
+            },
+            "binValues" : false,
+            "trellis" : {
+              "flipLabels" : false,
+              "showGridLines" : true,
+              "size" : [
+                100,
+                100
+              ],
+              "enable" : false,
+              "type" : "x",
+              "chartsPerLine" : 4
+            },
+            "columnMap" : {
+              "trellis" : [ ],
+              "dimensionAxis" : [
+                "Chapter.UP2GO_2T__txt_Rating__c"
+              ],
+              "plots" : [
+                "count"
+              ]
+            },
+            "showActionMenu" : true,
+            "measureAxis2" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "measureAxis1" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "valueType" : "compactNumber",
+            "theme" : "wave",
+            "compactDecimalDigits" : -1,
+            "dimensionAxis" : {
+              "showTitle" : true,
+              "customSize" : "auto",
+              "showAxis" : true,
+              "title" : "",
+              "icons" : {
+                "useIcons" : false,
+                "iconProps" : {
+                  "fit" : "cover",
+                  "column" : "",
+                  "type" : "round"
+                }
+              }
+            },
+            "applyConditionalFormatting" : true
+          },
+          "type" : "chart"
+        }
+      },
+      "Snapshot_DateTime_2" : {
+        "broadcastFacet" : true,
+        "datasets" : [
+          {
+            "name" : "${App.Datasets.PACCRM_PACC_Freeze_tp.Name}"
+          }
+        ],
+        "isGlobal" : false,
+        "label" : "Snapshot DateTime",
+        "query" : {
+          "query" : {
+            "measures" : [
+              [
+                "count",
+                "*"
+              ]
+            ],
+            "groups" : [
+              [
+                "ADFR.SnapshotDate_Year",
+                "ADFR.SnapshotDate_Month",
+                "ADFR.SnapshotDate_Day",
+                "ADFR.SnapshotDate_Hour",
+                "ADFR.SnapshotDate_Minute",
+                "ADFR.SnapshotDate_Second"
+              ]
+            ],
+            "order" : [
+              [
+                [
+                  "ADFR.SnapshotDate_Year",
+                  "ADFR.SnapshotDate_Month",
+                  "ADFR.SnapshotDate_Day",
+                  "ADFR.SnapshotDate_Hour",
+                  "ADFR.SnapshotDate_Minute",
+                  "ADFR.SnapshotDate_Second"
+                ],
+                {
+                  "ascending" : false
+                }
+              ]
+            ]
+          },
+          "version" : -1.0
+        },
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "singlerequired",
+        "type" : "aggregateflex",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "parameters" : {
+            "autoFitMode" : "keepLabels",
+            "bins" : {
+              "breakpoints" : {
+                "high" : 100,
+                "low" : 0
+              },
+              "bands" : {
+                "high" : {
+                  "color" : "#008000",
+                  "label" : ""
+                },
+                "low" : {
+                  "color" : "#B22222",
+                  "label" : ""
+                },
+                "medium" : {
+                  "color" : "#ffa500",
+                  "label" : ""
+                }
+              }
+            },
+            "legend" : {
+              "descOrder" : false,
+              "showHeader" : true,
+              "show" : true,
+              "customSize" : "auto",
+              "position" : "right-top",
+              "inside" : false
+            },
+            "axisMode" : "multi",
+            "tooltip" : {
+              "content" : {
+                "legend" : {
+                  "showBinLabel" : true,
+                  "measures" : [ ],
+                  "showNullValues" : true,
+                  "customizeLegend" : false,
+                  "showPercentage" : true,
+                  "showDimensions" : true,
+                  "showMeasures" : true,
+                  "dimensions" : [ ]
+                }
+              }
+            },
+            "visualizationType" : "hbar",
+            "title" : {
+              "fontSize" : 14,
+              "subtitleFontSize" : 11,
+              "label" : "",
+              "align" : "center",
+              "subtitleLabel" : ""
+            },
+            "binValues" : false,
+            "trellis" : {
+              "flipLabels" : false,
+              "showGridLines" : true,
+              "size" : [
+                100,
+                100
+              ],
+              "enable" : false,
+              "type" : "x",
+              "chartsPerLine" : 4
+            },
+            "columnMap" : {
+              "trellis" : [ ],
+              "dimensionAxis" : [
+                "ADFR.SnapshotDate_Year~~~ADFR.SnapshotDate_Month~~~ADFR.SnapshotDate_Day~~~ADFR.SnapshotDate_Hour~~~ADFR.SnapshotDate_Minute~~~ADFR.SnapshotDate_Second"
+              ],
+              "plots" : [
+                "count"
+              ]
+            },
+            "showActionMenu" : true,
+            "measureAxis2" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "measureAxis1" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "valueType" : "compactNumber",
+            "theme" : "wave",
+            "compactDecimalDigits" : -1,
+            "dimensionAxis" : {
+              "showTitle" : true,
+              "customSize" : "auto",
+              "showAxis" : true,
+              "title" : "",
+              "icons" : {
+                "useIcons" : false,
+                "iconProps" : {
+                  "fit" : "cover",
+                  "column" : "",
+                  "type" : "round"
+                }
+              }
+            },
+            "applyConditionalFormatting" : true
+          },
+          "type" : "chart"
+        }
+      },
+      "Risk_Type_1" : {
+        "broadcastFacet" : true,
+        "datasets" : [
+          {
+            "name" : "${App.Datasets.PACCRM_PACCRM_Freeze_tp.Name}"
+          }
+        ],
+        "isGlobal" : false,
+        "label" : "Risk Type",
+        "query" : {
+          "query" : {
+            "measures" : [
+              [
+                "count",
+                "*"
+              ]
+            ],
+            "groups" : [
+              "Risk.Risk.UP2GO_2T__pkl_Type__c"
+            ],
+            "order" : [
+              [
+                "Risk.Risk.UP2GO_2T__pkl_Type__c",
+                {
+                  "ascending" : false
+                }
+              ]
+            ]
+          },
+          "version" : -1.0
+        },
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "single",
+        "type" : "aggregateflex",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "parameters" : {
+            "autoFitMode" : "keepLabels",
+            "bins" : {
+              "breakpoints" : {
+                "high" : 100,
+                "low" : 0
+              },
+              "bands" : {
+                "high" : {
+                  "color" : "#008000",
+                  "label" : ""
+                },
+                "low" : {
+                  "color" : "#B22222",
+                  "label" : ""
+                },
+                "medium" : {
+                  "color" : "#ffa500",
+                  "label" : ""
+                }
+              }
+            },
+            "legend" : {
+              "descOrder" : false,
+              "showHeader" : true,
+              "show" : true,
+              "customSize" : "auto",
+              "position" : "right-top",
+              "inside" : false
+            },
+            "axisMode" : "multi",
+            "tooltip" : {
+              "content" : {
+                "legend" : {
+                  "showBinLabel" : true,
+                  "measures" : [ ],
+                  "showNullValues" : true,
+                  "customizeLegend" : false,
+                  "showPercentage" : true,
+                  "showDimensions" : true,
+                  "showMeasures" : true,
+                  "dimensions" : [ ]
+                }
+              }
+            },
+            "visualizationType" : "hbar",
+            "title" : {
+              "fontSize" : 14,
+              "subtitleFontSize" : 11,
+              "label" : "",
+              "align" : "center",
+              "subtitleLabel" : ""
+            },
+            "binValues" : false,
+            "trellis" : {
+              "flipLabels" : false,
+              "showGridLines" : true,
+              "size" : [
+                100,
+                100
+              ],
+              "enable" : false,
+              "type" : "x",
+              "chartsPerLine" : 4
+            },
+            "columnMap" : {
+              "trellis" : [ ],
+              "dimensionAxis" : [
+                "Risk.Risk.UP2GO_2T__pkl_Type__c"
+              ],
+              "plots" : [
+                "count"
+              ]
+            },
+            "showActionMenu" : true,
+            "measureAxis2" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "measureAxis1" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "valueType" : "compactNumber",
+            "theme" : "wave",
+            "compactDecimalDigits" : -1,
+            "dimensionAxis" : {
+              "showTitle" : true,
+              "customSize" : "auto",
+              "showAxis" : true,
+              "title" : "",
+              "icons" : {
+                "useIcons" : false,
+                "iconProps" : {
+                  "fit" : "cover",
+                  "column" : "",
+                  "type" : "round"
+                }
+              }
+            },
+            "applyConditionalFormatting" : true
+          },
+          "type" : "chart"
+        }
+      },
+      "Cover_Sheet__Assessm_1" : {
+        "broadcastFacet" : true,
+        "datasets" : [
+          {
+            "name" : "${App.Datasets.PACCRM_PACC_Freeze_tp.Name}"
+          }
+        ],
+        "isGlobal" : false,
+        "label" : "Cover Sheet: Assessment Table",
+        "query" : {
+          "query" : {
+            "measures" : [
+              [
+                "count",
+                "*",
+                "Statement"
+              ],
+              [
+                "count",
+                "*",
+                "Rating"
+              ],
+              [
+                "count",
+                "*",
+                "AssessmentLevel"
+              ]
+            ],
+            "columns" : [
+              {
+                "query" : {
+                  "measures" : [
+                    [
+                      "count",
+                      "*"
+                    ]
+                  ],
+                  "groups" : [
+                    "Assessment.Name"
+                  ],
+                  "formula" : "first('Assessment.txl_Statement__c')"
+                },
+                "name" : "Statement",
+                "header" : "Statement"
+              },
+              {
+                "query" : {
+                  "measures" : [
+                    [
+                      "count",
+                      "*"
+                    ]
+                  ],
+                  "groups" : [
+                    "Assessment.Name"
+                  ],
+                  "formula" : "first('Assessment.UP2GO_2T__txt_Rating__c')"
+                },
+                "name" : "Rating",
+                "header" : "Rating"
+              },
+              {
+                "query" : {
+                  "measures" : [
+                    [
+                      "count",
+                      "*"
+                    ]
+                  ],
+                  "groups" : [
+                    "Assessment.Name"
+                  ],
+                  "formula" : "first('ADFR.txt_AssessmentLevel__c')"
+                },
+                "name" : "AssessmentLevel",
+                "header" : "Assessment Level"
+              }
+            ],
+            "groups" : [
+              "Assessment.Name"
+            ]
+          },
+          "version" : -1.0
+        },
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "single",
+        "type" : "aggregateflex",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "options" : { },
+          "parameters" : {
+            "borderColor" : "#e0e5ee",
+            "borderWidth" : 1,
+            "cell" : {
+              "backgroundColor" : "#ffffff",
+              "fontColor" : "#16325c",
+              "fontSize" : 12
+            },
+            "columnProperties" : { },
+            "columns" : [
+              "AssessmentLevel",
+              "Statement",
+              "Rating",
+              "Assessment.Name"
+            ],
+            "customBulkActions" : [ ],
+            "header" : {
+              "backgroundColor" : "#f4f6f9",
+              "fontColor" : "#16325c",
+              "fontSize" : 12
+            },
+            "innerMajorBorderColor" : "#a8b7c7",
+            "innerMinorBorderColor" : "#e0e5ee",
+            "interactions" : [ ],
+            "maxColumnWidth" : 300,
+            "minColumnWidth" : 40,
+            "mode" : "variable",
+            "numberOfLines" : 1,
+            "pivoted" : false,
+            "showActionMenu" : true,
+            "showRowIndexColumn" : true,
+            "totals" : true,
+            "verticalPadding" : 8
+          },
+          "type" : "table"
+        }
+      },
+      "Risk_Properties_1" : {
+        "broadcastFacet" : true,
+        "datasets" : [
+          {
+            "name" : "${App.Datasets.PACCRM_PACCRM_Freeze_tp.Name}"
+          }
+        ],
+        "isGlobal" : false,
+        "label" : "Risk Properties",
+        "query" : {
+          "query" : {
+            "measures" : [
+              [
+                "count",
+                "*"
+              ]
+            ],
+            "groups" : [
+              "Risk.UP2GO_2T__pkl_CurrentOrAfterMeasure__c"
+            ],
+            "order" : [
+              [
+                "Risk.UP2GO_2T__pkl_CurrentOrAfterMeasure__c",
+                {
+                  "ascending" : false
+                }
+              ]
+            ]
+          },
+          "version" : -1.0
+        },
+        "receiveFacetSource" : {
+          "mode" : "all",
+          "steps" : [ ]
+        },
+        "selectMode" : "single",
+        "type" : "aggregateflex",
+        "useGlobal" : true,
+        "visualizationParameters" : {
+          "parameters" : {
+            "autoFitMode" : "keepLabels",
+            "bins" : {
+              "breakpoints" : {
+                "high" : 100,
+                "low" : 0
+              },
+              "bands" : {
+                "high" : {
+                  "color" : "#008000",
+                  "label" : ""
+                },
+                "low" : {
+                  "color" : "#B22222",
+                  "label" : ""
+                },
+                "medium" : {
+                  "color" : "#ffa500",
+                  "label" : ""
+                }
+              }
+            },
+            "legend" : {
+              "descOrder" : false,
+              "showHeader" : true,
+              "show" : true,
+              "customSize" : "auto",
+              "position" : "right-top",
+              "inside" : false
+            },
+            "axisMode" : "multi",
+            "tooltip" : {
+              "content" : {
+                "legend" : {
+                  "showBinLabel" : true,
+                  "measures" : [ ],
+                  "showNullValues" : true,
+                  "customizeLegend" : false,
+                  "showPercentage" : true,
+                  "showDimensions" : true,
+                  "showMeasures" : true,
+                  "dimensions" : [ ]
+                }
+              }
+            },
+            "visualizationType" : "hbar",
+            "title" : {
+              "fontSize" : 14,
+              "subtitleFontSize" : 11,
+              "label" : "",
+              "align" : "center",
+              "subtitleLabel" : ""
+            },
+            "binValues" : false,
+            "trellis" : {
+              "flipLabels" : false,
+              "showGridLines" : true,
+              "size" : [
+                100,
+                100
+              ],
+              "enable" : false,
+              "type" : "x",
+              "chartsPerLine" : 4
+            },
+            "columnMap" : {
+              "trellis" : [ ],
+              "dimensionAxis" : [
+                "Risk.UP2GO_2T__pkl_CurrentOrAfterMeasure__c"
+              ],
+              "plots" : [
+                "count"
+              ]
+            },
+            "showActionMenu" : true,
+            "measureAxis2" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "measureAxis1" : {
+              "sqrtScale" : false,
+              "showTitle" : true,
+              "showAxis" : true,
+              "title" : "",
+              "customDomain" : {
+                "showDomain" : false
+              }
+            },
+            "valueType" : "compactNumber",
+            "theme" : "wave",
+            "compactDecimalDigits" : -1,
+            "dimensionAxis" : {
+              "showTitle" : true,
+              "customSize" : "auto",
+              "showAxis" : true,
+              "title" : "",
+              "icons" : {
+                "useIcons" : false,
+                "iconProps" : {
+                  "fit" : "cover",
+                  "column" : "",
+                  "type" : "round"
+                }
+              }
+            },
+            "applyConditionalFormatting" : true
+          },
+          "type" : "chart"
+        }
+      }
+    },
+    "widgetStyle" : {
+      "backgroundColor" : "#FFFFFF",
+      "borderColor" : "#E6ECF2",
+      "borderEdges" : [ ],
+      "borderRadius" : 0,
+      "borderWidth" : 1
+    },
+    "widgets" : {
+      "container_1" : {
+        "parameters" : {
+          "alignmentX" : "left",
+          "alignmentY" : "top",
+          "fit" : "original",
+          "interactions" : [ ]
+        },
+        "type" : "container"
+      },
+      "container_2" : {
+        "parameters" : {
+          "alignmentX" : "left",
+          "alignmentY" : "top",
+          "fit" : "original",
+          "interactions" : [ ]
+        },
+        "type" : "container"
+      },
+      "container_3" : {
+        "parameters" : {
+          "alignmentX" : "left",
+          "alignmentY" : "top",
+          "fit" : "original",
+          "interactions" : [ ]
+        },
+        "type" : "container"
+      },
+      "container_4" : {
+        "parameters" : {
+          "alignmentX" : "left",
+          "alignmentY" : "top",
+          "fit" : "original",
+          "interactions" : [ ]
+        },
+        "type" : "container"
+      },
+      "text_3" : {
+        "parameters" : {
+          "content" : {
+            "richTextContent" : [
+              {
+                "attributes" : {
+                  "size" : "16px",
+                  "color" : "#091a3e"
+                },
+                "insert" : "Risk Illustration"
+              },
+              {
+                "attributes" : {
+                  "align" : "center"
+                },
+                "insert" : "\n"
+              }
+            ]
+          },
+          "interactions" : [ ],
+          "showActionMenu" : true
+        },
+        "type" : "text"
+      },
+      "text_2" : {
+        "parameters" : {
+          "content" : {
+            "richTextContent" : [
+              {
+                "attributes" : {
+                  "size" : "16px",
+                  "color" : "#091A3E"
+                },
+                "insert" : "Criterion\n"
+              },
+              {
+                "attributes" : {
+                  "align" : "left"
+                },
+                "insert" : "\n"
+              }
+            ]
+          },
+          "interactions" : [ ],
+          "showActionMenu" : false
+        },
+        "type" : "text"
+      },
+      "text_5" : {
+        "parameters" : {
+          "content" : {
+            "richTextContent" : [
+              {
+                "attributes" : {
+                  "size" : "16px",
+                  "color" : "#091A3E"
+                },
+                "insert" : "Chapter\n"
+              },
+              {
+                "attributes" : {
+                  "align" : "left"
+                },
+                "insert" : "\n"
+              }
+            ]
+          },
+          "interactions" : [ ],
+          "showActionMenu" : false
+        },
+        "type" : "text"
+      },
+      "text_4" : {
+        "parameters" : {
+          "content" : {
+            "richTextContent" : [
+              {
+                "attributes" : {
+                  "size" : "16px",
+                  "color" : "#091a3e"
+                },
+                "insert" : "Criterion Rating"
+              },
+              {
+                "attributes" : {
+                  "align" : "center"
+                },
+                "insert" : "\n"
+              }
+            ]
+          },
+          "interactions" : [ ],
+          "showActionMenu" : false
+        },
+        "type" : "text"
+      },
+      "text_7" : {
+        "parameters" : {
+          "content" : {
+            "richTextContent" : [
+              {
+                "attributes" : {
+                  "size" : "16px",
+                  "color" : "#091a3e"
+                },
+                "insert" : "Risk Type"
+              },
+              {
+                "attributes" : {
+                  "align" : "center"
+                },
+                "insert" : "\n"
+              }
+            ]
+          },
+          "interactions" : [ ],
+          "showActionMenu" : false
+        },
+        "type" : "text"
+      },
+      "chart_1" : {
+        "parameters" : {
+          "autoFitMode" : "keepLabels",
+          "legend" : {
+            "descOrder" : false,
+            "showHeader" : true,
+            "show" : true,
+            "customSize" : "auto",
+            "position" : "right-top",
+            "inside" : false
+          },
+          "highColor" : "#009DDF",
+          "tooltip" : {
+            "content" : {
+              "legend" : {
+                "showBinLabel" : true,
+                "measures" : [
+                  "Sum of Expected Monetary Value",
+                  "Number of Risks"
+                ],
+                "showNullValues" : true,
+                "customizeLegend" : true,
+                "showPercentage" : true,
+                "showDimensions" : false,
+                "showMeasures" : true,
+                "dimensions" : [
+                  "ftxt_EAXAlphabetical__c",
+                  "ftxt_EAYAlphabetical__c"
+                ]
+              }
+            }
+          },
+          "lowColor" : "#E2F4FC",
+          "visualizationType" : "matrix",
+          "exploreLink" : true,
+          "title" : {
+            "fontSize" : 14,
+            "subtitleFontSize" : 11,
+            "label" : "",
+            "align" : "center",
+            "subtitleLabel" : ""
+          },
+          "columnMap" : {
+            "r" : [
+              "BubbleSize"
+            ],
+            "color" : [
+              "Sum of Color"
+            ],
+            "x" : [
+              "ftxt_EAXAlphabetical__c"
+            ],
+            "y" : [
+              "ftxt_EAYAlphabetical__c"
+            ]
+          },
+          "showActionMenu" : true,
+          "x" : {
+            "showTitle" : true,
+            "showAxis" : true,
+            "title" : ""
+          },
+          "y" : {
+            "showTitle" : true,
+            "showAxis" : true,
+            "title" : ""
+          },
+          "theme" : "wave",
+          "step" : "Butterfly_Chart_1",
+          "applyConditionalFormatting" : true
+        },
+        "type" : "chart"
+      },
+      "text_6" : {
+        "parameters" : {
+          "content" : {
+            "richTextContent" : [
+              {
+                "attributes" : {
+                  "size" : "16px",
+                  "color" : "#091a3e"
+                },
+                "insert" : "Risk Properties"
+              },
+              {
+                "attributes" : {
+                  "align" : "center"
+                },
+                "insert" : "\n"
+              }
+            ]
+          },
+          "interactions" : [ ],
+          "showActionMenu" : false
+        },
+        "type" : "text"
+      },
+      "text_9" : {
+        "parameters" : {
+          "content" : {
+            "richTextContent" : [
+              {
+                "attributes" : {
+                  "size" : "16px",
+                  "color" : "#091A3E"
+                },
+                "insert" : "Meeting Participation\n"
+              },
+              {
+                "attributes" : {
+                  "align" : "left"
+                },
+                "insert" : "\n"
+              }
+            ]
+          },
+          "interactions" : [ ],
+          "showActionMenu" : true
+        },
+        "type" : "text"
+      },
+      "text_8" : {
+        "parameters" : {
+          "content" : {
+            "richTextContent" : [
+              {
+                "attributes" : {
+                  "size" : "16px",
+                  "color" : "#091A3E"
+                },
+                "insert" : "Risks identified via QG Assessment\n"
+              },
+              {
+                "attributes" : {
+                  "align" : "left"
+                },
+                "insert" : "\n"
+              }
+            ]
+          },
+          "interactions" : [ ],
+          "showActionMenu" : true
+        },
+        "type" : "text"
+      },
+      "text_1" : {
+        "parameters" : {
+          "content" : {
+            "richTextContent" : [
+              {
+                "attributes" : {
+                  "size" : "16px",
+                  "color" : "#091a3e"
+                },
+                "insert" : "Chapter Rating"
+              },
+              {
+                "attributes" : {
+                  "align" : "center"
+                },
+                "insert" : "\n"
+              }
+            ]
+          },
+          "interactions" : [ ],
+          "showActionMenu" : false
+        },
+        "type" : "text"
+      },
+      "navigation_1" : {
+        "parameters" : {
+          "fontSize" : 16,
+          "selectedTab" : {
+            "backgroundColor" : "#FFFFFF",
+            "borderColor" : "#0070D2",
+            "borderEdges" : [
+              "bottom"
+            ],
+            "borderWidth" : 4,
+            "textColor" : "#0070D2"
+          },
+          "tabCount" : 2,
+          "textColor" : "#54698D"
+        },
+        "type" : "navigation"
+      },
+      "table_1" : {
+        "parameters" : {
+          "borderColor" : "#e0e5ee",
+          "borderWidth" : 1,
+          "cell" : {
+            "backgroundColor" : "#ffffff",
+            "fontColor" : "#16325c",
+            "fontSize" : 12
+          },
+          "columnProperties" : { },
+          "columns" : [
+            "AssessmentLevel",
+            "Statement",
+            "Rating",
+            "Assessment.Name"
+          ],
+          "customBulkActions" : [ ],
+          "exploreLink" : true,
+          "header" : {
+            "backgroundColor" : "#f4f6f9",
+            "fontColor" : "#16325c",
+            "fontSize" : 12
+          },
+          "innerMajorBorderColor" : "#a8b7c7",
+          "innerMinorBorderColor" : "#e0e5ee",
+          "interactions" : [ ],
+          "mode" : "fittocontainer",
+          "numberOfLines" : 1,
+          "pivoted" : false,
+          "showActionMenu" : false,
+          "showRowIndexColumn" : true,
+          "step" : "Cover_Sheet__Assessm_1",
+          "totals" : true,
+          "verticalPadding" : 8
+        },
+        "type" : "table"
+      },
+      "table_2" : {
+        "parameters" : {
+          "borderColor" : "#e0e5ee",
+          "borderWidth" : 1,
+          "cell" : {
+            "backgroundColor" : "#ffffff",
+            "fontColor" : "#16325c",
+            "fontSize" : 12
+          },
+          "columnProperties" : { },
+          "columns" : [ ],
+          "customBulkActions" : [ ],
+          "exploreLink" : true,
+          "header" : {
+            "backgroundColor" : "#f4f6f9",
+            "fontColor" : "#16325c",
+            "fontSize" : 12
+          },
+          "innerMajorBorderColor" : "#a8b7c7",
+          "innerMinorBorderColor" : "#e0e5ee",
+          "interactions" : [ ],
+          "maxColumnWidth" : 300,
+          "minColumnWidth" : 40,
+          "mode" : "variable",
+          "numberOfFrozenColumns" : 1,
+          "numberOfLines" : 1,
+          "showActionMenu" : false,
+          "step" : "Criterion_Table_1",
+          "totals" : true,
+          "verticalPadding" : 8
+        },
+        "type" : "table"
+      },
+      "table_3" : {
+        "parameters" : {
+          "borderColor" : "#e0e5ee",
+          "borderWidth" : 1,
+          "cell" : {
+            "backgroundColor" : "#ffffff",
+            "fontColor" : "#16325c",
+            "fontSize" : 12
+          },
+          "columnProperties" : { },
+          "columns" : [
+            "Type",
+            "Category",
+            "Risk.Risk.Name",
+            "SumExpectedMonetaryValue"
+          ],
+          "customBulkActions" : [ ],
+          "exploreLink" : true,
+          "header" : {
+            "backgroundColor" : "#f4f6f9",
+            "fontColor" : "#16325c",
+            "fontSize" : 12
+          },
+          "innerMajorBorderColor" : "#a8b7c7",
+          "innerMinorBorderColor" : "#e0e5ee",
+          "interactions" : [ ],
+          "maxColumnWidth" : 300,
+          "minColumnWidth" : 40,
+          "mode" : "variable",
+          "numberOfLines" : 1,
+          "pivoted" : false,
+          "showActionMenu" : true,
+          "showRowIndexColumn" : false,
+          "step" : "Risk_Table_1",
+          "totals" : true,
+          "verticalPadding" : 8
+        },
+        "type" : "table"
+      },
+      "table_4" : {
+        "parameters" : {
+          "borderColor" : "#e0e5ee",
+          "borderWidth" : 1,
+          "cell" : {
+            "backgroundColor" : "#ffffff",
+            "fontColor" : "#16325c",
+            "fontSize" : 12
+          },
+          "columnProperties" : { },
+          "columns" : [ ],
+          "customBulkActions" : [ ],
+          "exploreLink" : true,
+          "header" : {
+            "backgroundColor" : "#f4f6f9",
+            "fontColor" : "#16325c",
+            "fontSize" : 12
+          },
+          "innerMajorBorderColor" : "#a8b7c7",
+          "innerMinorBorderColor" : "#e0e5ee",
+          "interactions" : [ ],
+          "maxColumnWidth" : 300,
+          "minColumnWidth" : 40,
+          "mode" : "variable",
+          "numberOfLines" : 1,
+          "pivoted" : false,
+          "showActionMenu" : false,
+          "showRowIndexColumn" : false,
+          "step" : "Cover_Sheet__Chapter_1",
+          "totals" : true,
+          "verticalPadding" : 8
+        },
+        "type" : "table"
+      },
+      "pillbox_2" : {
+        "parameters" : {
+          "compact" : false,
+          "exploreLink" : false,
+          "fontSize" : 14,
+          "measureField" : "none",
+          "selectedTab" : {
+            "backgroundColor" : "#0070D2",
+            "borderColor" : "#C6D3E1",
+            "borderEdges" : [
+              "all"
+            ],
+            "borderWidth" : 1,
+            "textColor" : "#FFFFFF"
+          },
+          "showActionMenu" : false,
+          "step" : "Cover_Sheet__Chapter_2",
+          "textColor" : "#335779"
+        },
+        "type" : "pillbox"
+      },
+      "table_5" : {
+        "parameters" : {
+          "borderColor" : "#e0e5ee",
+          "borderWidth" : 1,
+          "cell" : {
+            "backgroundColor" : "#ffffff",
+            "fontColor" : "#16325c",
+            "fontSize" : 12
+          },
+          "columnProperties" : { },
+          "columns" : [
+            "Inv. (0) / Par. (1)",
+            "Invitee.Subject",
+            "Date & Time",
+            "User.Name"
+          ],
+          "customBulkActions" : [ ],
+          "exploreLink" : true,
+          "header" : {
+            "backgroundColor" : "#f4f6f9",
+            "fontColor" : "#16325c",
+            "fontSize" : 12
+          },
+          "innerMajorBorderColor" : "#a8b7c7",
+          "innerMinorBorderColor" : "#e0e5ee",
+          "interactions" : [ ],
+          "maxColumnWidth" : 300,
+          "minColumnWidth" : 40,
+          "mode" : "variable",
+          "numberOfLines" : 1,
+          "pivoted" : true,
+          "showActionMenu" : true,
+          "showRowIndexColumn" : false,
+          "step" : "Meeting_Participatio_1",
+          "verticalPadding" : 8
+        },
+        "type" : "table"
+      },
+      "pillbox_1" : {
+        "parameters" : {
+          "compact" : false,
+          "exploreLink" : false,
+          "fontSize" : 14,
+          "measureField" : "none",
+          "selectedTab" : {
+            "backgroundColor" : "#0070D2",
+            "borderColor" : "#C6D3E1",
+            "borderEdges" : [
+              "all"
+            ],
+            "borderWidth" : 1,
+            "textColor" : "#FFFFFF"
+          },
+          "showActionMenu" : false,
+          "step" : "Cover_Sheet__Criteri_1",
+          "textColor" : "#335779"
+        },
+        "type" : "pillbox"
+      },
+      "pillbox_4" : {
+        "parameters" : {
+          "compact" : false,
+          "exploreLink" : false,
+          "fontSize" : 14,
+          "measureField" : "none",
+          "selectedTab" : {
+            "backgroundColor" : "#0070D2",
+            "borderColor" : "#C6D3E1",
+            "borderEdges" : [
+              "all"
+            ],
+            "borderWidth" : 1,
+            "textColor" : "#FFFFFF"
+          },
+          "showActionMenu" : false,
+          "step" : "Risk_Properties_1",
+          "textColor" : "#335779"
+        },
+        "type" : "pillbox"
+      },
+      "pillbox_3" : {
+        "parameters" : {
+          "compact" : false,
+          "exploreLink" : false,
+          "fontSize" : 14,
+          "selectedTab" : {
+            "backgroundColor" : "#0070D2",
+            "borderColor" : "#C6D3E1",
+            "borderEdges" : [
+              "all"
+            ],
+            "borderWidth" : 1,
+            "textColor" : "#FFFFFF"
+          },
+          "showActionMenu" : true,
+          "step" : "Static_Illustration__1",
+          "textColor" : "#335779"
+        },
+        "type" : "pillbox"
+      },
+      "pillbox_5" : {
+        "parameters" : {
+          "compact" : false,
+          "exploreLink" : false,
+          "fontSize" : 14,
+          "measureField" : "none",
+          "selectedTab" : {
+            "backgroundColor" : "#0070D2",
+            "borderColor" : "#C6D3E1",
+            "borderEdges" : [
+              "all"
+            ],
+            "borderWidth" : 1,
+            "textColor" : "#FFFFFF"
+          },
+          "showActionMenu" : false,
+          "step" : "Risk_Type_1",
+          "textColor" : "#335779"
+        },
+        "type" : "pillbox"
+      },
+      "listselector_1" : {
+        "parameters" : {
+          "compact" : false,
+          "displayMode" : "filter",
+          "exploreLink" : false,
+          "filterStyle" : {
+            "titleColor" : "#091A3E",
+            "valueColor" : "#16325C"
+          },
+          "instant" : true,
+          "measureField" : "none",
+          "showActionMenu" : false,
+          "step" : "Snapshot_DateTime_2",
+          "title" : "Freeze"
+        },
+        "type" : "listselector"
+      }
+    }
+  }
+}

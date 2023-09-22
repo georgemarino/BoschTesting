@@ -1,0 +1,968 @@
+{
+  "notificationLevel": "",
+  "workflowDefinition": {
+    "getEvent": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Description"},
+          {"name": "EndDateTime"},
+          {"name": "Subject"},
+          {"name": "StartDateTime"},
+          {"name": "WhatId"},
+          {"name": "WhoId"},
+          {"name": "OwnerId"},
+          {"name": "Id"}
+        ],
+        "object": "Event"
+      }
+    },
+    "joinUser2Invitee": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "getInvitee",
+        "left_key": ["RelationId"],
+        "right_select": ["Name"],
+        "right": "getUser",
+        "relationship": "User",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "computeKeepRisk": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "appendCurrent&AfterMeasureRiskMarkerWithCRL",
+        "mergeWithSource": true,
+        "computedFields": [{
+          "name": "keepRisk",
+          "saqlExpression": "case when 'Risk.Risk.Id' != \"\" then \"true\" end",
+          "label": "keepRisk",
+          "type": "Text"
+        }]
+      }
+    },
+    "filterAfterMeasureRiskmarker": {
+      "action": "filter",
+      "parameters": {
+        "source": "joinRisk2Riskmarker",
+        "saqlFilter": "UP2GO_2T__pkl_CurrentOrAfterMeasure__c == \"After Measure\""
+      }
+    },
+    "getRiskMarker": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "fcur_ExpectedMonetaryValue__c"},
+          {"name": "fnum_Color__c"},
+          {"name": "ftxt_EAXAlphabetical__c"},
+          {"name": "ftxt_EAYAlphabetical__c"},
+          {"name": "UP2GO_2T__mdr_Risk__c"},
+          {"name": "UP2GO_2T__pkl_CurrentOrAfterMeasure__c"}
+        ],
+        "object": "UP2GO_2T__Riskmarker__c"
+      }
+    },
+    "joinAssessment2C&C": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "joinChapter2Criterion",
+        "left_key": ["Chapter.UP2GO_2T__mdr_Assessment__c"],
+        "right_select": [
+          "Name",
+          "Id",
+          "ftxt_CurrentProjectGate__c",
+          "txl_Statement__c",
+          "UP2GO_2T__txt_Rating__c",
+          "UP2GO_2T__xid_ProjectId__c"
+        ],
+        "right": "getAssessment",
+        "relationship": "Assessment",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "joinUsertoMeasure": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "getMeasure",
+        "left_key": ["UP2GO_2T__lkp_AssignedTo__c"],
+        "right_select": ["Name"],
+        "right": "getRasicUser",
+        "relationship": "AssignedTo",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "joinMeasuretoLinker": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "filterPACC2",
+        "left_key": ["mdr_Measure__c"],
+        "right_select": [
+          "AssignedTo.Name",
+          "Name",
+          "UP2GO_2T__dat_DueDate__c",
+          "UP2GO_2T__lkp_AssignedTo__c",
+          "UP2GO_2T__txa_Description__c"
+        ],
+        "right": "joinUsertoMeasure",
+        "relationship": "Measure",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "getCPj": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "lkp_Assessment__c"},
+          {"name": "Name"}
+        ],
+        "object": "UP2GO_CPRM_BM__Project__c"
+      }
+    },
+    "filterInvitees": {
+      "action": "filter",
+      "parameters": {
+        "filter": "ADFR.KeepADFR:EQ:true",
+        "source": "joinADFR2Invitee"
+      }
+    },
+    "registerPACCRMFreeze": {
+      "action": "sfdcRegister",
+      "parameters": {
+        "name": "PACCRM: PACCRM Freeze",
+        "alias": "${App.Datasets.PACCRM_PACCRM_Freeze_tp.FullyQualifiedName}",
+        "source": "slicePACCRMFreeze"
+      }
+    },
+    "getMeasure": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "Name"},
+          {"name": "UP2GO_2T__txa_Description__c"},
+          {"name": "UP2GO_2T__dat_DueDate__c"},
+          {"name": "UP2GO_2T__lkp_AssignedTo__c"}
+        ],
+        "object": "UP2GO_2T__Measure__c"
+      }
+    },
+    "computeSnapshotDate": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "getADFR",
+        "mergeWithSource": true,
+        "computedFields": [{
+          "fiscalMonthOffset": 0,
+          "firstDayOfWeek": 1,
+          "name": "SnapshotDate",
+          "format": "dd.MM.yyyy HH:mm:ss",
+          "saqlExpression": "toDate(date_to_string(now(),\"dd.MM.yyyy HH\")+\":00:00\",\"dd.MM.yyyy HH:mm:ss\")",
+          "label": "Snapshot Date",
+          "type": "Date",
+          "isYearEndFiscalYear": true
+        }]
+      }
+    },
+    "appendNewInvitees2MeetingFreeze": {
+      "action": "append",
+      "parameters": {
+        "enableDisjointedSchemaMerge": true,
+        "sources": [
+          "extractMeetingFreeze",
+          "filterInvitees"
+        ]
+      }
+    },
+    "slicePACCRMFreeze": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "select",
+        "source": "appendNewPACCRMF2ExistingPACCRMF",
+        "fields": [
+          {"name": "Risk.Risk.UP2GO_2T__pkl_Type__c"},
+          {"name": "Risk.Risk.ftxt_RiskOrigin__c"},
+          {"name": "txt_RelevantGateOnCreation__c"},
+          {"name": "Risk.Risk.pkl_Category__c"},
+          {"name": "Risk.UP2GO_2T__pkl_CurrentOrAfterMeasure__c"},
+          {"name": "Risk.ftxt_EAYAlphabetical__c"},
+          {"name": "Risk.Risk.Name"},
+          {"name": "Risk.ftxt_EAXAlphabetical__c"},
+          {"name": "Risk.fcur_ExpectedMonetaryValue__c"},
+          {"name": "Risk.fnum_Color__c"},
+          {"name": "Risk.Risk.fcur_ExpectedMonetaryValueCurrent__c"},
+          {"name": "ADFR.SnapshotDate"},
+          {"name": "ADFR.Id"},
+          {"name": "Criterion.Assessment.Id"}
+        ]
+      }
+    },
+    "appendNewPACCF2ExistingPACCF": {
+      "action": "append",
+      "parameters": {
+        "enableDisjointedSchemaMerge": true,
+        "sources": [
+          "filterPACC",
+          "extractPACCF"
+        ]
+      }
+    },
+    "getCriterionMeasureLinker": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "mdr_Criterion__c"},
+          {"name": "mdr_Measure__c"}
+        ],
+        "object": "CriterionMeasureLinker__c"
+      }
+    },
+    "joinPACC2AssessmentRisk": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "filterCurrentAndAfterMeasureRiskMArker",
+        "left_key": ["UP2GO_2T__mdr_Criterion__c"],
+        "right_select": [
+          "Id",
+          "fdat_MeasureDueDate__c",
+          "AssignedTo.Id",
+          "Assessment.ftxt_CurrentProjectGate__c",
+          "Assessment.Id",
+          "rcnt_MeasuresNo__c"
+        ],
+        "right": "joinA&C&C2CPj",
+        "relationship": "Criterion",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "getRasicUser": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "UP2GO_2T__lkp_User__c"},
+          {"name": "Name"},
+          {"name": "Id"}
+        ],
+        "object": "UP2GO_2T__RasicUser__c"
+      }
+    },
+    "joinPACC2ADFR": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["mdr_Assessment__c"],
+        "left": "joinA&C&C2CPj",
+        "left_key": ["Assessment.Id"],
+        "right_select": [
+          "txt_AssessmentLevel__c",
+          "Id",
+          "SnapshotDate",
+          "SnapshotTextDate",
+          "KeepADFR",
+          "fdtm_FreezeWindowStartTime__c"
+        ],
+        "right": "filterADFR",
+        "relationship": "ADFR",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "filterCurrentAndAfterMeasureRiskMArker": {
+      "action": "filter",
+      "parameters": {
+        "filter": "keepRisk:EQ:true",
+        "source": "computeKeepRisk"
+      }
+    },
+    "filterPACCRM": {
+      "action": "filter",
+      "parameters": {
+        "filter": "ADFR.KeepADFR:EQ:true",
+        "source": "joinPACCRM2ADFR"
+      }
+    },
+    "slicePACCFreeze": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "select",
+        "source": "appendNewPACCF2ExistingPACCF",
+        "fields": [
+          {"name": "Id"},
+          {"name": "Name"},
+          {"name": "pkl_Relevance__c"},
+          {"name": "txl_Content__c"},
+          {"name": "txl_Description__c"},
+          {"name": "txl_Statement__c"},
+          {"name": "UP2GO_2T__pkl_Rating__c"},
+          {"name": "txt_Numbering__c"},
+          {"name": "fdat_MeasureDueDate__c"},
+          {"name": "ftxt_MeasureResponsible__c"},
+          {"name": "AssignedTo.Name"},
+          {"name": "Chapter.Name"},
+          {"name": "Chapter.UP2GO_2T__txa_Statement__c"},
+          {"name": "Chapter.UP2GO_2T__txt_Rating__c"},
+          {"name": "Assessment.Name"},
+          {"name": "Assessment.ftxt_CurrentProjectGate__c"},
+          {"name": "Assessment.txl_Statement__c"},
+          {"name": "Assessment.UP2GO_2T__txt_Rating__c"},
+          {"name": "Assessment.Id"},
+          {"name": "ADFR.fdtm_FreezeWindowStartTime__c"},
+          {"name": "ADFR.txt_AssessmentLevel__c"},
+          {"name": "ADFR.Id"},
+          {"name": "ADFR.SnapshotDate"},
+          {"name": "rcnt_MeasuresNo__c"}
+        ]
+      }
+    },
+    "getCriterion": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "UP2GO_2T__pkl_Status__c"},
+          {"name": "fchk_RelevantInStage__c"},
+          {"name": "Id"},
+          {"name": "Name"},
+          {"name": "pkl_Relevance__c"},
+          {"name": "txl_Content__c"},
+          {"name": "txl_Description__c"},
+          {"name": "txl_Statement__c"},
+          {"name": "UP2GO_2T__lkp_AssignedTo__c"},
+          {"name": "UP2GO_2T__lkp_Chapter__c"},
+          {"name": "UP2GO_2T__pkl_Rating__c"},
+          {"name": "txt_Numbering__c"},
+          {"name": "txt_RelevantQGCs__c"},
+          {"name": "fdat_MeasureDueDate__c"},
+          {"name": "ftxt_MeasureResponsible__c"},
+          {"name": "rcnt_MeasuresNo__c"}
+        ],
+        "object": "UP2GO_2T__Criterion__c"
+      }
+    },
+    "registerCriterionWithMeasure": {
+      "action": "sfdcRegister",
+      "parameters": {
+        "name": "Criterion With Measure",
+        "alias": "${App.Datasets.CriterionWithMeasure_tp.FullyQualifiedName}",
+        "source": "sliceFields"
+      }
+    },
+    "getCriterionWithMeasure": {
+      "action": "edgemart",
+      "parameters": {"alias": "${App.Datasets.CriterionWithMeasure_tp.FullyQualifiedName}"}
+    },
+    "extractPACCF": {
+      "action": "edgemart",
+      "parameters": {"alias": "${App.Datasets.PACCRM_PACC_Freeze_tp.FullyQualifiedName}"}
+    },
+    "getAssessment": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Name"},
+          {"name": "ftxt_CurrentProjectGate__c"},
+          {"name": "txl_Statement__c"},
+          {"name": "UP2GO_2T__txt_Rating__c"},
+          {"name": "Id"},
+          {"name": "UP2GO_2T__xid_ProjectId__c"}
+        ],
+        "object": "UP2GO_2T__Assessment__c"
+      }
+    },
+    "joinA&C&C2CPj": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["lkp_Assessment__c"],
+        "left": "joinAssessment2C&C",
+        "left_key": ["Assessment.Id"],
+        "right_select": [
+          "Id",
+          "Name"
+        ],
+        "right": "getCPj",
+        "relationship": "Project",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "getCRL": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "UP2GO_2T__mdr_Risk__c"},
+          {"name": "UP2GO_2T__mdr_Criterion__c"},
+          {"name": "txt_RelevantGateOnCreation__c"}
+        ],
+        "object": "UP2GO_2T__CriterionRiskLinker2__c"
+      }
+    },
+    "computeAdditionalFlags": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "computeSnapshotDate",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "SnapshotTextDate",
+            "saqlExpression": "toString(toDate('SnapshotDate_sec_epoch'),\"yyyy-MM-dd\")",
+            "label": "Snapshot Text Date",
+            "type": "Text"
+          },
+          {
+            "name": "KeepADFR",
+            "saqlExpression": "case when 'fdtm_FreezeWindowStartTime__c_sec_epoch' < 'SnapshotDate_sec_epoch' && 'SnapshotDate_sec_epoch' <= 'fdtm_FreezeWindowEndTime__c_sec_epoch' then \"true\" else \"false\" end",
+            "label": "Keep ADFR",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "joinParticpant2Invitee": {
+      "action": "augment",
+      "parameters": {
+        "right_key": [
+          "UP2GO_2T__txt_EventId__c",
+          "UP2GO_2T__lkp_User__c"
+        ],
+        "left": "joinAssessmentEvent2Invitees",
+        "left_key": [
+          "EventId",
+          "RelationId"
+        ],
+        "right_select": [
+          "User.Name",
+          "UP2GO_2T__lkp_User__c"
+        ],
+        "right": "joinUser2Participant",
+        "relationship": "Participant",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "filterPACC2": {
+      "action": "filter",
+      "parameters": {
+        "source": "joinCriteriontoLinker",
+        "saqlFilter": "('Criterion.ADFR.KeepADFR' == \"true\") && ('Criterion.fchk_RelevantInStage__c' == \"true\")"
+      }
+    },
+    "getRisk": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "UP2GO_2T__pkl_Type__c"},
+          {"name": "chk_ExternalEffects__c"},
+          {"name": "cur_MonetaryValueAfterMeasure__c"},
+          {"name": "cur_MonetaryValueCurrent__c"},
+          {"name": "fcur_ExpectedMonetaryValueCurrent__c"},
+          {"name": "ftxt_Significance__c"},
+          {"name": "Id"},
+          {"name": "lkp_Project__c"},
+          {"name": "pkl_Category__c"},
+          {"name": "txr_Cause__c"},
+          {"name": "txr_Note__c"},
+          {"name": "txt_Indicator__c"},
+          {"name": "txt_RiskEffects__c"},
+          {"name": "txt_RiskEvent__c"},
+          {"name": "txt_Threshold__c"},
+          {"name": "UP2GO_2T__pkl_ImpactCurrent__c"},
+          {"name": "UP2GO_2T__pkl_ProbabilityCurrent__c"},
+          {"name": "Name"},
+          {"name": "ftxt_RiskOrigin__c"}
+        ],
+        "object": "UP2GO_2T__Risk__c"
+      }
+    },
+    "filterADFR": {
+      "action": "filter",
+      "parameters": {
+        "filter": "KeepADFR:EQ:true",
+        "source": "computeAdditionalFlags"
+      }
+    },
+    "extractMeetingFreeze": {
+      "action": "edgemart",
+      "parameters": {"alias": "${App.Datasets.PACCRM_Meeting_Freeze_tp.FullyQualifiedName}"}
+    },
+    "joinCriteriontoLinker": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "getCriterionMeasureLinker",
+        "left_key": ["mdr_Criterion__c"],
+        "right_select": [
+          "ADFR.fdtm_FreezeWindowStartTime__c",
+          "ADFR.Id",
+          "ADFR.KeepADFR",
+          "ADFR.SnapshotDate",
+          "ADFR.SnapshotTextDate",
+          "ADFR.txt_AssessmentLevel__c",
+          "Assessment.ftxt_CurrentProjectGate__c",
+          "Assessment.Id",
+          "Assessment.Name",
+          "Assessment.txl_Statement__c",
+          "Assessment.UP2GO_2T__txt_Rating__c",
+          "Assessment.UP2GO_2T__xid_ProjectId__c",
+          "AssignedTo.Id",
+          "AssignedTo.Name",
+          "AssignedTo.UP2GO_2T__lkp_User__c",
+          "Chapter.Name",
+          "Chapter.UP2GO_2T__mdr_Assessment__c",
+          "Chapter.UP2GO_2T__txa_Statement__c",
+          "Chapter.UP2GO_2T__txt_Rating__c",
+          "fchk_RelevantInStage__c",
+          "fdat_MeasureDueDate__c",
+          "ftxt_MeasureResponsible__c",
+          "Name",
+          "Project.Id",
+          "pkl_Relevance__c",
+          "Project.Name",
+          "txl_Content__c",
+          "txl_Description__c",
+          "txl_Statement__c",
+          "txt_Numbering__c",
+          "txt_RelevantQGCs__c",
+          "UP2GO_2T__lkp_AssignedTo__c",
+          "UP2GO_2T__lkp_Chapter__c",
+          "UP2GO_2T__pkl_Rating__c",
+          "UP2GO_2T__pkl_Status__c"
+        ],
+        "right": "joinPACC2ADFR",
+        "relationship": "Criterion",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "getUser": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "Name"}
+        ],
+        "object": "User"
+      }
+    },
+    "appendNewRecords": {
+      "action": "append",
+      "parameters": {
+        "enableDisjointedSchemaMerge": true,
+        "sources": [
+          "joinMeasuretoLinker",
+          "getCriterionWithMeasure"
+        ]
+      }
+    },
+    "joinAssessmentEvent2Invitees": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "joinUser2Invitee",
+        "left_key": ["EventId"],
+        "right_select": [
+          "Assessment.Id",
+          "Description",
+          "EndDateTime",
+          "OwnerId",
+          "StartDateTime",
+          "Subject",
+          "WhatId",
+          "WhoId",
+          "Id",
+          "KeepEvent",
+          "Assessment.Name"
+        ],
+        "right": "filterAssessmentEvents",
+        "relationship": "Invitee",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "getChapter": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "UP2GO_2T__mdr_Assessment__c"},
+          {"name": "Name"},
+          {"name": "UP2GO_2T__txa_Statement__c"},
+          {"name": "UP2GO_2T__txt_Rating__c"}
+        ],
+        "object": "UP2GO_2T__Chapter__c"
+      }
+    },
+    "joinAssessment2Event": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "getEvent",
+        "left_key": ["WhatId"],
+        "right_select": [
+          "Id",
+          "Name"
+        ],
+        "right": "getAssessment",
+        "relationship": "Assessment",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "joinRisk2Riskmarker": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "getRiskMarker",
+        "left_key": ["UP2GO_2T__mdr_Risk__c"],
+        "right_select": [
+          "chk_ExternalEffects__c",
+          "cur_MonetaryValueAfterMeasure__c",
+          "cur_MonetaryValueCurrent__c",
+          "fcur_ExpectedMonetaryValueCurrent__c",
+          "ftxt_Significance__c",
+          "lkp_Project__c",
+          "Name",
+          "pkl_Category__c",
+          "txr_Cause__c",
+          "txr_Note__c",
+          "txt_Indicator__c",
+          "txt_RiskEffects__c",
+          "txt_RiskEvent__c",
+          "Id",
+          "txt_Threshold__c",
+          "UP2GO_2T__pkl_ImpactCurrent__c",
+          "UP2GO_2T__pkl_ProbabilityCurrent__c",
+          "UP2GO_2T__pkl_Type__c",
+          "ftxt_RiskOrigin__c"
+        ],
+        "right": "getRisk",
+        "relationship": "Risk",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "joinRasicUser2Criterion": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "getCriterion",
+        "left_key": ["UP2GO_2T__lkp_AssignedTo__c"],
+        "right_select": [
+          "Name",
+          "Id",
+          "UP2GO_2T__lkp_User__c"
+        ],
+        "right": "getRasicUser",
+        "relationship": "AssignedTo",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "joinCurrentRiskMarker2CRL": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Risk.Id"],
+        "left": "getCRL",
+        "left_key": ["UP2GO_2T__mdr_Risk__c"],
+        "right_select": [
+          "fcur_ExpectedMonetaryValue__c",
+          "fnum_Color__c",
+          "ftxt_EAXAlphabetical__c",
+          "ftxt_EAYAlphabetical__c",
+          "UP2GO_2T__pkl_CurrentOrAfterMeasure__c",
+          "Risk.UP2GO_2T__pkl_Type__c",
+          "Risk.chk_ExternalEffects__c",
+          "Risk.cur_MonetaryValueAfterMeasure__c",
+          "Risk.cur_MonetaryValueCurrent__c",
+          "Risk.fcur_ExpectedMonetaryValueCurrent__c",
+          "Risk.ftxt_Significance__c",
+          "Risk.Id",
+          "Risk.pkl_Category__c",
+          "Risk.txr_Cause__c",
+          "Risk.txr_Note__c",
+          "Risk.txt_Indicator__c",
+          "Risk.txt_RiskEffects__c",
+          "Risk.txt_RiskEvent__c",
+          "Risk.txt_Threshold__c",
+          "Risk.UP2GO_2T__pkl_ImpactCurrent__c",
+          "Risk.UP2GO_2T__pkl_ProbabilityCurrent__c",
+          "Risk.Name",
+          "Risk.ftxt_RiskOrigin__c"
+        ],
+        "right": "filterCurrentRiskmarker",
+        "relationship": "Risk",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "joinUser2Participant": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "getParticipant",
+        "left_key": ["UP2GO_2T__lkp_User__c"],
+        "right_select": ["Name"],
+        "right": "getUser",
+        "relationship": "User",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "filterPACC": {
+      "action": "filter",
+      "parameters": {
+        "source": "joinPACC2ADFR",
+        "saqlFilter": "('ADFR.KeepADFR' == \"true\") && ('fchk_RelevantInStage__c' == \"true\")"
+      }
+    },
+    "joinPACCRM2ADFR": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["mdr_Assessment__c"],
+        "left": "joinPACC2AssessmentRisk",
+        "left_key": ["Criterion.Assessment.Id"],
+        "right_select": [
+          "KeepADFR",
+          "SnapshotDate",
+          "SnapshotTextDate",
+          "txt_AssessmentLevel__c",
+          "Id"
+        ],
+        "right": "filterADFR",
+        "relationship": "ADFR",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "filterCurrentRiskmarker": {
+      "action": "filter",
+      "parameters": {
+        "source": "joinRisk2Riskmarker",
+        "saqlFilter": "UP2GO_2T__pkl_CurrentOrAfterMeasure__c == \"Current\""
+      }
+    },
+    "getInvitee": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "EventId"},
+          {"name": "Response"},
+          {"name": "RelationId"},
+          {"name": "IsInvitee"}
+        ],
+        "object": "EventRelation"
+      }
+    },
+    "getParticipant": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "UP2GO_2T__lkp_User__c"},
+          {"name": "UP2GO_2T__txt_EventId__c"}
+        ],
+        "object": "UP2GO_2T__Participant__c"
+      }
+    },
+    "computeEventFilterFlag": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "joinAssessment2Event",
+        "mergeWithSource": true,
+        "computedFields": [{
+          "name": "KeepEvent",
+          "saqlExpression": "case when 'Assessment.Id' != null then \"true\" else \"false\" end",
+          "label": "KeepEvent",
+          "type": "Text"
+        }]
+      }
+    },
+    "appendNewPACCRMF2ExistingPACCRMF": {
+      "action": "append",
+      "parameters": {
+        "enableDisjointedSchemaMerge": true,
+        "sources": [
+          "exctractPACCRMF",
+          "filterPACCRM"
+        ]
+      }
+    },
+    "joinADFR2Invitee": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["mdr_Assessment__c"],
+        "left": "joinParticpant2Invitee",
+        "left_key": ["Invitee.Assessment.Id"],
+        "right_select": [
+          "fdtm_FreezeWindowEndTime__c",
+          "fdtm_FreezeWindowStartTime__c",
+          "txt_AssessmentLevel__c",
+          "SnapshotDate",
+          "KeepADFR",
+          "Id"
+        ],
+        "right": "filterADFR",
+        "relationship": "ADFR",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "registerPAACFreeze": {
+      "action": "sfdcRegister",
+      "parameters": {
+        "rowLevelSecurityFilter": "",
+        "name": "PACCRM: PACC Freeze",
+        "alias": "${App.Datasets.PACCRM_PACC_Freeze_tp.FullyQualifiedName}",
+        "source": "slicePACCFreeze"
+      }
+    },
+    "sliceFields": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "select",
+        "source": "appendNewRecords",
+        "fields": [
+          {"name": "Criterion.ADFR.fdtm_FreezeWindowStartTime__c"},
+          {"name": "Criterion.ADFR.Id"},
+          {"name": "Criterion.ADFR.SnapshotDate"},
+          {"name": "Criterion.ADFR.txt_AssessmentLevel__c"},
+          {"name": "Criterion.Assessment.ftxt_CurrentProjectGate__c"},
+          {"name": "Criterion.Assessment.Id"},
+          {"name": "Criterion.Assessment.Name"},
+          {"name": "Criterion.AssignedTo.Name"},
+          {"name": "Criterion.Assessment.txl_Statement__c"},
+          {"name": "Criterion.Assessment.UP2GO_2T__txt_Rating__c"},
+          {"name": "Criterion.Chapter.Name"},
+          {"name": "Criterion.Chapter.UP2GO_2T__txa_Statement__c"},
+          {"name": "Criterion.Chapter.UP2GO_2T__txt_Rating__c"},
+          {"name": "Criterion.fdat_MeasureDueDate__c"},
+          {"name": "Criterion.ftxt_MeasureResponsible__c"},
+          {"name": "Criterion.Name"},
+          {"name": "Criterion.pkl_Relevance__c"},
+          {"name": "Criterion.txl_Content__c"},
+          {"name": "Criterion.txl_Description__c"},
+          {"name": "Criterion.txl_Statement__c"},
+          {"name": "Criterion.txt_Numbering__c"},
+          {"name": "Criterion.UP2GO_2T__pkl_Rating__c"},
+          {"name": "mdr_Criterion__c"},
+          {"name": "Measure.Name"},
+          {"name": "Measure.UP2GO_2T__dat_DueDate__c"},
+          {"name": "Measure.UP2GO_2T__txa_Description__c"},
+          {"name": "Measure.AssignedTo.Name"}
+        ]
+      }
+    },
+    "joinAfterMeasureRiskMarker2CRL": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Risk.Id"],
+        "left": "getCRL",
+        "left_key": ["UP2GO_2T__mdr_Risk__c"],
+        "right_select": [
+          "fcur_ExpectedMonetaryValue__c",
+          "fnum_Color__c",
+          "ftxt_EAXAlphabetical__c",
+          "ftxt_EAYAlphabetical__c",
+          "Risk.chk_ExternalEffects__c",
+          "Risk.cur_MonetaryValueAfterMeasure__c",
+          "Risk.cur_MonetaryValueCurrent__c",
+          "Risk.fcur_ExpectedMonetaryValueCurrent__c",
+          "Risk.ftxt_Significance__c",
+          "Risk.Id",
+          "Risk.Name",
+          "Risk.pkl_Category__c",
+          "Risk.txr_Cause__c",
+          "Risk.txr_Note__c",
+          "Risk.txt_Indicator__c",
+          "Risk.txt_RiskEffects__c",
+          "Risk.txt_RiskEvent__c",
+          "Risk.txt_Threshold__c",
+          "Risk.UP2GO_2T__pkl_ImpactCurrent__c",
+          "Risk.UP2GO_2T__pkl_ProbabilityCurrent__c",
+          "Risk.UP2GO_2T__pkl_Type__c",
+          "UP2GO_2T__pkl_CurrentOrAfterMeasure__c",
+          "Risk.ftxt_RiskOrigin__c"
+        ],
+        "right": "filterAfterMeasureRiskmarker",
+        "relationship": "Risk",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "getADFR": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "fdtm_FreezeWindowEndTime__c"},
+          {"name": "fdtm_FreezeWindowStartTime__c"},
+          {"name": "mdr_Assessment__c"},
+          {"name": "txt_AssessmentLevel__c"},
+          {"name": "Id"}
+        ],
+        "object": "AssessmentDataFreezeRequest__c"
+      }
+    },
+    "registerMeetingPACCRMFreeze": {
+      "action": "sfdcRegister",
+      "parameters": {
+        "name": "PACCRM: Meeting Freeze",
+        "alias": "${App.Datasets.PACCRM_Meeting_Freeze_tp.FullyQualifiedName}",
+        "source": "sliceMeetingFreeze"
+      }
+    },
+    "joinChapter2Criterion": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "joinRasicUser2Criterion",
+        "left_key": ["UP2GO_2T__lkp_Chapter__c"],
+        "right_select": [
+          "Name",
+          "UP2GO_2T__mdr_Assessment__c",
+          "UP2GO_2T__txa_Statement__c",
+          "UP2GO_2T__txt_Rating__c"
+        ],
+        "right": "getChapter",
+        "relationship": "Chapter",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "filterAssessmentEvents": {
+      "action": "filter",
+      "parameters": {
+        "source": "computeEventFilterFlag",
+        "saqlFilter": "'Assessment.Id' != null"
+      }
+    },
+    "appendCurrent&AfterMeasureRiskMarkerWithCRL": {
+      "action": "append",
+      "parameters": {
+        "enableDisjointedSchemaMerge": true,
+        "sources": [
+          "joinAfterMeasureRiskMarker2CRL",
+          "joinCurrentRiskMarker2CRL"
+        ]
+      }
+    },
+    "exctractPACCRMF": {
+      "action": "edgemart",
+      "parameters": {"alias": "${App.Datasets.PACCRM_PACCRM_Freeze_tp.FullyQualifiedName}"}
+    },
+    "sliceMeetingFreeze": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "select",
+        "source": "appendNewInvitees2MeetingFreeze",
+        "fields": [
+          {"name": "IsInvitee"},
+          {"name": "User.Name"},
+          {"name": "Invitee.Subject"},
+          {"name": "Participant.User.Name"},
+          {"name": "ADFR.SnapshotDate"},
+          {"name": "Invitee.StartDateTime"},
+          {"name": "ADFR.Id"},
+          {"name": "Invitee.Assessment.Id"}
+        ]
+      }
+    }
+  },
+  "_type": "dataflow",
+  "description": "PACCRM: CPj QG & Risk Assessment (freezes)",
+  "MasterLabel": "PACCRM: CPj QG & Risk Assessment (freezes)",
+  "nextRun": "",
+  "WorkflowStatus": "Inactive",
+  "isDeletable": true,
+  "longRunningAlertInMins": "",
+  "DataflowType": "USER",
+  "name": "PACCRM_CPj_QG_Risk_Assessment_freezes",
+  "_url": "/insights/internal_api/v1.0/esObject/workflow//json",
+  "_uid": ""
+}

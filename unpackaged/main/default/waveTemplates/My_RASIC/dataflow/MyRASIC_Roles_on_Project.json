@@ -1,0 +1,314 @@
+{
+  "notificationLevel": "",
+  "workflowDefinition": {
+    "getDecision": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "Name"}
+        ],
+        "object": "UP2GO_2T__Decision2__c"
+      }
+    },
+    "joinCPjMembers2Stage": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "filterCPjMembers",
+        "left_key": ["PRJ.UP2GO_CPRM_BM__lkp_CurrentStage__c"],
+        "right_select": [
+          "Id",
+          "Name",
+          "UP2GO_CPRM_BM__lkp_Gate__c"
+        ],
+        "right": "getCPjStage",
+        "relationship": "Stage",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "appendProjectMembers": {
+      "action": "append",
+      "parameters": {
+        "enableDisjointedSchemaMerge": true,
+        "sources": [
+          "joinDecision2CPjStage",
+          "joinDecisiontoSPJStage"
+        ]
+      }
+    },
+    "joinSPJMembers2SPJStage": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "filterSPJMembers",
+        "left_key": ["PRJ.UP2GO_CPRM_BM__lkp_CurrentStage2__c"],
+        "right_select": [
+          "ftxt_Gate__c",
+          "Id",
+          "Name",
+          "UP2GO_CPRM_BM__lkp_Gate__c"
+        ],
+        "right": "getSPJStage",
+        "relationship": "Stage",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "joinDecision2CPjStage": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "joinCPjMembers2Stage",
+        "left_key": ["Stage.UP2GO_CPRM_BM__lkp_Gate__c"],
+        "right_select": [
+          "Id",
+          "Name"
+        ],
+        "right": "getDecision",
+        "relationship": "Gate",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "joinCPj2Member": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "joinRASICUser2Delegate",
+        "left_key": ["UP2GO_2T__txt_ParentId__c"],
+        "right_select": [
+          "Id",
+          "Name",
+          "UP2GO_CPRM_BM__lkp_CurrentStage__c"
+        ],
+        "right": "getCPj",
+        "relationship": "PRJ",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "getSPJStage": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "ftxt_Gate__c"},
+          {"name": "Name"},
+          {"name": "UP2GO_CPRM_BM__lkp_Gate__c"}
+        ],
+        "object": "UP2GO_CPRM_BM__SalesProjectStage2__c"
+      }
+    },
+    "joinSPJ2Member": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "joinRASICUser2Delegate",
+        "left_key": ["UP2GO_2T__txt_ParentId__c"],
+        "right_select": [
+          "Id",
+          "Name",
+          "Status",
+          "UP2GO_CPRM_BM__lkp_CurrentStage2__c"
+        ],
+        "right": "cpxSPJStatus",
+        "relationship": "PRJ",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "joinDecisiontoSPJStage": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "joinSPJMembers2SPJStage",
+        "left_key": ["Stage.UP2GO_CPRM_BM__lkp_Gate__c"],
+        "right_select": [
+          "Id",
+          "Name"
+        ],
+        "right": "getDecision",
+        "relationship": "Gate",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "cpxSPJStatus": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "getSPJ",
+        "mergeWithSource": true,
+        "computedFields": [{
+          "name": "Status",
+          "saqlExpression": "'pkl_Status__c'",
+          "label": "Status",
+          "type": "Text"
+        }]
+      }
+    },
+    "getMember": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "UP2GO_2T__pkl_RasicRole__c"},
+          {"name": "UP2GO_2T__txt_ParentId__c"},
+          {"name": "UP2GO_2T__ftxt_UserOrQueueId__c"},
+          {"name": "UP2GO_2T__lkp_Delegate__c"},
+          {"name": "UP2GO_2T__pkl_Status__c"}
+        ],
+        "object": "UP2GO_2T__Member__c"
+      }
+    },
+    "cpxCPjType": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "joinCPj2Member",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "ProjectType",
+            "saqlExpression": "case when 'PRJ.Id' is not null then \"CPj\" else \"\" end",
+            "label": "Project Type",
+            "type": "Text"
+          },
+          {
+            "name": "IsRemoved",
+            "saqlExpression": "case 'UP2GO_2T__pkl_Status__c' when \"Removed\" then \"Yes\" else \"No\" end",
+            "label": "IsRemoved",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "filterUserMembers": {
+      "action": "filter",
+      "parameters": {
+        "source": "getMember",
+        "saqlFilter": "UP2GO_2T__pkl_RasicRole__c != \"Access Only\""
+      }
+    },
+    "filterCPjMembers": {
+      "action": "filter",
+      "parameters": {
+        "source": "cpxCPjType",
+        "saqlFilter": "ProjectType is not null"
+      }
+    },
+    "filterSPJMembers": {
+      "action": "filter",
+      "parameters": {
+        "source": "cpxSPJType",
+        "saqlFilter": "ProjectType is not null"
+      }
+    },
+    "getCPj": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Name"},
+          {"name": "Id"},
+          {"name": "UP2GO_CPRM_BM__lkp_CurrentStage__c"}
+        ],
+        "object": "UP2GO_CPRM_BM__Project__c"
+      }
+    },
+    "joinRASICUser2Delegate": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "filterUserMembers",
+        "left_key": ["UP2GO_2T__lkp_Delegate__c"],
+        "right_select": [
+          "Id",
+          "Name"
+        ],
+        "right": "getRASICUser",
+        "relationship": "Delegate",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "getRASICUser": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "Name"}
+        ],
+        "object": "UP2GO_2T__RasicUser__c"
+      }
+    },
+    "cpxRASICOrder": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "appendProjectMembers",
+        "mergeWithSource": true,
+        "computedFields": [{
+          "name": "RasicOrder",
+          "saqlExpression": "case when 'UP2GO_2T__pkl_RasicRole__c' in [\"R (Responsible)\"] then \"A\"\nwhen 'UP2GO_2T__pkl_RasicRole__c' in [\"A (Accountable)\"] then \"B\"\nwhen 'UP2GO_2T__pkl_RasicRole__c' in [\"S (Supporter)\"] then \"C\" when 'UP2GO_2T__pkl_RasicRole__c' in [\"I (Informed)\"] then \"D\" when 'UP2GO_2T__pkl_RasicRole__c' in [\"C (Consultant)\"] then \"E\"  else \"Z\" end",
+          "label": "Rasic Order",
+          "type": "Text"
+        }]
+      }
+    },
+    "cpxSPJType": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "joinSPJ2Member",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "ProjectType",
+            "saqlExpression": "case when 'PRJ.Id' is not null then \"SPJ\" else \"\" end",
+            "label": "Project Type",
+            "type": "Text"
+          },
+          {
+            "name": "IsRemoved",
+            "saqlExpression": "case 'UP2GO_2T__pkl_Status__c' when \"Removed\" then \"Yes\" else \"No\" end",
+            "label": "IsRemoved",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "regMyRASICMemberswithProject": {
+      "action": "sfdcRegister",
+      "parameters": {
+        "rowLevelSecurityFilter": "'UP2GO_2T__ftxt_UserOrQueueId__c' == \"$User.Id\"",
+        "name": "MyRASIC: Members with Project",
+        "alias": "${App.Datasets.MyRASICMemberswithProject_tp.FullyQualifiedName}",
+        "source": "cpxRASICOrder"
+      }
+    },
+    "getCPjStage": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "Name"},
+          {"name": "UP2GO_CPRM_BM__lkp_Gate__c"}
+        ],
+        "object": "UP2GO_CPRM_BM__ProjectStage__c"
+      }
+    },
+    "getSPJ": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Name"},
+          {"name": "UP2GO_CPRM_BM__lkp_CurrentStage2__c"},
+          {"name": "Id"},
+          {"name": "pkl_Status__c"}
+        ],
+        "object": "UP2GO_CPRM_BM__SalesProject__c"
+      }
+    }
+  },
+  "_type": "dataflow",
+  "description": "MyRASIC: Roles on Project",
+  "MasterLabel": "MyRASIC: Roles on Project",
+  "nextRun": "",
+  "WorkflowStatus": "Inactive",
+  "isDeletable": true,
+  "longRunningAlertInMins": "",
+  "DataflowType": "USER",
+  "name": "MyRASIC_Roles_on_Project",
+  "_url": "/insights/internal_api/v1.0/esObject/workflow//json",
+  "_uid": ""
+}

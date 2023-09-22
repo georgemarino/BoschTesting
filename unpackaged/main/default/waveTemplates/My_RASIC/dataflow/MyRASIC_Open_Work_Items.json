@@ -1,0 +1,616 @@
+{
+  "notificationLevel": "",
+  "workflowDefinition": {
+    "getEvent": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "IsDeleted"},
+          {"name": "Subject"},
+          {"name": "WhatId"},
+          {"name": "ActivityDate"},
+          {"name": "OwnerId"}
+        ],
+        "object": "Event"
+      }
+    },
+    "filterEvent": {
+      "action": "filter",
+      "parameters": {
+        "filter": "IsDeleted:EQ:false",
+        "source": "getEvent"
+      }
+    },
+    "filterAssessmentEvent": {
+      "action": "filter",
+      "parameters": {
+        "filter": "Origin:EQ:CPj",
+        "source": "cpxEventFilter"
+      }
+    },
+    "joinSPj2Task": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "getTask",
+        "left_key": ["WhatId"],
+        "right_select": [
+          "Name",
+          "UP2GO_CPRM_BM__chk_Archived__c",
+          "Id"
+        ],
+        "right": "getSPj",
+        "relationship": "Prj",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "cpxSPj2TaskFields": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "joinSPj2Task",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "Origin",
+            "saqlExpression": "case when 'Prj.Id' is not null then \"APj\" end",
+            "label": "Origin",
+            "type": "Text"
+          },
+          {
+            "name": "ArchivedProject",
+            "saqlExpression": "'Prj.UP2GO_CPRM_BM__chk_Archived__c'",
+            "label": "Archived Project",
+            "type": "Text"
+          },
+          {
+            "saqlExpression": "case when 'ActivityDate'  is not null then 'ActivityDate' else \"none\" end",
+            "name": "DueDate",
+            "label": "Due Date",
+            "type": "Text"
+          },
+          {
+            "name": "Type",
+            "saqlExpression": "\"Task\"",
+            "label": "Type",
+            "type": "Text"
+          },
+          {
+            "name": "BelongsTo",
+            "saqlExpression": "'OwnerId'",
+            "label": "Belongs To",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "getCPj": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "lkp_Assessment__c"},
+          {"name": "Name"}
+        ],
+        "object": "UP2GO_CPRM_BM__Project__c"
+      }
+    },
+    "joinCPJ2Measure": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "joinUser2Measure",
+        "left_key": ["UP2GO_2T__fid_ProjectId__c"],
+        "right_select": [
+          "Id",
+          "lkp_Assessment__c",
+          "Name"
+        ],
+        "right": "getCPj",
+        "relationship": "Prj",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "getRASICUser": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Name"},
+          {"name": "Id"},
+          {"name": "UP2GO_2T__lkp_User__c"}
+        ],
+        "object": "UP2GO_2T__RasicUser__c"
+      }
+    },
+    "cpxAdditionalFields": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "appendPrj",
+        "mergeWithSource": true,
+        "computedFields": [{
+          "precision": 10,
+          "name": "PastFuture",
+          "saqlExpression": "case when 'DueDate' == \"none\" then \"none\" when date_diff(\"day\", now(), toDate('DueDate', \"yyyy-MM-dd\")) < 0 then \"Past\" else \"Future\" end",
+          "label": "PastFuture",
+          "type": "Text"
+        }]
+      }
+    },
+    "joinCPJ2Criterion": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "joinGate2Criterion",
+        "left_key": ["UP2GO_2T__fid_ProjectId__c"],
+        "right_select": [
+          "Id",
+          "lkp_Assessment__c",
+          "Name"
+        ],
+        "right": "getCPj",
+        "relationship": "Prj",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "sliceWorkItems": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "select",
+        "source": "cpxAdditionalFields",
+        "fields": [
+          {"name": "Id"},
+          {"name": "Status"},
+          {"name": "Subject"},
+          {"name": "Prj.Name"},
+          {"name": "Prj.Id"},
+          {"name": "Origin"},
+          {"name": "DueDate"},
+          {"name": "Type"},
+          {"name": "BelongsTo"},
+          {"name": "pkl_Status__c"},
+          {"name": "PastFuture"}
+        ]
+      }
+    },
+    "joinAssessment2Criterion": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "filterAssignedCriterion",
+        "left_key": ["UP2GO_2T__mdr_Assessment__c"],
+        "right_select": [
+          "Name",
+          "OwnerId",
+          "Id",
+          "UP2GO_2T__xid_ProjectId__c"
+        ],
+        "right": "getAssessment",
+        "relationship": "Assessment",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "sliceCriterions": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "drop",
+        "source": "filterCPJCriterions",
+        "fields": [
+          {"name": "Gate.Id"},
+          {"name": "Gate.fdat_DueDate__c"},
+          {"name": "Gate.UP2GO_2T__dat_DueDate__c"}
+        ]
+      }
+    },
+    "cpxEventFilter": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "joinAssessment2EventRelation",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "Origin",
+            "saqlExpression": "case when 'Assessment.UP2GO_2T__xid_ProjectId__c' is not null then \"CPj\" end",
+            "label": "Origin",
+            "type": "Text"
+          },
+          {
+            "name": "DueDate",
+            "saqlExpression": "'ActivityDate'",
+            "label": "DueDate",
+            "type": "Text"
+          },
+          {
+            "name": "Type",
+            "saqlExpression": "\"Meeting\"",
+            "label": "Type",
+            "type": "Text"
+          },
+          {
+            "name": "BelongsTo",
+            "saqlExpression": "'OwnerId'",
+            "label": "Belongs To",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "filterCPjTasks": {
+      "action": "filter",
+      "parameters": {
+        "source": "cpxCPjFields",
+        "saqlFilter": "'Origin' == \"CPj\""
+      }
+    },
+    "filterAssignedMeasures": {
+      "action": "filter",
+      "parameters": {
+        "source": "getMeasures",
+        "saqlFilter": "'UP2GO_2T__lkp_AssignedTo__c' is not null"
+      }
+    },
+    "filterSPjTasks": {
+      "action": "filter",
+      "parameters": {
+        "source": "cpxSPj2TaskFields",
+        "saqlFilter": "'Origin' == \"APj\" && 'ArchivedProject' == \"false\" "
+      }
+    },
+    "joinGate2Criterion": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "joinAssessment2Criterion",
+        "left_key": ["ftxt_CurrentProjectGateId__c"],
+        "right_select": [
+          "fdat_DueDate__c",
+          "Id",
+          "UP2GO_2T__dat_DueDate__c"
+        ],
+        "right": "getGates",
+        "relationship": "Gate",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "joinAssessment2Measure": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "filterAssignedMeasures",
+        "left_key": ["UP2GO_2T__mdr_Assessment__c"],
+        "right_select": [
+          "OwnerId",
+          "Name",
+          "Id",
+          "UP2GO_2T__xid_ProjectId__c"
+        ],
+        "right": "getAssessment",
+        "relationship": "Assessment",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "getSPj": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Name"},
+          {"name": "Id"},
+          {"name": "UP2GO_CPRM_BM__chk_Archived__c"}
+        ],
+        "object": "UP2GO_CPRM_BM__SalesProject__c"
+      }
+    },
+    "cpxCPjFields": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "joinCPj2Task",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "saqlExpression": "case when 'Prj.Id' is not null then \"CPj\" end",
+            "name": "Origin",
+            "label": "Origin",
+            "type": "Text"
+          },
+          {
+            "name": "DueDate",
+            "saqlExpression": "case when 'ActivityDate'  is not null then 'ActivityDate' else \"none\" end",
+            "label": "Due Date",
+            "type": "Text"
+          },
+          {
+            "saqlExpression": "'OwnerId'",
+            "name": "BelongsTo",
+            "label": "Belongs To",
+            "type": "Text"
+          },
+          {
+            "name": "Type",
+            "saqlExpression": "\"Task\"",
+            "label": "Type",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "getCriterion": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "UP2GO_2T__fid_ProjectId__c"},
+          {"name": "ftxt_CurrentProjectGateId__c"},
+          {"name": "Name"},
+          {"name": "UP2GO_2T__pkl_Status__c"},
+          {"name": "UP2GO_2T__ftxt_AssignedToUser__c"},
+          {"name": "UP2GO_2T__mdr_Assessment__c"}
+        ],
+        "object": "UP2GO_2T__Criterion__c"
+      }
+    },
+    "getGates": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "fdat_DueDate__c"},
+          {"name": "UP2GO_2T__dat_DueDate__c"}
+        ],
+        "object": "UP2GO_2T__Decision2__c"
+      }
+    },
+    "regWorkItems": {
+      "action": "sfdcRegister",
+      "parameters": {
+        "rowLevelSecurityFilter": "'BelongsTo' == \"$User.Id\"",
+        "name": "My RASIC: Work Items",
+        "alias": "${App.Datasets.MyRASICWorkItems_tp.FullyQualifiedName}",
+        "source": "sliceWorkItems"
+      }
+    },
+    "sliceMeasures": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "drop",
+        "source": "filterCPJMeasures",
+        "fields": [
+          {"name": "User.Name"},
+          {"name": "User.UP2GO_2T__lkp_User__c"}
+        ]
+      }
+    },
+    "getMeasures": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "UP2GO_2T__fid_ProjectId__c"},
+          {"name": "Name"},
+          {"name": "pkl_Status__c"},
+          {"name": "UP2GO_2T__dat_DueDate__c"},
+          {"name": "UP2GO_2T__lkp_AssignedTo__c"},
+          {"name": "UP2GO_2T__mdr_Assessment__c"}
+        ],
+        "object": "UP2GO_2T__Measure__c"
+      }
+    },
+    "cpxCPJ2MeasureFields": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "joinCPJ2Measure",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "Origin",
+            "saqlExpression": "case when 'Prj.Id' is not null then \"CPj\" end",
+            "label": "Origin",
+            "type": "Text"
+          },
+          {
+            "name": "Subject",
+            "saqlExpression": "'Name'",
+            "label": "Subject",
+            "type": "Text"
+          },
+          {
+            "name": "Status",
+            "saqlExpression": "'pkl_Status__c'\n",
+            "label": "Status",
+            "type": "Text"
+          },
+          {
+            "name": "DueDate",
+            "saqlExpression": "case when 'UP2GO_2T__dat_DueDate__c'  is not null then date_to_string(toDate(UP2GO_2T__dat_DueDate__c, \"yyyy-MM-ddTHH:mm:ss.000Z\"), \"yyyy-MM-dd\") else \"none\" end",
+            "label": "Due Date",
+            "type": "Text"
+          },
+          {
+            "name": "Type",
+            "saqlExpression": "\"Measure\"",
+            "label": "Type",
+            "type": "Text"
+          },
+          {
+            "name": "BelongsTo",
+            "saqlExpression": "'User.UP2GO_2T__lkp_User__c'",
+            "label": "Belongs To",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "getAssessment": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "OwnerId"},
+          {"name": "Name"},
+          {"name": "UP2GO_2T__xid_ProjectId__c"}
+        ],
+        "object": "UP2GO_2T__Assessment__c"
+      }
+    },
+    "filterCPJMeasures": {
+      "action": "filter",
+      "parameters": {
+        "source": "cpxCPJ2MeasureFields",
+        "saqlFilter": "'Origin' == \"CPj\""
+      }
+    },
+    "joinCPj2Task": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "getTask",
+        "left_key": ["WhatId"],
+        "right_select": [
+          "lkp_Assessment__c",
+          "Id",
+          "Name"
+        ],
+        "right": "getCPj",
+        "relationship": "Prj",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "appendPrj": {
+      "action": "append",
+      "parameters": {
+        "enableDisjointedSchemaMerge": true,
+        "sources": [
+          "filterSPjTasks",
+          "filterCPjTasks",
+          "sliceMeasures",
+          "sliceCriterions",
+          "joinCPj2Event"
+        ]
+      }
+    },
+    "joinCPj2Event": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "filterAssessmentEvent",
+        "left_key": ["Assessment.UP2GO_2T__xid_ProjectId__c"],
+        "right_select": [
+          "Id",
+          "Name"
+        ],
+        "right": "getCPj",
+        "relationship": "Prj",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "cpxCPJ2CriterionFields": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "joinCPJ2Criterion",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "Origin",
+            "saqlExpression": "case when 'Prj.Id' is not null then \"CPj\" end",
+            "label": "Origin",
+            "type": "Text"
+          },
+          {
+            "name": "Subject",
+            "saqlExpression": "'Name'",
+            "label": "Subject",
+            "type": "Text"
+          },
+          {
+            "saqlExpression": "case when 'Gate.UP2GO_2T__dat_DueDate__c'  is not null then 'Gate.UP2GO_2T__dat_DueDate__c' else \"none\" end",
+            "name": "DueDate",
+            "label": "Due Date",
+            "type": "Text"
+          },
+          {
+            "name": "Type",
+            "saqlExpression": "\"Criterion\"",
+            "label": "Type",
+            "type": "Text"
+          },
+          {
+            "name": "Status",
+            "saqlExpression": "'UP2GO_2T__pkl_Status__c'",
+            "label": "Status",
+            "type": "Text"
+          },
+          {
+            "saqlExpression": "'UP2GO_2T__ftxt_AssignedToUser__c'",
+            "name": "BelongsTo",
+            "label": "Belongs To",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "joinAssessment2EventRelation": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "filterEvent",
+        "left_key": ["WhatId"],
+        "right_select": ["UP2GO_2T__xid_ProjectId__c"],
+        "right": "getAssessment",
+        "relationship": "Assessment",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "joinUser2Measure": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "joinAssessment2Measure",
+        "left_key": ["UP2GO_2T__lkp_AssignedTo__c"],
+        "right_select": [
+          "UP2GO_2T__lkp_User__c",
+          "Name"
+        ],
+        "right": "getRASICUser",
+        "relationship": "User",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "filterCPJCriterions": {
+      "action": "filter",
+      "parameters": {
+        "source": "cpxCPJ2CriterionFields",
+        "saqlFilter": "'Origin' == \"CPj\" && 'Status' != \"Closed\" && 'UP2GO_2T__ftxt_AssignedToUser__c' is not null"
+      }
+    },
+    "getTask": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "OwnerId"},
+          {"name": "Status"},
+          {"name": "Subject"},
+          {"name": "WhatId"},
+          {"name": "ActivityDate"}
+        ],
+        "object": "Task"
+      }
+    },
+    "filterAssignedCriterion": {
+      "action": "filter",
+      "parameters": {
+        "source": "getCriterion",
+        "saqlFilter": "'UP2GO_2T__ftxt_AssignedToUser__c' is not null"
+      }
+    }
+  },
+  "_type": "dataflow",
+  "description": "MyRASIC: Open Work Items",
+  "MasterLabel": "MyRASIC: Open Work Items",
+  "nextRun": "",
+  "WorkflowStatus": "Inactive",
+  "isDeletable": true,
+  "longRunningAlertInMins": "",
+  "DataflowType": "USER",
+  "name": "MyRASIC_Open_Work_Items",
+  "_url": "/insights/internal_api/v1.0/esObject/workflow//json",
+  "_uid": ""
+}

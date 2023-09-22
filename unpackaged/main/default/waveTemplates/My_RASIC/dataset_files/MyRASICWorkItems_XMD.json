@@ -1,0 +1,37 @@
+{
+  "dates": [],
+  "derivedDimensions": [],
+  "derivedMeasures": [],
+  "dimensions": [
+    {
+      "conditionalFormatting": {},
+      "customActions": [],
+      "field": "Prj.Name",
+      "label": "Project",
+      "linkTemplateEnabled": true,
+      "members": [],
+      "recordDisplayFields": [
+        "Prj.Name"
+      ],
+      "recordIdField": "Prj.Id",
+      "salesforceActions": [],
+      "salesforceActionsEnabled": false
+    },
+    {
+      "conditionalFormatting": {},
+      "customActions": [],
+      "field": "Subject",
+      "linkTemplateEnabled": true,
+      "members": [],
+      "recordDisplayFields": [
+        "Prj.Name"
+      ],
+      "recordIdField": "Id",
+      "salesforceActions": [],
+      "salesforceActionsEnabled": false
+    }
+  ],
+  "measures": [],
+  "organizations": [],
+  "showDetailsDefaultFields": []
+}

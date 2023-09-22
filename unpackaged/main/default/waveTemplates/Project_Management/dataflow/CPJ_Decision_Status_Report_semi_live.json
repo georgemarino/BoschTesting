@@ -1,0 +1,15 @@
+{
+  "notificationLevel": "",
+  "workflowDefinition": {},
+  "_type": "dataflow",
+  "description": "CPJ Decision Status Report (semi-live)",
+  "MasterLabel": "CPJ Decision Status Report (semi-live)",
+  "nextRun": "",
+  "WorkflowStatus": "Inactive",
+  "isDeletable": true,
+  "longRunningAlertInMins": "",
+  "DataflowType": "USER",
+  "name": "CPJ_Decision_Status_Report_semi_live",
+  "_url": "/insights/internal_api/v1.0/esObject/workflow//json",
+  "_uid": ""
+}

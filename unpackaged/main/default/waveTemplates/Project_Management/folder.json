@@ -1,0 +1,10 @@
+{
+  "name" : "Project_Management",
+  "label" : "Project Management",
+  "shares" : [
+    {
+      "accessType" : "View",
+      "shareType" : "Organization"
+    }
+  ]
+}

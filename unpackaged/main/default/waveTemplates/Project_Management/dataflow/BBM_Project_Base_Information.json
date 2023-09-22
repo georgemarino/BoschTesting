@@ -1,0 +1,15 @@
+{
+  "notificationLevel": "",
+  "workflowDefinition": {},
+  "_type": "dataflow",
+  "description": "BBM Project Base Information",
+  "MasterLabel": "BBM Project Base Information",
+  "nextRun": "",
+  "WorkflowStatus": "Inactive",
+  "isDeletable": true,
+  "longRunningAlertInMins": "",
+  "DataflowType": "USER",
+  "name": "BBM_Project_Base_Information",
+  "_url": "/insights/internal_api/v1.0/esObject/workflow//json",
+  "_uid": ""
+}

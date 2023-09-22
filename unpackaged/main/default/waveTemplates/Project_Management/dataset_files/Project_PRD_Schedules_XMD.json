@@ -1,0 +1,31 @@
+{
+    "dates": [],
+    "derivedDimensions": [{
+        "conditionalFormatting": {},
+        "customActions": [],
+        "field": "Source",
+        "members": [{
+            "label": "ProdS",
+            "member": "Service"
+        }, {
+            "label": "TechS",
+            "member": "SaaS"
+        }],
+        "recordDisplayFields": [],
+        "salesforceActions": [],
+        "showInExplorer": true
+    }],
+    "derivedMeasures": [{
+        "conditionalFormatting": {},
+        "field": "EBIT (%)",
+        "format": {
+            "customFormat": "[\"#,###.#%\",100]",
+            "delimiters": {}
+        },
+        "showInExplorer": true
+    }],
+    "dimensions": [],
+    "measures": [],
+    "organizations": [],
+    "showDetailsDefaultFields": []
+}

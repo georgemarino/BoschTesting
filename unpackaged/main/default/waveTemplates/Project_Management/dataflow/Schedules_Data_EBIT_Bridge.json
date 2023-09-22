@@ -1,0 +1,2709 @@
+{
+  "notificationLevel": "",
+  "workflowDefinition": {
+    "getConfigSnapshot": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "flnk_SNP_APJ__c"},
+          {"name": "Id"},
+          {"name": "fckb_IsActiveSnapshot__c"},
+          {"name": "CreatedDate"},
+          {"name": "UP2GO_CPRM_BM__lkp_Gate__c"},
+          {"name": "UP2GO_CPRM_BM__mdr_Configuration__c"},
+          {"name": "fpct_TotalEBITSOPPlus4__c"},
+          {"name": "num_TotalEBITSOPPlus4EUR__c"},
+          {"name": "num_TotalSalesSOPPlus4EUR__c"}
+        ],
+        "object": "UP2GO_CPRM_BM__ConfigurationSnapshot__c"
+      }
+    },
+    "GetSPJPRDschedules": {
+      "action": "edgemart",
+      "parameters": {"alias": "${Variables.SPJDSRProductSchedules.datasetAlias}"}
+    },
+    "updateDivFromSnap": {
+      "action": "update",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "augRecentDecision",
+        "left_key": ["Id"],
+        "update_columns": {"CPj.pkl_BBMDivision__c": "ftxt_Division__c"},
+        "right": "getConfigSnapshotRow"
+      }
+    },
+    "cpxSPJToolings": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "GetSPJToolings",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "ScheduleType",
+            "saqlExpression": "\"Toolings\"",
+            "label": "ScheduleType",
+            "type": "Text"
+          },
+          {
+            "name": "MatchKey",
+            "saqlExpression": "'Id'",
+            "label": "MatchKey",
+            "type": "Text"
+          },
+          {
+            "name": "ProductClass",
+            "saqlExpression": "'ftxt_Level3__c'",
+            "label": "ProductClass",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "augCurrencyToService": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["IsoCode"],
+        "left": "JoinSer2SerSchedules",
+        "left_key": ["CurrencyIsoCode"],
+        "right_select": ["ConversionRate"],
+        "right": "getCurrency",
+        "relationship": "Currency",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "augServicesComma": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["UP2GO_CPRM_BM__lkp_SalesProject__c"],
+        "left": "augProductsComma",
+        "left_key": ["Id"],
+        "right_select": ["SERComma"],
+        "right": "FilterSERoneSPJ",
+        "relationship": "SERrollup",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "ComputeQuickSavingsFreezeFields": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "AugmentQuickSavings2QSFreezes",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "lkp_Project__c",
+            "saqlExpression": "'Prj.CPj.Id'",
+            "label": "lkp_Project__c",
+            "type": "Text"
+          },
+          {
+            "saqlExpression": "\"QuickSaving\"",
+            "name": "ScheduleType",
+            "label": "ScheduleType",
+            "type": "Text"
+          },
+          {
+            "name": "IsRevenueRelevant",
+            "saqlExpression": "\"true\"",
+            "label": "IsRevenueRelevant",
+            "type": "Text"
+          },
+          {
+            "name": "BU",
+            "saqlExpression": "'QS.BU'",
+            "label": "BU",
+            "type": "Text"
+          },
+          {
+            "name": "ProjectStep",
+            "saqlExpression": "'Prj.Decision.Name'",
+            "label": "ProjectStep",
+            "type": "Text"
+          },
+          {
+            "name": "PrjStepID",
+            "saqlExpression": "'Prj.DDFRId'",
+            "label": "PrjStepID",
+            "type": "Text"
+          },
+          {
+            "name": "PrjStepDate",
+            "saqlExpression": "toDate('Prj.SnapshotDate', \"dd.MM.yyyy HH:mm:ss\")",
+            "format": "yy-MM-dd\u2019T\u2019HH:mm:ss\u2019Z\u2019",
+            "label": "PrjStepDate",
+            "type": "Date",
+            "isYearEndFiscalYear": true
+          },
+          {
+            "name": "DuplicateCheck",
+            "saqlExpression": "'Prj.CPj.Id'+\"--\"+'Prj.Decision.Name'",
+            "label": "DuplicateCheck",
+            "type": "Text"
+          },
+          {
+            "precision": 14,
+            "name": "fcur_EBITSOPPlus4__c",
+            "saqlExpression": "-'fcur_CostSOPPlus4__c'",
+            "scale": 2,
+            "label": "fcur_EBITSOPPlus4__c",
+            "type": "Numeric"
+          },
+          {
+            "precision": 14,
+            "name": "fcur_SalesSOPPlus4__c",
+            "saqlExpression": "-'fcur_CostSOPPlus4__c'",
+            "scale": 2,
+            "label": "fcur_SalesSOPPlus4__c",
+            "type": "Numeric"
+          },
+          {
+            "name": "MatchKey",
+            "saqlExpression": "'Id'",
+            "label": "MatchKey",
+            "type": "Text"
+          },
+          {
+            "name": "ProductClass",
+            "saqlExpression": "'ftxt_Level3__c'",
+            "label": "ProductClass",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "GetToolings": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "fcur_EBITSOPPlus4__c"},
+          {"name": "ftxt_Level2__c"},
+          {"name": "lkp_Project__c"},
+          {"name": "fchk_IsRevenueRelevant__c"},
+          {"name": "ftxt_IncludeInSOPPlusN__c"},
+          {"name": "fcur_SalesSOPPlus4__c"},
+          {"name": "UP2GO_CPRM_BM__cur_Price__c"},
+          {"name": "UP2GO_CPRM_BM__cur_Cost__c"},
+          {"name": "UP2GO_CPRM_BM__num_Quantity__c"},
+          {"name": "CurrencyIsoCode"},
+          {"name": "lkp_SalesProject__c"},
+          {"name": "ftxt_Level3__c"}
+        ],
+        "object": "UP2GO_CPRM_BM__Tooling__c"
+      }
+    },
+    "AugmentProjectInformation": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "AddFreezes",
+        "left_key": ["lkp_Project__c"],
+        "right_select": [
+          "Name",
+          "UP2GO_CPRM_BM__lkp_OrgTeam__c",
+          "pkl_BBMDivision__c",
+          "fcur_LiveEBITSOPPlus4__c",
+          "fcur_LiveSalesSOPPlus4__c",
+          "lkp_SalesProject__c",
+          "lkp_LegalEntity__c",
+          "fpct_LiveEBITSOPPlus4__c",
+          "SPJ.ftxt_PID__c",
+          "SPJ.ftxt_AcquisitionCustomerGroup__c",
+          "SPJ.ftxt_AcquiCustomerRegion__c",
+          "SPJ.Name",
+          "SPJ.ftxt_GlobalCustomerTeamName__c",
+          "SPJ.flnk_Owner__c",
+          "SPJ.pkl_AcquisitionProjectImpactCategory__c",
+          "SPJ.ftxt_CurrentStageName__c",
+          "SPJ.dat_BoschSOP__c",
+          "SPJ.ftxt_Acquisition_Customer__c",
+          "SPJ.ftxt_Owner_Name__c",
+          "SPJ.ftxt_NextGateName__c",
+          "SPJ.fpct_CalculatedEBITSOPPlus4__c",
+          "SPJ.rsum_TotalEBITSOPPlus4__c",
+          "SPJ.rsum_TotalSalesSOPPlus4__c",
+          "SPJ.CurrencyIsoCode",
+          "SPJ.PRDrollup.PRDComma",
+          "SPJ.SERrollup.SERComma",
+          "SPJ.SERRollup.Name",
+          "fimg_BudgetStatusLight__c",
+          "fimg_CustomerSatisfactionStatusLight__c",
+          "fimg_ProfitStatusLight__c",
+          "fimg_ResourcesStatusLight__c",
+          "fimg_SpecQualityStatusLight__c",
+          "fimg_TimeStatusLight__c",
+          "pkl_BudgetStatus__c",
+          "pkl_CustomerSatisfactionStatus__c",
+          "pkl_ProfitStatus__c",
+          "pkl_ResourcesStatus__c",
+          "pkl_SpecQualityStatus__c",
+          "pkl_TimeStatus__c"
+        ],
+        "right": "augSPJtoCPJ",
+        "relationship": "CPj",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "GetProjectFreezes": {
+      "action": "edgemart",
+      "parameters": {"alias": "${App.Datasets.DSR_Project_tp.FullyQualifiedName}"}
+    },
+    "cpxMatchKey": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "augLItoSnapshot",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "saqlExpression": "'ConfigSnap.UP2GO_CPRM_BM__mdr_Configuration__c'+'ConfigSnap.Decision.UP2GO_CPRM_BM__txt_ShortName__c'",
+            "name": "MatchKey2",
+            "label": "MatchKey2",
+            "type": "Text"
+          },
+          {
+            "name": "ProductClass",
+            "saqlExpression": "'ftxt_ProductClass__c'",
+            "label": "ProductClass",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "AugmentCurPrd2SerFreezes": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "AugmentPrj2SerFreezes",
+        "left_key": ["Id"],
+        "right_select": [
+          "SER.ftxt_Level2__c",
+          "fcur_EBITSOPPlus4__c",
+          "fcur_SalesSOPPlus4__c"
+        ],
+        "right": "JoinSer2SerSchedules",
+        "relationship": "PRD",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "GetCredit": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "fcur_CostSOPPlus4__c"},
+          {"name": "lkp_Project__c"},
+          {"name": "UP2GO_CPRM_BM__ftxt_BusinessUnit__c"},
+          {"name": "fchk_IsRevenueRelevant__c"},
+          {"name": "ftxt_IncludeInSOPPlusN__c"},
+          {"name": "CurrencyIsoCode"},
+          {"name": "lkp_SalesProject__c"},
+          {"name": "ftxt_Level3__c"}
+        ],
+        "object": "UP2GO_CPRM_BM__Credit__c"
+      }
+    },
+    "GetQuickSavingsFreezes": {
+      "action": "edgemart",
+      "parameters": {"alias": "${App.Datasets.Project_QuickSavings_tp.FullyQualifiedName}"}
+    },
+    "cpxProjectSPJ": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "augCPJtoSPJ",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "lkp_Project__c",
+            "saqlExpression": "'CPJ.lkp_Project__c'\n",
+            "label": "lkp_Project__c",
+            "type": "Text"
+          },
+          {
+            "name": "PrjStepID",
+            "saqlExpression": "'CPJ.PrjStepID'",
+            "label": "PrjStepID",
+            "type": "Text"
+          },
+          {
+            "name": "ProjectStep",
+            "saqlExpression": "'DDFR.Decision.DDFR.Decision.Name'",
+            "label": "ProjectStep",
+            "type": "Text"
+          },
+          {
+            "name": "PrjStepDate",
+            "saqlExpression": "toDate('DDFR.Decision.DDFR.SnapshotDate_sec_epoch')",
+            "format": "yy-MM-dd\u2019T\u2019HH:mm:ss\u2019Z\u2019",
+            "label": "PrjStepDate",
+            "type": "Date",
+            "isYearEndFiscalYear": true
+          }
+        ]
+      }
+    },
+    "NormalizePrdData": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "drop",
+        "source": "ComputePrdBU",
+        "fields": [
+          {"name": "UP2GO_CPRM_BM__mdr_Product__c"},
+          {"name": "UP2GO_CPRM_BM__fnum_NumberOfProducts__c"},
+          {"name": "UP2GO_CPRM_BM__cur_DiscountedPrice__c"},
+          {"name": "cur_BaseCost__c"},
+          {"name": "fcur_SGAUnitCost__c"},
+          {"name": "CurrencyIsoCode"},
+          {"name": "num_ExchangeRateEUR__c"},
+          {"name": "fcur_TotalProductPrice__c"},
+          {"name": "fcur_TotalIncidentalCost__c"},
+          {"name": "fcur_BaseProductCost__c"},
+          {"name": "fcur_AdditionalPartsCost__c"},
+          {"name": "pct_SGAUnitCost__c"},
+          {"name": "fcur_TotalOneTimePayments__c"},
+          {"name": "ftxt_IncludeInSOPPlusN__c"},
+          {"name": "PRD.ftxt_Level2__c"},
+          {"name": "PRD.lkp_Project__c"},
+          {"name": "PRD.UP2GO_CPRM_BM__fchk_IsRevenueRelevant__c"},
+          {"name": "Currency.ConversionRate"}
+        ]
+      }
+    },
+    "ComputeToolingsFreezesFields": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "AugmentToolings2ToolingsFreezes",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "lkp_Project__c",
+            "saqlExpression": "'Prj.CPj.Id'",
+            "label": "lkp_Project__c",
+            "type": "Text"
+          },
+          {
+            "saqlExpression": "\"Toolings\"",
+            "name": "ScheduleType",
+            "label": "ScheduleType",
+            "type": "Text"
+          },
+          {
+            "name": "IsRevenueRelevant",
+            "saqlExpression": "\"true\"",
+            "label": "IsRevenueRelevant",
+            "type": "Text"
+          },
+          {
+            "name": "BU",
+            "saqlExpression": "'CurTool.BU'",
+            "label": "BU",
+            "type": "Text"
+          },
+          {
+            "saqlExpression": "'Prj.Decision.Name'",
+            "name": "ProjectStep",
+            "label": "ProjectStep",
+            "type": "Text"
+          },
+          {
+            "name": "PrjStepID",
+            "saqlExpression": "'Prj.Decision.Name'",
+            "label": "PrjStepID",
+            "type": "Text"
+          },
+          {
+            "saqlExpression": "toDate('Prj.SnapshotDate', \"dd.MM.yyyy HH:mm:ss\")",
+            "name": "PrjStepDate",
+            "format": "yy-MM-dd\u2019T\u2019HH:mm:ss\u2019Z\u2019",
+            "label": "PrjStepDate",
+            "type": "Date",
+            "isYearEndFiscalYear": true
+          },
+          {
+            "name": "DuplicateCheck",
+            "saqlExpression": "'Prj.CPj.Id'+\"--\"+'Prj.Decision.Name'",
+            "label": "DuplicateCheck",
+            "type": "Text"
+          },
+          {
+            "name": "MatchKey",
+            "saqlExpression": "'Id'",
+            "label": "MatchKey",
+            "type": "Text"
+          },
+          {
+            "name": "ProductClass",
+            "saqlExpression": "'ftxt_Level3__c'",
+            "label": "ProductClass",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "fltOldDecisions": {
+      "action": "filter",
+      "parameters": {
+        "source": "cpxDecisionRank2",
+        "saqlFilter": "'Filter' == \"1\""
+      }
+    },
+    "AugmentProject2SaaS": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["DDFRId"],
+        "left": "GetSaaSFreezes",
+        "left_key": ["joinSaaS2schedules.Id"],
+        "right_select": [
+          "DDFRId",
+          "Decision.Name",
+          "CPj.Id",
+          "SnapshotDate"
+        ],
+        "right": "GetProjectFreezes",
+        "relationship": "Prj",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "filterCredit": {
+      "action": "filter",
+      "parameters": {
+        "source": "GetCredit",
+        "saqlFilter": "('lkp_Project__c' is not null || 'lkp_SalesProject__c' is not null) && 'fchk_IsRevenueRelevant__c' == \"true\""
+      }
+    },
+    "regSAPdata": {
+      "action": "sfdcRegister",
+      "parameters": {
+        "rowLevelSecurityFilter": "'Division' in [\"$User.pkm_ReportingAccessForDivision__c\"]",
+        "name": "EBIT Bridge from SAP",
+        "alias": "${App.Datasets.EBIT_Bridge_from_SAP_1_tp.FullyQualifiedName}",
+        "source": "cpxDataSource"
+      }
+    },
+    "AugmentCurPrdInformatino": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "AugmentProject2PrdSchedules",
+        "left_key": ["Id"],
+        "right_select": ["PRD.ftxt_Level2__c"],
+        "right": "JoinPrd2PrdSchedules",
+        "relationship": "PRD",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "cpxDataSource": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "getSAPdata",
+        "mergeWithSource": true,
+        "computedFields": [{
+          "name": "DataSource",
+          "saqlExpression": "\"QUO\"",
+          "label": "DataSource",
+          "type": "Text"
+        }]
+      }
+    },
+    "ComputeCredit": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "augCurrencyToCredit",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "BU",
+            "saqlExpression": "'UP2GO_CPRM_BM__ftxt_BusinessUnit__c'",
+            "label": "BU",
+            "type": "Text"
+          },
+          {
+            "name": "ScheduleType",
+            "saqlExpression": "\"QuickSaving\"",
+            "label": "ScheduleType",
+            "type": "Text"
+          },
+          {
+            "precision": 14,
+            "name": "fcur_EBITSOPPlus4__c",
+            "saqlExpression": "-'fcur_CostSOPPlus4__c'*'Currency.ConversionRate'",
+            "scale": 2,
+            "label": "fcur_EBITSOPPlus4__c",
+            "type": "Numeric"
+          },
+          {
+            "precision": 14,
+            "name": "fcur_SalesSOPPlus4__c",
+            "saqlExpression": "-'fcur_CostSOPPlus4__c'*'Currency.ConversionRate'",
+            "scale": 2,
+            "label": "fcur_SalesSOPPlus4__c",
+            "type": "Numeric"
+          },
+          {
+            "name": "IsRevenueRelevant",
+            "saqlExpression": "'fchk_IsRevenueRelevant__c'",
+            "label": "IsRevenueRelevant",
+            "type": "Text"
+          },
+          {
+            "precision": 14,
+            "name": "Volume",
+            "saqlExpression": "0",
+            "scale": 2,
+            "label": "Volume",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "name": "ExchangeRate",
+            "saqlExpression": "'Currency.ConversionRate'",
+            "scale": 4,
+            "label": "ExchangeRate",
+            "type": "Numeric"
+          },
+          {
+            "name": "SOP4",
+            "saqlExpression": "'ftxt_IncludeInSOPPlusN__c'",
+            "label": "SOP4",
+            "type": "Text"
+          },
+          {
+            "name": "MatchKey",
+            "saqlExpression": "'Id'",
+            "label": "MatchKey",
+            "type": "Text"
+          },
+          {
+            "name": "ProductClass",
+            "saqlExpression": "'ftxt_Level3__c'",
+            "label": "ProductClass",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "cprPRDrollupSPJ": {
+      "action": "computeRelative",
+      "parameters": {
+        "partitionBy": ["UP2GO_CPRM_BM__lkp_SalesProject__c"],
+        "orderBy": [{
+          "name": "Name",
+          "direction": "asc"
+        }],
+        "source": "cpxPRDcounter",
+        "computedFields": [
+          {
+            "expression": {
+              "saqlExpression": "case when \ncoalesce(previous('Name'), \"\") == \"\" then \ncoalesce(current('Name'), \"\") else previous('PRDComma') + \", \" + current('Name') end",
+              "type": "Text"
+            },
+            "name": "PRDComma",
+            "label": "PRDComma"
+          },
+          {
+            "expression": {
+              "saqlExpression": "previous('PRDcount') + current('PRDcount')",
+              "type": "Numeric"
+            },
+            "name": "NumberOfPRD",
+            "label": "NumberOfPRD"
+          }
+        ]
+      }
+    },
+    "GetToolingsFreezes": {
+      "action": "edgemart",
+      "parameters": {"alias": "${App.Datasets.Project_Tooling_tp.FullyQualifiedName}"}
+    },
+    "cpxDecisionRank2": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "cprDecisionRank",
+        "mergeWithSource": true,
+        "computedFields": [{
+          "name": "Filter",
+          "saqlExpression": "case when 'RecentDate' == 'UP2GO_2T__dat_DateTimeClosed__c' then \"1\" else \"0\" end",
+          "label": "Filter",
+          "type": "Text"
+        }]
+      }
+    },
+    "augLItoSnapshot": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["MatchKey"],
+        "left": "augDecisionToConfigSnapRow",
+        "left_key": ["MatchKey"],
+        "right_select": [
+          "lkp_Project__c",
+          "ftxt_Level2__c",
+          "fchk_IsRevenueRelevant__c",
+          "UP2GO_CPRM_BM__cur_Price__c",
+          "UP2GO_CPRM_BM__cur_Cost__c",
+          "UP2GO_CPRM_BM__num_Quantity__c"
+        ],
+        "right": "computeCurrent",
+        "relationship": "Project",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "GetSERSchedulesFreezes": {
+      "action": "edgemart",
+      "parameters": {"alias": "${App.Datasets.Project_SER_Schedules_tp.FullyQualifiedName}"}
+    },
+    "cprDecisionRank": {
+      "action": "computeRelative",
+      "parameters": {
+        "partitionBy": ["UP2GO_CPRM_BM__lkp_Project__c"],
+        "orderBy": [{
+          "name": "UP2GO_2T__dat_DateTimeClosed__c",
+          "direction": "desc"
+        }],
+        "source": "fltDecisionLastAccepted",
+        "computedFields": [{
+          "expression": {
+            "sourceField": "UP2GO_2T__dat_DateTimeClosed__c",
+            "offset": "first()"
+          },
+          "name": "RecentDate",
+          "label": "RecentDate"
+        }]
+      }
+    },
+    "getConfigSnapshotRow": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "UP2GO_CPRM_BM__lkp_Snapshot__c"},
+          {"name": "CRD_fchk_IsRevenueRelevant__c"},
+          {"name": "SER_fchk_IsRevenueRelevant__c"},
+          {"name": "TOL_fchk_IsRevenueRelevant__c"},
+          {"name": "ftxt_Source__c"},
+          {"name": "Id"},
+          {"name": "CRD_ftxt_Level2__c"},
+          {"name": "PRD_ftxt_Level2__c"},
+          {"name": "SER_ftxt_Level2__c"},
+          {"name": "TOL_ftxt_Level2__c"},
+          {"name": "UP2GO_CPRM_BM__PRD_Id__c"},
+          {"name": "UP2GO_CPRM_BM__CRD_Id__c"},
+          {"name": "UP2GO_CPRM_BM__TOL_Id__c"},
+          {"name": "SER_id__c"},
+          {"name": "CreatedDate"},
+          {"name": "fnum_EBITSOP4local__c"},
+          {"name": "fnum_SalesSOP4local__c"},
+          {"name": "UP2GO_CPRM_BM__PRS_fnum_NumberOfProducts__c"},
+          {"name": "UP2GO_CPRM_BM__PRS_cur_DiscountedPrice__c"},
+          {"name": "PRS_cur_BaseCost__c"},
+          {"name": "UP2GO_CPRM_BM__PRS_cur_Price__c"},
+          {"name": "PRS_fcur_SGAUnitCost__c"},
+          {"name": "UP2GO_CPRM_BM__num_FxRateEUR__c"},
+          {"name": "UP2GO_CPRM_BM__txt_ProductScheduleId__c"},
+          {"name": "txt_ServiceScheduleId__c"},
+          {"name": "UP2GO_CPRM_BM__txt_CreditId__c"},
+          {"name": "UP2GO_CPRM_BM__txt_ToolingId__c"},
+          {"name": "PRS_fcur_TotalIncidentalCost__c"},
+          {
+            "name": "PRS_fcur_BaseProductCost__c",
+            "scale": 4
+          },
+          {"name": "PRS_fcur_AdditionalPartsCost__c"},
+          {"name": "PRS_pct_SGAUnitCost__c"},
+          {
+            "defaultValue": null,
+            "precision": 10,
+            "name": "PRS_fcur_TotalProductPrice__c",
+            "scale": 4
+          },
+          {"name": "TOL_ftxt_IncludeInSOPPlusN__c"},
+          {"name": "SES_ftxt_IncludeInSOPPlusN__c"},
+          {"name": "PRS_ftxt_IncludeInSOPPlusN__c"},
+          {"name": "CRD_ftxt_IncludeInSOPPlusN__c"},
+          {"name": "CRD_fcur_CostSOPPlus4__c"},
+          {"name": "fdat_Date__c"},
+          {"name": "ftxt_Division__c"},
+          {"name": "ftxt_ProductClass__c"}
+        ],
+        "object": "UP2GO_CPRM_BM__ConfigurationSnapshotRow__c"
+      }
+    },
+    "AppendData": {
+      "action": "append",
+      "parameters": {
+        "enableDisjointedSchemaMerge": true,
+        "sources": [
+          "NormalizePrdData",
+          "NormalizeSerData",
+          "NormalizeToolings",
+          "NormalizeCredit",
+          "JoinSaaaS2SaasSchedule"
+        ]
+      }
+    },
+    "AugmentToolings2ToolingsFreezes": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["lkp_Project__c"],
+        "left": "AugmentPrj2ToolingsFreezes",
+        "left_key": ["Prj.CPj.Id"],
+        "right_select": [
+          "BU",
+          "ftxt_Level2__c",
+          "lkp_Project__c",
+          "fchk_IsRevenueRelevant__c",
+          "UP2GO_CPRM_BM__cur_Price__c",
+          "UP2GO_CPRM_BM__cur_Cost__c",
+          "UP2GO_CPRM_BM__num_Quantity__c"
+        ],
+        "right": "NormalizeToolings",
+        "relationship": "CurTool",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "sliceSerScheduleFreezes": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "select",
+        "source": "ComputeSerFreezeFields",
+        "fields": [
+          {"name": "Id"},
+          {"name": "fcur_EBITSOPPlus4__c"},
+          {"name": "ExchangeRate"},
+          {"name": "fcur_SalesSOPPlus4__c"},
+          {"name": "Prj.DDFRId"},
+          {"name": "lkp_Project__c"},
+          {"name": "ScheduleType"},
+          {"name": "IsRevenueRelevant"},
+          {"name": "BU"},
+          {"name": "ProjectStep"},
+          {"name": "PrjStepID"},
+          {"name": "PrjStepDate"},
+          {"name": "DuplicateCheck"},
+          {"name": "SOP4"},
+          {"name": "PRD.fcur_EBITSOPPlus4__c"},
+          {"name": "PRD.fcur_SalesSOPPlus4__c"},
+          {"name": "MatchKey"}
+        ]
+      }
+    },
+    "cpxSPJSaaS": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "GetSPJSaaS",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "ScheduleType",
+            "saqlExpression": "\"SaaS\"",
+            "label": "ScheduleType",
+            "type": "Text"
+          },
+          {
+            "saqlExpression": "'UP2GO_CPRM_BM__mdr_SaaS__c' + 'Name'",
+            "name": "MatchKey",
+            "label": "MatchKey",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "ComputeToolingsBU": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "augCurrencyToToolings",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "BU",
+            "saqlExpression": "'ftxt_Level2__c'",
+            "label": "BU",
+            "type": "Text"
+          },
+          {
+            "name": "ScheduleType",
+            "saqlExpression": "\"Toolings\"",
+            "label": "ScheduleType",
+            "type": "Text"
+          },
+          {
+            "name": "IsRevenueRelevant",
+            "saqlExpression": "'fchk_IsRevenueRelevant__c'",
+            "label": "IsRevenueRelevant",
+            "type": "Text"
+          },
+          {
+            "precision": 14,
+            "name": "Volume",
+            "saqlExpression": "'UP2GO_CPRM_BM__num_Quantity__c'",
+            "scale": 2,
+            "label": "Volume",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "name": "ExchangeRate",
+            "saqlExpression": "'Currency.ConversionRate'",
+            "scale": 4,
+            "label": "ExchangeRate",
+            "type": "Numeric"
+          },
+          {
+            "name": "SOP4",
+            "saqlExpression": "'ftxt_IncludeInSOPPlusN__c'",
+            "label": "SOP4",
+            "type": "Text"
+          },
+          {
+            "name": "MatchKey",
+            "saqlExpression": "'Id'",
+            "label": "MatchKey",
+            "type": "Text"
+          },
+          {
+            "name": "ProductClass",
+            "saqlExpression": "'ftxt_Level3__c'",
+            "label": "ProductClass",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "AugmentPrj2QuickSavings": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["DDFRId"],
+        "left": "GetQuickSavingsFreezes",
+        "left_key": ["quicksavings2prj.DDFRId"],
+        "right_select": [
+          "CPj.Id",
+          "DDFRId",
+          "Decision.Name",
+          "SnapshotDate"
+        ],
+        "right": "GetProjectFreezes",
+        "relationship": "Prj",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "GetPRDSchedules": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "UP2GO_CPRM_BM__mdr_Product__c"},
+          {"name": "fcur_EBITSOPPlus4__c"},
+          {"name": "fcur_SalesSOPPlus4__c"},
+          {"name": "UP2GO_CPRM_BM__fnum_NumberOfProducts__c"},
+          {"name": "UP2GO_CPRM_BM__cur_DiscountedPrice__c"},
+          {
+            "name": "cur_BaseCost__c",
+            "scale": 5
+          },
+          {"name": "fcur_SGAUnitCost__c"},
+          {"name": "CurrencyIsoCode"},
+          {"name": "num_ExchangeRateEUR__c"},
+          {
+            "name": "fcur_TotalProductPrice__c",
+            "scale": 5
+          },
+          {"name": "fcur_TotalIncidentalCost__c"},
+          {
+            "name": "fcur_BaseProductCost__c",
+            "scale": 5
+          },
+          {"name": "fcur_AdditionalPartsCost__c"},
+          {"name": "pct_SGAUnitCost__c"},
+          {"name": "fcur_TotalOneTimePayments__c"},
+          {"name": "ftxt_IncludeInSOPPlusN__c"},
+          {"name": "Name"}
+        ],
+        "object": "UP2GO_CPRM_BM__ProductSchedule__c"
+      }
+    },
+    "cpxSPJPRD": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "GetSPJPRDschedules",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "precision": 14,
+            "name": "Volume",
+            "saqlExpression": "'UP2GO_CPRM_BM__num_VolumeOverride__c'",
+            "scale": 2,
+            "label": "Volume - Update",
+            "type": "Numeric"
+          },
+          {
+            "precision": 12,
+            "name": "PiecePricewoAdder",
+            "saqlExpression": "'UP2GO_CPRM_BM__cur_DiscountedPrice__c'/'ExchangeRate'",
+            "scale": 5,
+            "label": "Piece Price w/o Adder (LC)",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "saqlExpression": "'cur_BaseCost__c'/'ExchangeRate'",
+            "name": "PPCBase",
+            "scale": 5,
+            "label": "PPC Base (LC)",
+            "type": "Numeric"
+          },
+          {
+            "precision": 14,
+            "name": "SGATotal",
+            "saqlExpression": "'pct_SGAUnitCost__c'",
+            "scale": 2,
+            "label": "SG&A Total (%)",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "name": "CustomerPiecePriceinclAmortization",
+            "saqlExpression": "('fcur_SalesSOPPlus4__c' - 'fcur_TotalOneTimePayments__c')/ 'ExchangeRate'/'fnum_ProductVolumeSOPPlus4__c'",
+            "scale": 5,
+            "label": "Customer Piece Price incl. Amortization (LC)",
+            "type": "Numeric"
+          },
+          {
+            "precision": 14,
+            "name": "TotalOneTimeCostsWSGA",
+            "saqlExpression": "'fcur_TotalIncidentalCost__c'/'ExchangeRate'",
+            "scale": 2,
+            "label": "Total One-Time Costs WSGA (LC)",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "name": "PPCAdderTotal",
+            "saqlExpression": "('fcur_BaseProductCost__c' - 'cur_BaseCost__c')/'ExchangeRate'",
+            "scale": 5,
+            "label": "PPC Adder Total (LC)",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "name": "TotalCostsSGAAdderperPiece",
+            "saqlExpression": "'fcur_TotalIncidentalCost__c'/'ExchangeRate'",
+            "scale": 5,
+            "label": "Total Costs SG&A Adder per Piece (LC)",
+            "type": "Numeric"
+          },
+          {
+            "precision": 14,
+            "name": "TotalProductOneTimePaymentsTC",
+            "saqlExpression": "'fcur_TotalOneTimePayments__c'",
+            "scale": 2,
+            "label": "Total Product One-Time Payments (TC)",
+            "type": "Numeric"
+          },
+          {
+            "name": "LIid",
+            "saqlExpression": "'Id'",
+            "label": "LIid",
+            "type": "Text"
+          },
+          {
+            "name": "SOP4",
+            "saqlExpression": "'ftxt_IncludeInSOPPlusN__c'",
+            "label": "SOP4",
+            "type": "Text"
+          },
+          {
+            "precision": 10,
+            "name": "PPCandAdder",
+            "saqlExpression": "(\n   (\n      ('fcur_SalesSOPPlus4__c' - 'fcur_EBITSOPPlus4__c'\n)/'ExchangeRate'/'UP2GO_CPRM_BM__fnum_NumberOfProducts__c')-('fcur_TotalIncidentalCost__c'/'ExchangeRate'))/(1 + 'pct_SGAUnitCost__c'/100)",
+            "scale": 5,
+            "label": "PPC with Adder",
+            "type": "Numeric"
+          },
+          {
+            "name": "ScheduleType",
+            "saqlExpression": "\"Product\"",
+            "label": "ScheduleType",
+            "type": "Text"
+          },
+          {
+            "name": "MatchKey",
+            "saqlExpression": "'UP2GO_CPRM_BM__mdr_Product__c' + 'Name'",
+            "label": "MatchKey",
+            "type": "Text"
+          },
+          {
+            "name": "ProductClass",
+            "saqlExpression": "'Product.ftxt_Level3__c'",
+            "label": "ProductClass",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "computeCurrent": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "AppendData",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "ProjectStep",
+            "saqlExpression": "\"Current\"",
+            "label": "ProjectStep",
+            "type": "Text"
+          },
+          {
+            "name": "PrjStepID",
+            "saqlExpression": "\"ZZ99\"",
+            "label": "PrjStepID",
+            "type": "Text"
+          },
+          {
+            "name": "PrjStepDate",
+            "saqlExpression": "now()",
+            "format": "yy-MM-dd\u2019T\u2019HH:mm:ss\u2019Z\u2019",
+            "label": "PrjStepDate",
+            "type": "Date",
+            "isYearEndFiscalYear": false
+          }
+        ]
+      }
+    },
+    "AppendFreezeSchedules": {
+      "action": "append",
+      "parameters": {
+        "enableDisjointedSchemaMerge": true,
+        "sources": [
+          "slicePrdScheduleFreezes",
+          "sliceSerScheduleFreezes",
+          "SliceToolingsFreezes",
+          "SliceQuickSavingsFreezes",
+          "AugmentCurSaaS2Freeze"
+        ]
+      }
+    },
+    "GetPRD": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "ftxt_Level2__c"},
+          {"name": "lkp_Project__c"},
+          {"name": "UP2GO_CPRM_BM__fchk_IsRevenueRelevant__c"},
+          {"name": "UP2GO_CPRM_BM__lkp_SalesProject__c"},
+          {"name": "Name"},
+          {"name": "ftxt_Level3__c"}
+        ],
+        "object": "UP2GO_CPRM_BM__Product__c"
+      }
+    },
+    "SliceQuickSavingsFreezes": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "select",
+        "source": "ComputeQuickSavingsFreezeFields",
+        "fields": [
+          {"name": "Id"},
+          {"name": "ExchangeRate"},
+          {"name": "Prj.DDFRId"},
+          {"name": "lkp_Project__c"},
+          {"name": "ScheduleType"},
+          {"name": "IsRevenueRelevant"},
+          {"name": "BU"},
+          {"name": "ProjectStep"},
+          {"name": "PrjStepID"},
+          {"name": "PrjStepDate"},
+          {"name": "DuplicateCheck"},
+          {"name": "fcur_EBITSOPPlus4__c"},
+          {"name": "fcur_SalesSOPPlus4__c"},
+          {"name": "SOP4"},
+          {"name": "MatchKey"}
+        ]
+      }
+    },
+    "filterToolings": {
+      "action": "filter",
+      "parameters": {
+        "source": "GetToolings",
+        "saqlFilter": "('lkp_Project__c' is not null || 'lkp_SalesProject__c' is not null)  && 'fchk_IsRevenueRelevant__c' == \"true\""
+      }
+    },
+    "AddFreezes": {
+      "action": "append",
+      "parameters": {
+        "enableDisjointedSchemaMerge": true,
+        "sources": [
+          "computeCurrent",
+          "sliceFreezeSchedules",
+          "NormalizeSnapshot",
+          "cpxProjectSPJ"
+        ]
+      }
+    },
+    "GetSPJQuickSavings": {
+      "action": "edgemart",
+      "parameters": {"alias": "${Variables.SPJDSRCredit.datasetAlias}"}
+    },
+    "computePrdScheduleFreezeFields": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "AugmentCurPrdInformatino",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "lkp_Project__c",
+            "saqlExpression": "'Prj.CPj.Id'",
+            "label": "lkp_Project__c",
+            "type": "Text"
+          },
+          {
+            "name": "ScheduleType",
+            "saqlExpression": "\"Product\"",
+            "label": "ScheduleType",
+            "type": "Text"
+          },
+          {
+            "name": "IsRevenueRelevant",
+            "saqlExpression": "\"true\"",
+            "label": "IsRevenueRelevant",
+            "type": "Text"
+          },
+          {
+            "name": "BU",
+            "saqlExpression": "'PRD.PRD.ftxt_Level2__c'",
+            "label": "BU",
+            "type": "Text"
+          },
+          {
+            "name": "ProjectStep",
+            "saqlExpression": "'Prj.Decision.Name'",
+            "label": "ProjectStep",
+            "type": "Text"
+          },
+          {
+            "name": "PrjStepID",
+            "saqlExpression": "'Prj.DDFRId'",
+            "label": "PrjStepID",
+            "type": "Text"
+          },
+          {
+            "saqlExpression": "toDate('Prj.SnapshotDate', \"dd.MM.yyyy HH:mm:ss\")",
+            "name": "PrjStepDate",
+            "format": "yy-MM-dd\u2019T\u2019HH:mm:ss\u2019Z\u2019",
+            "label": "PrjStepDate",
+            "type": "Date",
+            "isYearEndFiscalYear": true
+          },
+          {
+            "name": "DuplicateCheck",
+            "saqlExpression": "'Prj.CPj.Id'+\"--\"+'Prj.Decision.Name'",
+            "label": "DuplicateCheck",
+            "type": "Text"
+          },
+          {
+            "name": "MatchKey",
+            "saqlExpression": "'prd2schedules.Id' + substr('UP2GO_CPRM_BM__dat_FirstDay__c', 1, 4)",
+            "label": "MatchKey",
+            "type": "Text"
+          },
+          {
+            "name": "ProductClass",
+            "saqlExpression": "'prd2schedules.ftxt_Level3__c'",
+            "label": "ProductClass",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "augDecisionToConfigSnapRow": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "ComputeSnapshotBU",
+        "left_key": ["UP2GO_CPRM_BM__lkp_Snapshot__c"],
+        "right_select": [
+          "fckb_IsActiveSnapshot__c",
+          "CreatedDate",
+          "UP2GO_CPRM_BM__lkp_Gate__c",
+          "UP2GO_CPRM_BM__mdr_Configuration__c",
+          "fpct_TotalEBITSOPPlus4__c",
+          "num_TotalEBITSOPPlus4EUR__c",
+          "num_TotalSalesSOPPlus4EUR__c",
+          "Decision.Name",
+          "Decision.UP2GO_CPRM_BM__txt_ShortName__c"
+        ],
+        "right": "augDecisionToConfigSnap",
+        "relationship": "ConfigSnap",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "fltrActiveSnap": {
+      "action": "filter",
+      "parameters": {
+        "source": "cpxSnapsthotProject",
+        "saqlFilter": "'FilterRecent' == \"1\""
+      }
+    },
+    "cpxPRDcounter": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "GetPRD",
+        "mergeWithSource": true,
+        "computedFields": [{
+          "precision": 2,
+          "name": "PRDcount",
+          "saqlExpression": "1",
+          "scale": 0,
+          "label": "PRDcount",
+          "type": "Numeric"
+        }]
+      }
+    },
+    "FilterDuplicates": {
+      "action": "filter",
+      "parameters": {
+        "source": "ComputeDuplicates",
+        "saqlFilter": "'Duplicate' == \"Keep\""
+      }
+    },
+    "JoinPrd2PrdSchedules": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "GetPRDSchedules",
+        "left_key": ["UP2GO_CPRM_BM__mdr_Product__c"],
+        "right_select": [
+          "ftxt_Level2__c",
+          "lkp_Project__c",
+          "UP2GO_CPRM_BM__fchk_IsRevenueRelevant__c",
+          "UP2GO_CPRM_BM__lkp_SalesProject__c",
+          "ftxt_Level3__c"
+        ],
+        "right": "GetPRD",
+        "relationship": "PRD",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "ComputeSerFreezeFields": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "AugmentCurPrd2SerFreezes",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "lkp_Project__c",
+            "saqlExpression": "'Prj.CPj.Id'",
+            "label": "lkp_Project__c",
+            "type": "Text"
+          },
+          {
+            "name": "ScheduleType",
+            "saqlExpression": "\"Service\"",
+            "label": "ScheduleType",
+            "type": "Text"
+          },
+          {
+            "name": "IsRevenueRelevant",
+            "saqlExpression": "\"true\"",
+            "label": "IsRevenueRelevant",
+            "type": "Text"
+          },
+          {
+            "name": "BU",
+            "saqlExpression": "'PRD.SER.ftxt_Level2__c'",
+            "label": "BU",
+            "type": "Text"
+          },
+          {
+            "name": "ProjectStep",
+            "saqlExpression": "'Prj.Decision.Name'",
+            "label": "ProjectStep",
+            "type": "Text"
+          },
+          {
+            "name": "PrjStepID",
+            "saqlExpression": "'Prj.DDFRId'",
+            "label": "PrjStepID",
+            "type": "Text"
+          },
+          {
+            "name": "PrjStepDate",
+            "saqlExpression": "toDate('Prj.SnapshotDate', \"dd.MM.yyyy HH:mm:ss\")",
+            "format": "yy-MM-dd\u2019T\u2019HH:mm:ss\u2019Z\u2019",
+            "label": "PrjStepDate",
+            "type": "Date",
+            "isYearEndFiscalYear": true
+          },
+          {
+            "name": "DuplicateCheck",
+            "saqlExpression": "'Prj.CPj.Id'+\"--\"+'Prj.Decision.Name'",
+            "label": "DuplicateCheck",
+            "type": "Text"
+          },
+          {
+            "name": "MatchKey",
+            "saqlExpression": "'ser2schedules.Id' + substr('UP2GO_CPRM_BM__dat_FirstDay__c', 1, 4)",
+            "label": "MatchKey",
+            "type": "Text"
+          },
+          {
+            "name": "ProductClass",
+            "saqlExpression": "'ser2schedules.ftxt_Level3__c'",
+            "label": "ProductClass",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "GetSaaSFreezes": {
+      "action": "edgemart",
+      "parameters": {"alias": "${App.Datasets.Project_SaaS_Schedules_tp.FullyQualifiedName}"}
+    },
+    "GetSPJSERschedules": {
+      "action": "edgemart",
+      "parameters": {"alias": "${Variables.SPJDSRServiceSchedules.datasetAlias}"}
+    },
+    "GetPrdSchedulesFreezes": {
+      "action": "edgemart",
+      "parameters": {"alias": "${App.Datasets.Project_PRD_Schedules_tp.FullyQualifiedName}"}
+    },
+    "cprLatestDecision": {
+      "action": "computeRelative",
+      "parameters": {
+        "partitionBy": ["MatchKey2"],
+        "orderBy": [{
+          "name": "ConfigSnap.CreatedDate",
+          "direction": "desc"
+        }],
+        "source": "cpxMatchKey",
+        "computedFields": [{
+          "expression": {
+            "sourceField": "ConfigSnap.CreatedDate",
+            "offset": "first()"
+          },
+          "name": "FilterMostRecent",
+          "label": "FilterMostRecent"
+        }]
+      }
+    },
+    "GetSaaS": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "cur_EBITSOPPlus4__c"},
+          {"name": "lkp_Project__c"},
+          {"name": "UP2GO_CPRM_BM__lkp_SalesProject__c"},
+          {"name": "fchk_IsRevenueRelevant__c"},
+          {"name": "ftxt_Level2__c"},
+          {"name": "ftxt_Level3__c"}
+        ],
+        "object": "UP2GO_CPRM_BM__Saas__c"
+      }
+    },
+    "ComputePrdBU": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "augCurrenctToProduct",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "BU",
+            "saqlExpression": "'PRD.ftxt_Level2__c'",
+            "label": "Business Unit",
+            "type": "Text"
+          },
+          {
+            "name": "ScheduleType",
+            "saqlExpression": "\"Product\"",
+            "label": "ScheduleType",
+            "type": "Text"
+          },
+          {
+            "name": "lkp_Project__c",
+            "saqlExpression": "'PRD.lkp_Project__c'",
+            "label": "lkp_Project__c",
+            "type": "Text"
+          },
+          {
+            "name": "IsRevenueRelevant",
+            "saqlExpression": "'PRD.UP2GO_CPRM_BM__fchk_IsRevenueRelevant__c'",
+            "label": "IsRevenueRelevant",
+            "type": "Text"
+          },
+          {
+            "precision": 14,
+            "name": "Volume",
+            "saqlExpression": "'UP2GO_CPRM_BM__fnum_NumberOfProducts__c'",
+            "scale": 2,
+            "label": "Volume",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "name": "PiecePricewoAdder",
+            "saqlExpression": "'UP2GO_CPRM_BM__cur_DiscountedPrice__c'",
+            "scale": 5,
+            "label": "Piece Price w/o Adder",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "saqlExpression": "'cur_BaseCost__c'",
+            "name": "PPCBase",
+            "scale": 5,
+            "label": "PPC Base",
+            "type": "Numeric"
+          },
+          {
+            "precision": 14,
+            "name": "SGATotal",
+            "saqlExpression": "'pct_SGAUnitCost__c'",
+            "scale": 2,
+            "label": "SG&A Total (%)",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "name": "CustomerPiecePriceinclAmortization",
+            "saqlExpression": "('fcur_SalesSOPPlus4__c' - 'fcur_TotalOneTimePayments__c')/'UP2GO_CPRM_BM__fnum_NumberOfProducts__c'",
+            "scale": 5,
+            "label": "Customer Piece Price incl. Amortization",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "name": "TotalOneTimeCostsWSGA",
+            "saqlExpression": "'fcur_TotalIncidentalCost__c'",
+            "scale": 5,
+            "label": "Total One-Time Costs WSGA",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "name": "PPCAdderTotal",
+            "saqlExpression": "'fcur_BaseProductCost__c' - 'cur_BaseCost__c'",
+            "scale": 5,
+            "label": "PPC Adder Total",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "name": "TotalCostsSGAAdderperPiece",
+            "saqlExpression": "'fcur_TotalIncidentalCost__c'",
+            "scale": 5,
+            "label": "Total Costs SG&A Adder per Piece",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "name": "TotalProductOneTimePaymentsTC",
+            "saqlExpression": "'fcur_TotalOneTimePayments__c'",
+            "scale": 5,
+            "label": "Total Product One-Time Payments",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "name": "ExchangeRate",
+            "saqlExpression": "'Currency.ConversionRate'",
+            "scale": 4,
+            "label": "ExchangeRate",
+            "type": "Numeric"
+          },
+          {
+            "name": "LIid",
+            "saqlExpression": "\"\"",
+            "label": "LIid",
+            "type": "Text"
+          },
+          {
+            "name": "SOP4",
+            "saqlExpression": "'ftxt_IncludeInSOPPlusN__c'",
+            "label": "SOP4",
+            "type": "Text"
+          },
+          {
+            "precision": 10,
+            "name": "PPCandAdder",
+            "saqlExpression": "(\n   (\n      ('fcur_SalesSOPPlus4__c' - 'fcur_EBITSOPPlus4__c'\n)/'UP2GO_CPRM_BM__fnum_NumberOfProducts__c')-('fcur_TotalIncidentalCost__c'))/(1 + 'pct_SGAUnitCost__c'/100)",
+            "scale": 5,
+            "label": "PPC with Adder",
+            "type": "Numeric"
+          },
+          {
+            "name": "MatchKey",
+            "saqlExpression": "'UP2GO_CPRM_BM__mdr_Product__c' + 'Name'",
+            "label": "MatchKey",
+            "type": "Text"
+          },
+          {
+            "name": "ProductClass",
+            "saqlExpression": "'PRD.ftxt_Level3__c'",
+            "label": "ProductClass",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "JoinSer2SerSchedules": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "GetSERSchedules",
+        "left_key": ["UP2GO_CPRM_BM__mdr_Service__c"],
+        "right_select": [
+          "ftxt_Level2__c",
+          "lkp_Project__c",
+          "fchk_IsRevenueRelevant__c",
+          "UP2GO_CPRM_BM__lkp_SalesProject__c",
+          "ftxt_Level3__c"
+        ],
+        "right": "GetSER",
+        "relationship": "SER",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "NormalizeSnapshot": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "drop",
+        "source": "fltrActiveSnap",
+        "fields": [
+          {"name": "UP2GO_CPRM_BM__lkp_Snapshot__c"},
+          {"name": "CRD_fchk_IsRevenueRelevant__c"},
+          {"name": "SER_fchk_IsRevenueRelevant__c"},
+          {"name": "TOL_fchk_IsRevenueRelevant__c"},
+          {"name": "ftxt_Source__c"},
+          {"name": "CRD_ftxt_Level2__c"},
+          {"name": "PRD_ftxt_Level2__c"},
+          {"name": "SER_ftxt_Level2__c"},
+          {"name": "TOL_ftxt_Level2__c"},
+          {"name": "UP2GO_CPRM_BM__PRD_Id__c"},
+          {"name": "UP2GO_CPRM_BM__CRD_Id__c"},
+          {"name": "UP2GO_CPRM_BM__TOL_Id__c"},
+          {"name": "SER_id__c"},
+          {"name": "CreatedDate"},
+          {"name": "fnum_EBITSOP4local__c"},
+          {"name": "fnum_SalesSOP4local__c"},
+          {"name": "UP2GO_CPRM_BM__PRS_fnum_NumberOfProducts__c"},
+          {"name": "UP2GO_CPRM_BM__PRS_cur_DiscountedPrice__c"},
+          {"name": "PRS_cur_BaseCost__c"},
+          {"name": "UP2GO_CPRM_BM__PRS_cur_Price__c"},
+          {"name": "PRS_fcur_SGAUnitCost__c"},
+          {"name": "UP2GO_CPRM_BM__num_FxRateEUR__c"},
+          {"name": "UP2GO_CPRM_BM__txt_ProductScheduleId__c"},
+          {"name": "txt_ServiceScheduleId__c"},
+          {"name": "UP2GO_CPRM_BM__txt_CreditId__c"},
+          {"name": "UP2GO_CPRM_BM__txt_ToolingId__c"},
+          {"name": "PRS_fcur_TotalIncidentalCost__c"},
+          {"name": "PRS_fcur_BaseProductCost__c"},
+          {"name": "PRS_fcur_AdditionalPartsCost__c"},
+          {"name": "PRS_pct_SGAUnitCost__c"},
+          {"name": "PRS_fcur_TotalProductPrice__c"},
+          {"name": "TOL_ftxt_IncludeInSOPPlusN__c"},
+          {"name": "SES_ftxt_IncludeInSOPPlusN__c"},
+          {"name": "PRS_ftxt_IncludeInSOPPlusN__c"},
+          {"name": "CRD_ftxt_IncludeInSOPPlusN__c"},
+          {"name": "ConfigSnap.fckb_IsActiveSnapshot__c"},
+          {"name": "ConfigSnap.UP2GO_CPRM_BM__lkp_Gate__c"},
+          {"name": "ConfigSnap.Decision.Name"},
+          {"name": "Project.lkp_Project__c"},
+          {"name": "CRD_fcur_CostSOPPlus4__c"}
+        ]
+      }
+    },
+    "AugmentCurSaaS2Freeze": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "AugmentProject2SaaS",
+        "left_key": ["Id"],
+        "right_select": ["SaaS.UP2GO_CPRM_BM__lkp_SalesProject__c"],
+        "right": "JoinSaaaS2SaasSchedule",
+        "relationship": "SaaS",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "NormalizeSerData": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "drop",
+        "source": "ComputeSerBU",
+        "fields": [
+          {"name": "UP2GO_CPRM_BM__mdr_Service__c"},
+          {"name": "ftxt_IncludeInSOPPlusN__c"},
+          {"name": "Currency.ConversionRate"}
+        ]
+      }
+    },
+    "augCurrencyToCredit": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["IsoCode"],
+        "left": "filterCredit",
+        "left_key": ["CurrencyIsoCode"],
+        "right_select": ["ConversionRate"],
+        "right": "getCurrency",
+        "relationship": "Currency",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "augCurrencyToToolings": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["IsoCode"],
+        "left": "filterToolings",
+        "left_key": ["CurrencyIsoCode"],
+        "right_select": ["ConversionRate"],
+        "right": "getCurrency",
+        "relationship": "Currency",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "augServiceComma": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["UP2GO_CPRM_BM__lkp_SalesProject__c"],
+        "left": "augServicesComma",
+        "left_key": ["Id"],
+        "right_select": ["Name"],
+        "right": "GetSER",
+        "relationship": "SERRollup",
+        "operation": "LookupMultiValue"
+      }
+    },
+    "getCurrency": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "ConversionRate"},
+          {"name": "IsoCode"}
+        ],
+        "object": "CurrencyType"
+      }
+    },
+    "augProductsComma": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["UP2GO_CPRM_BM__lkp_SalesProject__c"],
+        "left": "getSPJ",
+        "left_key": ["Id"],
+        "right_select": ["PRDComma"],
+        "right": "fltrPRDoneSPJ",
+        "relationship": "PRDrollup",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "GetSER": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "ftxt_Level2__c"},
+          {"name": "Id"},
+          {"name": "lkp_Project__c"},
+          {"name": "fchk_IsRevenueRelevant__c"},
+          {"name": "UP2GO_CPRM_BM__lkp_SalesProject__c"},
+          {"name": "Name"},
+          {"name": "ftxt_Level3__c"}
+        ],
+        "object": "UP2GO_CPRM_BM__Service__c"
+      }
+    },
+    "cprSERrollupSPJ": {
+      "action": "computeRelative",
+      "parameters": {
+        "partitionBy": ["UP2GO_CPRM_BM__lkp_SalesProject__c"],
+        "orderBy": [{
+          "name": "Name",
+          "direction": "asc"
+        }],
+        "source": "cpxSERcounter",
+        "computedFields": [
+          {
+            "expression": {
+              "saqlExpression": "case when \ncoalesce(previous('Name'), \"\") == \"\" then \ncoalesce(current('Name'), \"\") else previous('SERComma') + \", \" + current('Name') end",
+              "type": "Text"
+            },
+            "name": "SERComma",
+            "label": "SERComma"
+          },
+          {
+            "expression": {
+              "saqlExpression": "previous('SERcount') + current('SERcount')",
+              "type": "Numeric"
+            },
+            "name": "NumberOfSER",
+            "label": "NumberOfSER"
+          }
+        ]
+      }
+    },
+    "cpxSERcounter": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "GetSER",
+        "mergeWithSource": true,
+        "computedFields": [{
+          "precision": 2,
+          "name": "SERcount",
+          "saqlExpression": "1",
+          "scale": 0,
+          "label": "SERcount",
+          "type": "Numeric"
+        }]
+      }
+    },
+    "NormalizeToolings": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "drop",
+        "source": "ComputeToolingsBU",
+        "fields": [
+          {"name": "ftxt_IncludeInSOPPlusN__c"},
+          {"name": "CurrencyIsoCode"},
+          {"name": "Currency.ConversionRate"}
+        ]
+      }
+    },
+    "cprFilterPRD": {
+      "action": "computeRelative",
+      "parameters": {
+        "partitionBy": ["UP2GO_CPRM_BM__lkp_SalesProject__c"],
+        "orderBy": [{
+          "name": "NumberOfPRD",
+          "direction": "desc"
+        }],
+        "source": "cprPRDrollupSPJ",
+        "computedFields": [{
+          "expression": {
+            "saqlExpression": "case when first('NumberOfPRD') == current('NumberOfPRD') then 1 else 0 end",
+            "type": "Numeric"
+          },
+          "name": "FilterPRD",
+          "label": "FilterPRD"
+        }]
+      }
+    },
+    "ComputeSnapshotBU": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "getConfigSnapshotRow",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "IsRevenueRelevant",
+            "saqlExpression": "case  when 'ftxt_Source__c' == \"CRD\" then 'CRD_fchk_IsRevenueRelevant__c'  when 'ftxt_Source__c' == \"SER\" then 'SER_fchk_IsRevenueRelevant__c'  when 'ftxt_Source__c' == \"TOL\" then 'TOL_fchk_IsRevenueRelevant__c' else \"\" end",
+            "label": "IsRevenueRelevant",
+            "type": "Text"
+          },
+          {
+            "name": "ScheduleType",
+            "saqlExpression": "case when 'ftxt_Source__c' == \"PRD\" then \"Product\"  when 'ftxt_Source__c' == \"CRD\" then \"QuickSaving\"  when 'ftxt_Source__c' == \"SER\" then \"Service\"  when 'ftxt_Source__c' == \"TOL\" then \"Toolings\" else \"\" end",
+            "label": "ScheduleType",
+            "type": "Text"
+          },
+          {
+            "name": "BU",
+            "saqlExpression": "case when 'ftxt_Source__c' == \"PRD\" then 'PRD_ftxt_Level2__c'  when 'ftxt_Source__c' == \"CRD\" then 'CRD_ftxt_Level2__c'  when 'ftxt_Source__c' == \"SER\" then 'SER_ftxt_Level2__c'  when 'ftxt_Source__c' == \"TOL\" then 'TOL_ftxt_Level2__c' else \"\" end",
+            "label": "BU",
+            "type": "Text"
+          },
+          {
+            "precision": 14,
+            "name": "fcur_EBITSOPPlus4__c",
+            "saqlExpression": "'fnum_EBITSOP4local__c'*'UP2GO_CPRM_BM__num_FxRateEUR__c'",
+            "scale": 2,
+            "label": "fcur_EBITSOPPlus4__c",
+            "type": "Numeric"
+          },
+          {
+            "precision": 14,
+            "name": "fcur_SalesSOPPlus4__c",
+            "saqlExpression": "case when 'ftxt_Source__c' == \"CRD\" \nthen -'CRD_fcur_CostSOPPlus4__c'/'UP2GO_CPRM_BM__num_FxRateEUR__c'\nelse 'fnum_SalesSOP4local__c'*'UP2GO_CPRM_BM__num_FxRateEUR__c' end",
+            "scale": 2,
+            "label": "fcur_SalesSOPPlus4__c",
+            "type": "Numeric"
+          },
+          {
+            "name": "LIid",
+            "saqlExpression": "case when 'ftxt_Source__c' == \"PRD\" then 'UP2GO_CPRM_BM__txt_ProductScheduleId__c'  when 'ftxt_Source__c' == \"CRD\" then 'UP2GO_CPRM_BM__txt_CreditId__c'  when 'ftxt_Source__c' == \"SER\" then 'txt_ServiceScheduleId__c'  when 'ftxt_Source__c' == \"TOL\" then 'UP2GO_CPRM_BM__txt_ToolingId__c' else \"\" end",
+            "label": "LIid",
+            "type": "Text"
+          },
+          {
+            "precision": 14,
+            "name": "Volume",
+            "saqlExpression": "'UP2GO_CPRM_BM__PRS_fnum_NumberOfProducts__c'",
+            "scale": 2,
+            "label": "Volume",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "name": "PiecePricewoAdder",
+            "saqlExpression": "'UP2GO_CPRM_BM__PRS_cur_DiscountedPrice__c'*'UP2GO_CPRM_BM__num_FxRateEUR__c'",
+            "scale": 5,
+            "label": "Piece Price w/o Adder (LC)",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "saqlExpression": "'PRS_cur_BaseCost__c'*'UP2GO_CPRM_BM__num_FxRateEUR__c'",
+            "name": "PPCBase",
+            "scale": 5,
+            "label": "PPC Base (LC)",
+            "type": "Numeric"
+          },
+          {
+            "precision": 14,
+            "name": "SGATotal",
+            "saqlExpression": "'PRS_pct_SGAUnitCost__c'",
+            "scale": 4,
+            "label": "SG&A Total (%)",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "name": "CustomerPiecePriceinclAmortization",
+            "saqlExpression": "'PRS_fcur_TotalProductPrice__c'*'UP2GO_CPRM_BM__num_FxRateEUR__c'",
+            "scale": 4,
+            "label": "Customer Piece Price incl. Amortization (LC)",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "name": "TotalOneTimeCostsWSGA",
+            "saqlExpression": "'PRS_fcur_TotalIncidentalCost__c'*'UP2GO_CPRM_BM__num_FxRateEUR__c'",
+            "scale": 5,
+            "label": "Total One-Time Costs WSGA (LC)",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "name": "PPCAdderTotal",
+            "saqlExpression": "('PRS_fcur_BaseProductCost__c'-'PRS_cur_BaseCost__c')*'UP2GO_CPRM_BM__num_FxRateEUR__c'",
+            "scale": 5,
+            "label": "PPC Adder Total (LC)",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "name": "TotalCostsSGAAdderperPiece",
+            "saqlExpression": "'PRS_fcur_TotalIncidentalCost__c'*'UP2GO_CPRM_BM__num_FxRateEUR__c'",
+            "scale": 5,
+            "label": "Total Costs SG&A Adder per Piece (LC)",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "name": "TotalProductOneTimePaymentsTC",
+            "saqlExpression": "'PRS_fnum_OneTimePayments__c'",
+            "scale": 5,
+            "label": "Total Product One-Time Payments (TC)",
+            "type": "Numeric"
+          },
+          {
+            "precision": 10,
+            "name": "ExchangeRate",
+            "saqlExpression": "case when UP2GO_CPRM_BM__num_FxRateEUR__c != 0 then 1/'UP2GO_CPRM_BM__num_FxRateEUR__c' else 1 end",
+            "scale": 4,
+            "label": "ExchangeRate",
+            "type": "Numeric"
+          },
+          {
+            "name": "SOP4",
+            "saqlExpression": "case when 'ftxt_Source__c' == \"PRD\" then 'PRS_ftxt_IncludeInSOPPlusN__c'  when 'ftxt_Source__c' == \"CRD\" then 'CRD_ftxt_IncludeInSOPPlusN__c'  when 'ftxt_Source__c' == \"SER\" then 'SES_ftxt_IncludeInSOPPlusN__c'  when 'ftxt_Source__c' == \"TOL\" then 'TOL_ftxt_IncludeInSOPPlusN__c' else \"\" end",
+            "label": "SOP4",
+            "type": "Text"
+          },
+          {
+            "precision": 10,
+            "name": "PPCandAdder",
+            "saqlExpression": "case when 'ftxt_Source__c' == \"PRD\" then  \n((('fnum_SalesSOP4local__c' - 'fnum_EBITSOP4local__c')/'UP2GO_CPRM_BM__PRS_fnum_NumberOfProducts__c') - ('PRS_fcur_TotalIncidentalCost__c'))/(1 + 'PRS_pct_SGAUnitCost__c'/100)*'UP2GO_CPRM_BM__num_FxRateEUR__c'\nelse 0 end",
+            "scale": 5,
+            "label": "PPC with Adder",
+            "type": "Numeric"
+          },
+          {
+            "name": "MatchKey",
+            "saqlExpression": "case \nwhen 'ftxt_Source__c' == \"PRD\" then 'UP2GO_CPRM_BM__PRD_Id__c'  + substr('fdat_Date__c',1, 4)\nwhen 'ftxt_Source__c' == \"CRD\" then 'UP2GO_CPRM_BM__CRD_Id__c'  \nwhen 'ftxt_Source__c' == \"SER\" then 'SER_id__c'  + substr('fdat_Date__c',1, 4)\nwhen 'ftxt_Source__c' == \"TOL\" then 'UP2GO_CPRM_BM__TOL_Id__c' else \"\" end",
+            "label": "MatchKey",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "ComputeDuplicates": {
+      "action": "computeRelative",
+      "parameters": {
+        "partitionBy": ["DuplicateCheck"],
+        "orderBy": [{
+          "name": "PrjStepDate",
+          "direction": "desc"
+        }],
+        "source": "AppendFreezeSchedules",
+        "computedFields": [{
+          "expression": {
+            "saqlExpression": "case when current('Prj.DDFRId') == first('Prj.DDFRId') then \"Keep\" else \"Drop\" end",
+            "type": "Text"
+          },
+          "name": "Duplicate",
+          "label": "Duplicate"
+        }]
+      }
+    },
+    "getDecision": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Name"},
+          {"name": "Id"},
+          {"name": "UP2GO_CPRM_BM__lkp_Project__c"},
+          {"name": "pkl_Outcome__c"},
+          {"name": "UP2GO_2T__dat_DateTimeClosed__c"},
+          {"name": "UP2GO_CPRM_BM__txt_ShortName__c"}
+        ],
+        "object": "UP2GO_2T__Decision2__c"
+      }
+    },
+    "augCurrenctToProduct": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["IsoCode"],
+        "left": "filterProducts",
+        "left_key": ["CurrencyIsoCode"],
+        "right_select": ["ConversionRate"],
+        "right": "getCurrency",
+        "relationship": "Currency",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "cpxSnapsthotProject": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "cprLatestDecision",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "lkp_Project__c",
+            "saqlExpression": "'Project.lkp_Project__c'",
+            "label": "lkp_Project__c",
+            "type": "Text"
+          },
+          {
+            "saqlExpression": "'ConfigSnap.UP2GO_CPRM_BM__lkp_Gate__c'",
+            "name": "PrjStepID",
+            "label": "PrjStepID",
+            "type": "Text"
+          },
+          {
+            "name": "ProjectStep",
+            "saqlExpression": "'ConfigSnap.Decision.Name'",
+            "label": "ProjectStep",
+            "type": "Text"
+          },
+          {
+            "saqlExpression": "case when 'FilterMostRecent' == 'ConfigSnap.CreatedDate' then \"1\" else \"0\" end",
+            "name": "FilterRecent",
+            "label": "FilterRecent",
+            "type": "Text"
+          },
+          {
+            "name": "PrjStepDate",
+            "saqlExpression": "toDate('ConfigSnap.CreatedDate',\"yyyy-MM-ddTHH:mm:ss.000Z\")",
+            "format": "yy-MM-dd\u2019T\u2019HH:mm:ss\u2019Z\u2019",
+            "label": "PrjStepDate",
+            "type": "Date",
+            "isYearEndFiscalYear": true
+          }
+        ]
+      }
+    },
+    "filterServices": {
+      "action": "filter",
+      "parameters": {
+        "source": "augCurrencyToService",
+        "saqlFilter": "('SER.lkp_Project__c' is not null || 'SER.UP2GO_CPRM_BM__lkp_SalesProject__c' is not null)  && 'SER.fchk_IsRevenueRelevant__c' == \"true\""
+      }
+    },
+    "augDecisionToConfigSnap": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "getConfigSnapshot",
+        "left_key": ["UP2GO_CPRM_BM__lkp_Gate__c"],
+        "right_select": [
+          "Name",
+          "UP2GO_CPRM_BM__txt_ShortName__c"
+        ],
+        "right": "getDecision",
+        "relationship": "Decision",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "GetSERSchedules": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "UP2GO_CPRM_BM__mdr_Service__c"},
+          {"name": "fcur_EBITSOPPlus4__c"},
+          {"name": "fcur_SalesSOPPlus4__c"},
+          {"name": "ftxt_IncludeInSOPPlusN__c"},
+          {"name": "CurrencyIsoCode"},
+          {"name": "Name"}
+        ],
+        "object": "UP2GO_CPRM_BM__ServiceSchedule__c"
+      }
+    },
+    "slicePrdScheduleFreezes": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "select",
+        "source": "computePrdScheduleFreezeFields",
+        "fields": [
+          {"name": "Id"},
+          {"name": "LIid"},
+          {"name": "fcur_EBITSOPPlus4__c"},
+          {"name": "ExchangeRate"},
+          {"name": "PiecePricewoAdder"},
+          {"name": "PPCandAdder"},
+          {"name": "CustomerPiecePriceinclAmortization"},
+          {"name": "SGATotal"},
+          {"name": "Volume"},
+          {"name": "PPCAdderTotal"},
+          {"name": "TotalProductOneTimePaymentsTC"},
+          {"name": "TotalCostsSGAAdderperPiece"},
+          {"name": "TotalOneTimeCostsWSGA"},
+          {"name": "PPCBase"},
+          {"name": "fcur_SalesSOPPlus4__c"},
+          {"name": "Prj.DDFRId"},
+          {"name": "lkp_Project__c"},
+          {"name": "ScheduleType"},
+          {"name": "IsRevenueRelevant"},
+          {"name": "BU"},
+          {"name": "ProjectStep"},
+          {"name": "PrjStepID"},
+          {"name": "PrjStepDate"},
+          {"name": "DuplicateCheck"},
+          {"name": "SOP4"},
+          {"name": "MatchKey"}
+        ]
+      }
+    },
+    "GetSaaSSchedule": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "CurrencyIsoCode"},
+          {"name": "fchk_IsSOPPlus4__c"},
+          {"name": "Id"},
+          {"name": "fpct_EBITSOPPlus4__c"},
+          {"name": "fnum_numofProducts__c"},
+          {"name": "fcur_Sales__c"},
+          {"name": "fcur_TotalServiceCostsOverall__c"},
+          {"name": "fcur_SalesSOPPlus4__c"},
+          {"name": "fcur_SalesDOSPlus5__c"},
+          {"name": "Name"},
+          {"name": "num_VolumeOverride__c"},
+          {"name": "UP2GO_CPRM_BM__fcur_PriceForScheduledFX__c"},
+          {"name": "UP2GO_CPRM_BM__fcur_RevenueForScheduledFX__c"},
+          {"name": "UP2GO_CPRM_BM__mdr_SaaS__c"}
+        ],
+        "object": "UP2GO_CPRM_BM__SaasSchedule__c"
+      }
+    },
+    "filterProducts": {
+      "action": "filter",
+      "parameters": {
+        "source": "JoinPrd2PrdSchedules",
+        "saqlFilter": "('PRD.lkp_Project__c' is not null || 'PRD.UP2GO_CPRM_BM__lkp_SalesProject__c' is not null)  && 'PRD.UP2GO_CPRM_BM__fchk_IsRevenueRelevant__c' == \"true\"\n\n"
+      }
+    },
+    "JoinSaaaS2SaasSchedule": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "GetSaaSSchedule",
+        "left_key": ["UP2GO_CPRM_BM__mdr_SaaS__c"],
+        "right_select": [
+          "fchk_IsRevenueRelevant__c",
+          "ftxt_Level2__c",
+          "ftxt_Level3__c",
+          "lkp_Project__c",
+          "UP2GO_CPRM_BM__lkp_SalesProject__c"
+        ],
+        "right": "GetSaaS",
+        "relationship": "SaaS",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "appendSPJfreezes": {
+      "action": "append",
+      "parameters": {
+        "enableDisjointedSchemaMerge": true,
+        "sources": [
+          "cpxSPJPRD",
+          "cpxSPJQS",
+          "cpxSPJSER",
+          "cpxSPJToolings",
+          "cpxSPJSaaS"
+        ]
+      }
+    },
+    "SliceToolingsFreezes": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "select",
+        "source": "ComputeToolingsFreezesFields",
+        "fields": [
+          {"name": "fcur_EBITSOPPlus4__c"},
+          {"name": "ExchangeRate"},
+          {"name": "fcur_SalesSOPPlus4__c"},
+          {"name": "Prj.DDFRId"},
+          {"name": "lkp_Project__c"},
+          {"name": "ScheduleType"},
+          {"name": "IsRevenueRelevant"},
+          {"name": "BU"},
+          {"name": "ProjectStep"},
+          {"name": "PrjStepID"},
+          {"name": "PrjStepDate"},
+          {"name": "DuplicateCheck"},
+          {"name": "Id"},
+          {"name": "SOP4"},
+          {"name": "CurTool.ftxt_Level2__c"},
+          {"name": "CurTool.lkp_Project__c"},
+          {"name": "CurTool.fchk_IsRevenueRelevant__c"},
+          {"name": "CurTool.UP2GO_CPRM_BM__cur_Price__c"},
+          {"name": "CurTool.UP2GO_CPRM_BM__cur_Cost__c"},
+          {"name": "CurTool.UP2GO_CPRM_BM__num_Quantity__c"},
+          {"name": "MatchKey"}
+        ]
+      }
+    },
+    "GetSPJSaaS": {
+      "action": "edgemart",
+      "parameters": {"alias": "${Variables.SPJDSRSaaSSchedules.datasetAlias}"}
+    },
+    "NormalizeCredit": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "drop",
+        "source": "ComputeCredit",
+        "fields": [
+          {"name": "fcur_CostSOPPlus4__c"},
+          {"name": "UP2GO_CPRM_BM__ftxt_BusinessUnit__c"},
+          {"name": "fchk_IsRevenueRelevant__c"},
+          {"name": "ftxt_IncludeInSOPPlusN__c"},
+          {"name": "Currency.ConversionRate"}
+        ]
+      }
+    },
+    "RegisterCPjSchedulesDataset": {
+      "action": "sfdcRegister",
+      "parameters": {
+        "name": "Project Management Schedules for EBIT Bridge",
+        "alias": "${App.Datasets.PM_Schedules_EBIT_Bridge_tp.FullyQualifiedName}",
+        "source": "cprMostRecentSE4"
+      }
+    },
+    "ComputeSerBU": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "filterServices",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "saqlExpression": "'SER.ftxt_Level2__c'",
+            "name": "BU",
+            "label": "Business Unit",
+            "type": "Text"
+          },
+          {
+            "name": "ScheduleType",
+            "saqlExpression": "\"Service\"",
+            "label": "ScheduleType",
+            "type": "Text"
+          },
+          {
+            "name": "lkp_Project__c",
+            "saqlExpression": "'SER.lkp_Project__c'",
+            "label": "lkp_Project__c",
+            "type": "Text"
+          },
+          {
+            "name": "IsRevenueRelevant",
+            "saqlExpression": "'SER.fchk_IsRevenueRelevant__c'",
+            "label": "IsRevenueRelevant",
+            "type": "Text"
+          },
+          {
+            "precision": 10,
+            "name": "ExchangeRate",
+            "saqlExpression": "'Currency.ConversionRate'",
+            "scale": 4,
+            "label": "ExchangeRate",
+            "type": "Numeric"
+          },
+          {
+            "name": "SOP4",
+            "saqlExpression": "'ftxt_IncludeInSOPPlusN__c'",
+            "label": "SOP4",
+            "type": "Text"
+          },
+          {
+            "name": "MatchKey",
+            "saqlExpression": "'UP2GO_CPRM_BM__mdr_Service__c' + 'Name'",
+            "label": "MatchKey",
+            "type": "Text"
+          },
+          {
+            "name": "ProductClass",
+            "saqlExpression": "'SER.ftxt_Level3__c'",
+            "label": "ProductClass",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "fltrPRDoneSPJ": {
+      "action": "filter",
+      "parameters": {
+        "source": "cprFilterPRD",
+        "saqlFilter": "'FilterPRD' == 1"
+      }
+    },
+    "cpxSPJSER": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "GetSPJSERschedules",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "ScheduleType",
+            "saqlExpression": "\"Service\"",
+            "label": "ScheduleType",
+            "type": "Text"
+          },
+          {
+            "name": "MatchKey",
+            "saqlExpression": "'UP2GO_CPRM_BM__mdr_Service__c' + 'Name'",
+            "label": "MatchKey",
+            "type": "Text"
+          },
+          {
+            "name": "ProductClass",
+            "saqlExpression": "'Service.ftxt_Level3__c'",
+            "label": "ProductClass",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "AugmentProject2PrdSchedules": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["DDFRId"],
+        "left": "GetPrdSchedulesFreezes",
+        "left_key": ["prd2prj.Id"],
+        "right_select": [
+          "CPj.Id",
+          "Decision.Name",
+          "DDFRId",
+          "SnapshotDate"
+        ],
+        "right": "GetProjectFreezes",
+        "relationship": "Prj",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "ComputeSortRank": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "updateDivFromSnap",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "precision": 6,
+            "name": "SortRank",
+            "saqlExpression": "case \nwhen starts_with('ProjectStep', \"SE4\") then 10\nwhen starts_with('ProjectStep', \"QGC0\") then 20\nwhen starts_with('ProjectStep', \"QGC1\") then 30\nwhen starts_with('ProjectStep', \"QGC2\") then 40\nwhen starts_with('ProjectStep', \"QGC3\") then 50\nwhen starts_with('ProjectStep', \"QGC4\") then 60\nwhen starts_with('ProjectStep', \"QGC5\") then 70\nwhen starts_with('ProjectStep', \"Current\") then 99\nend",
+            "scale": 0,
+            "label": "SortRank",
+            "type": "Numeric"
+          },
+          {
+            "saqlExpression": "case when 'DDFR.Decision.DDFR.Decision.UP2GO_CPRM_BM__txt_ShortName__c' == \"SE4\" || 'ProjectStep' == \"SE4\" then 'lkp_Project__c' + \"SE4\" end",
+            "name": "SE4filter",
+            "label": "SE4filter",
+            "type": "Text"
+          },
+          {
+            "name": "DataSource",
+            "saqlExpression": "\"Salesforce\"",
+            "label": "DataSource",
+            "type": "Text"
+          },
+          {
+            "precision": 10,
+            "name": "Config_pct_EBIT_SOP4",
+            "saqlExpression": "coalesce('ConfigSnap.fpct_TotalEBITSOPPlus4__c', 'DDFR.fpct_LiveEBITSOPPlus4__c')",
+            "scale": 4,
+            "label": "Config_pct_EBIT_SOP4",
+            "type": "Numeric"
+          },
+          {
+            "name": "BudgetStatus",
+            "saqlExpression": "case 'CPj.pkl_BudgetStatus__c' \nwhen \"Green\" then \"3_Green\" \nwhen \"Yellow\" then \"2_Yellow\" \nwhen \"Red\" then \"1_Red\" \n end",
+            "label": "BudgetStatus",
+            "type": "Text"
+          },
+          {
+            "saqlExpression": "case 'CPj.pkl_CustomerSatisfactionStatus__c' \nwhen \"Green\" then \"3_Green\" \nwhen \"Yellow\" then \"2_Yellow\" \nwhen \"Red\" then \"1_Red\" \n end",
+            "name": "CustomerSatisfactionStatus",
+            "label": "CustomerSatisfactionStatus",
+            "type": "Text"
+          },
+          {
+            "saqlExpression": "case 'CPj.pkl_ProfitStatus__c' \nwhen \"Green\" then \"3_Green\" \nwhen \"Yellow\" then \"2_Yellow\" \nwhen \"Red\" then \"1_Red\" \n end",
+            "name": "ProfitStatus",
+            "label": "ProfitStatus",
+            "type": "Text"
+          },
+          {
+            "saqlExpression": "case 'CPj.pkl_ResourcesStatus__c' \nwhen \"Green\" then \"3_Green\" \nwhen \"Yellow\" then \"2_Yellow\" \nwhen \"Red\" then \"1_Red\" \n end",
+            "name": "ResourcesStatus",
+            "label": "ResourcesStatus",
+            "type": "Text"
+          },
+          {
+            "saqlExpression": "case 'CPj.pkl_SpecQualityStatus__c' \nwhen \"Green\" then \"3_Green\" \nwhen \"Yellow\" then \"2_Yellow\" \nwhen \"Red\" then \"1_Red\" \n end",
+            "name": "SpecQualityStatus",
+            "label": "SpecQualityStatus",
+            "type": "Text"
+          },
+          {
+            "saqlExpression": "case 'CPj.pkl_TimeStatus__c' \nwhen \"Green\" then \"3_Green\" \nwhen \"Yellow\" then \"2_Yellow\" \nwhen \"Red\" then \"1_Red\" \n end",
+            "name": "TimeStatus",
+            "label": "TimeStatus",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "getSAPdata": {
+      "action": "edgemart",
+      "parameters": {"alias": "${Variables.EBIT_Bridge_from_SAP.datasetAlias}"}
+    },
+    "cpxSPJQS": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "GetSPJQuickSavings",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "ScheduleType",
+            "saqlExpression": "\"QuickSaving\"",
+            "label": "ScheduleType",
+            "type": "Text"
+          },
+          {
+            "name": "MatchKey",
+            "saqlExpression": "'Id'",
+            "label": "MatchKey",
+            "type": "Text"
+          },
+          {
+            "name": "ProductClass",
+            "saqlExpression": "'ftxt_Level3__c'",
+            "label": "ProductClass",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "getCPJ": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "Name"},
+          {"name": "UP2GO_CPRM_BM__lkp_OrgTeam__c"},
+          {"name": "pkl_BBMDivision__c"},
+          {"name": "fcur_LiveEBITSOPPlus4__c"},
+          {"name": "fcur_LiveSalesSOPPlus4__c"},
+          {"name": "lkp_SalesProject__c"},
+          {"name": "lkp_LegalEntity__c"},
+          {"name": "fpct_LiveEBITSOPPlus4__c"},
+          {"name": "pkl_TimeStatus__c"},
+          {"name": "pkl_SpecQualityStatus__c"},
+          {"name": "pkl_ResourcesStatus__c"},
+          {"name": "pkl_ProfitStatus__c"},
+          {"name": "pkl_CustomerSatisfactionStatus__c"},
+          {"name": "pkl_BudgetStatus__c"},
+          {"name": "fimg_TimeStatusLight__c"},
+          {"name": "fimg_SpecQualityStatusLight__c"},
+          {"name": "fimg_ResourcesStatusLight__c"},
+          {"name": "fimg_ProfitStatusLight__c"},
+          {"name": "fimg_CustomerSatisfactionStatusLight__c"},
+          {"name": "fimg_BudgetStatusLight__c"}
+        ],
+        "object": "UP2GO_CPRM_BM__Project__c"
+      }
+    },
+    "fltDecisionLastAccepted": {
+      "action": "filter",
+      "parameters": {
+        "source": "getDecision",
+        "saqlFilter": "pkl_Outcome__c==\"Passed\" && UP2GO_CPRM_BM__lkp_Project__c != \"\" && Name in [\"QGC0\", \"QGC1\", \"QGC2\", \"QGC3\", \"QGC4\", \"QGC5\"]"
+      }
+    },
+    "sliceFreezeSchedules": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "select",
+        "source": "FilterDuplicates",
+        "fields": [
+          {"name": "Id"},
+          {"name": "LIid"},
+          {"name": "fcur_EBITSOPPlus4__c"},
+          {"name": "ExchangeRate"},
+          {"name": "PiecePricewoAdder"},
+          {"name": "CustomerPiecePriceinclAmortization"},
+          {"name": "SGATotal"},
+          {"name": "Volume"},
+          {"name": "PPCAdderTotal"},
+          {"name": "TotalProductOneTimePaymentsTC"},
+          {"name": "PPCandAdder"},
+          {"name": "TotalCostsSGAAdderperPiece"},
+          {"name": "TotalOneTimeCostsWSGA"},
+          {"name": "PPCBase"},
+          {"name": "fcur_SalesSOPPlus4__c"},
+          {"name": "lkp_Project__c"},
+          {"name": "ScheduleType"},
+          {"name": "IsRevenueRelevant"},
+          {"name": "BU"},
+          {"name": "ProjectStep"},
+          {"name": "PrjStepID"},
+          {"name": "PrjStepDate"},
+          {"name": "SOP4"},
+          {"name": "PRD.fcur_EBITSOPPlus4__c"},
+          {"name": "PRD.fcur_SalesSOPPlus4__c"},
+          {"name": "CurTool.ftxt_Level2__c"},
+          {"name": "CurTool.lkp_Project__c"},
+          {"name": "CurTool.fchk_IsRevenueRelevant__c"},
+          {"name": "CurTool.UP2GO_CPRM_BM__cur_Price__c"},
+          {"name": "CurTool.UP2GO_CPRM_BM__cur_Cost__c"},
+          {"name": "CurTool.UP2GO_CPRM_BM__num_Quantity__c"},
+          {"name": "MatchKey"}
+        ]
+      }
+    },
+    "AugmentPrj2ToolingsFreezes": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["DDFRId"],
+        "left": "GetToolingsFreezes",
+        "left_key": ["tooling2prj.DDFRId"],
+        "right_select": [
+          "DDFRId",
+          "CPj.Id",
+          "SnapshotDate",
+          "Decision.Name"
+        ],
+        "right": "GetProjectFreezes",
+        "relationship": "Prj",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "AugmentQuickSavings2QSFreezes": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["lkp_Project__c"],
+        "left": "AugmentPrj2QuickSavings",
+        "left_key": ["Prj.CPj.Id"],
+        "right_select": ["BU"],
+        "right": "NormalizeCredit",
+        "relationship": "QS",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "augRecentDecision": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["UP2GO_CPRM_BM__lkp_Project__c"],
+        "left": "AugmentProjectInformation",
+        "left_key": ["lkp_Project__c"],
+        "right_select": ["Name"],
+        "right": "fltOldDecisions",
+        "relationship": "LastAcceptedGate",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "augCPJtoSPJ": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "appendSPJfreezes",
+        "left_key": ["Id"],
+        "right_select": [
+          "PrjStepID",
+          "ProjectStep",
+          "lkp_Project__c"
+        ],
+        "right": "computeCurrent",
+        "relationship": "CPJ",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "GetSPJToolings": {
+      "action": "edgemart",
+      "parameters": {"alias": "${Variables.SPJDSRToolings.datasetAlias}"}
+    },
+    "cprMostRecentSE4": {
+      "action": "computeRelative",
+      "parameters": {
+        "partitionBy": ["SE4filter"],
+        "orderBy": [{
+          "name": "PrjStepDate",
+          "direction": "desc"
+        }],
+        "source": "ComputeSortRank",
+        "computedFields": [{
+          "expression": {
+            "saqlExpression": "case when current('PrjStepDate_sec_epoch') == first('PrjStepDate_sec_epoch') && current('SE4filter') like \"%SE4%\" then \"SE4\" else \"\" end",
+            "type": "Text"
+          },
+          "name": "MostRecentSE4",
+          "label": "MostRecentSE4"
+        }]
+      }
+    },
+    "augSPJtoCPJ": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "getCPJ",
+        "left_key": ["lkp_SalesProject__c"],
+        "right_select": [
+          "ftxt_PID__c",
+          "ftxt_AcquisitionCustomerGroup__c",
+          "ftxt_AcquiCustomerRegion__c",
+          "Name",
+          "ftxt_GlobalCustomerTeamName__c",
+          "flnk_Owner__c",
+          "pkl_AcquisitionProjectImpactCategory__c",
+          "ftxt_CurrentStageName__c",
+          "dat_BoschSOP__c",
+          "ftxt_Acquisition_Customer__c",
+          "ftxt_Owner_Name__c",
+          "ftxt_NextGateName__c",
+          "fpct_CalculatedEBITSOPPlus4__c",
+          "rsum_TotalEBITSOPPlus4__c",
+          "rsum_TotalSalesSOPPlus4__c",
+          "SERRollup.Name",
+          "PRDrollup.PRDComma",
+          "SERrollup.SERComma",
+          "CurrencyIsoCode"
+        ],
+        "right": "augServiceComma",
+        "relationship": "SPJ",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "cprFilterSER": {
+      "action": "computeRelative",
+      "parameters": {
+        "partitionBy": ["UP2GO_CPRM_BM__lkp_SalesProject__c"],
+        "orderBy": [{
+          "name": "NumberOfSER",
+          "direction": "desc"
+        }],
+        "source": "cprSERrollupSPJ",
+        "computedFields": [{
+          "expression": {
+            "saqlExpression": "case when first('NumberOfSER') == current('NumberOfSER') then 1 else 0 end",
+            "type": "Numeric"
+          },
+          "name": "FilterSER",
+          "label": "FilterSER"
+        }]
+      }
+    },
+    "FilterSERoneSPJ": {
+      "action": "filter",
+      "parameters": {
+        "source": "cprFilterSER",
+        "saqlFilter": "'FilterSER' == 1"
+      }
+    },
+    "AugmentPrj2SerFreezes": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["DDFRId"],
+        "left": "GetSERSchedulesFreezes",
+        "left_key": ["ser2prj.Id"],
+        "right_select": [
+          "Decision.Name",
+          "DDFRId",
+          "SnapshotDate",
+          "CPj.Id"
+        ],
+        "right": "GetProjectFreezes",
+        "relationship": "Prj",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "getSPJ": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "ftxt_PID__c"},
+          {"name": "Id"},
+          {"name": "ftxt_AcquisitionCustomerGroup__c"},
+          {"name": "ftxt_AcquiCustomerRegion__c"},
+          {"name": "Name"},
+          {"name": "ftxt_GlobalCustomerTeamName__c"},
+          {"name": "flnk_Owner__c"},
+          {"name": "pkl_AcquisitionProjectImpactCategory__c"},
+          {"name": "ftxt_CurrentStageName__c"},
+          {"name": "dat_BoschSOP__c"},
+          {"name": "ftxt_Acquisition_Customer__c"},
+          {"name": "ftxt_Owner_Name__c"},
+          {"name": "ftxt_NextGateName__c"},
+          {"name": "fpct_CalculatedEBITSOPPlus4__c"},
+          {"name": "rsum_TotalEBITSOPPlus4__c"},
+          {"name": "rsum_TotalSalesSOPPlus4__c"},
+          {"name": "CurrencyIsoCode"}
+        ],
+        "object": "UP2GO_CPRM_BM__SalesProject__c"
+      }
+    }
+  },
+  "_type": "dataflow",
+  "description": "Project Management Schedules Data (EBIT Bridge)",
+  "MasterLabel": "Schedules Data (EBIT Bridge)",
+  "nextRun": "2023-07-06T00:30:00.000Z",
+  "frequency": "day",
+  "WorkflowStatus": "Inactive",
+  "isDeletable": true,
+  "longRunningAlertInMins": "",
+  "scheduleAttributes": {
+    "scheduleType": "weekly",
+    "timeZone": "Europe/Berlin",
+    "startTime": {
+      "hour": 2,
+      "minute": 30
+    },
+    "daysOfWeek": [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ]
+  },
+  "DataflowType": "USER",
+  "name": "Schedules_Data_EBIT_Bridge",
+  "RefreshFrequencySec": 86400,
+  "interval": 1,
+  "_url": "/insights/internal_api/v1.0/esObject/workflow//json",
+  "_uid": ""
+}

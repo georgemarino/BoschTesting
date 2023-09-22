@@ -1,0 +1,82 @@
+{
+  "templateType" : "app",
+  "label" : "My RASIC",
+  "name" : "My_RASIC",
+  "assetVersion" : 50.0,
+  "variableDefinition" : "variables.json",
+  "uiDefinition" : "ui.json",
+  "rules" : [
+    {
+      "type" : "templateToApp",
+      "file" : "template-to-app-rules.json"
+    },
+    {
+      "type" : "appToTemplate",
+      "file" : "app-to-template-rules.json"
+    }
+  ],
+  "releaseInfo" : {
+    "templateVersion" : "1.9",
+    "notesFile" : "releaseNotes.html"
+  },
+  "folderDefinition" : "folder.json",
+  "externalFiles" : [ ],
+  "lenses" : [ ],
+  "dashboards" : [
+    {
+      "label" : "My Open Workitems",
+      "name" : "My_Open_Workitems_tp",
+      "condition" : "${Variables.Overrides.createAllDashboards}",
+      "file" : "dashboards/My_Open_Workitems.json"
+    },
+    {
+      "label" : "My RASIC Roles on Projects",
+      "name" : "My_RASIC_Roles_on_Projects_tp",
+      "condition" : "${Variables.Overrides.createAllDashboards}",
+      "file" : "dashboards/My_RASIC_Roles_on_Projects.json"
+    }
+  ],
+  "components" : [ ],
+  "eltDataflows" : [
+    {
+      "label" : "MyRASIC: Roles on Project",
+      "name" : "MyRASIC_Roles_on_Project",
+      "condition" : "${Variables.Overrides.createDataflow}",
+      "file" : "dataflow/MyRASIC_Roles_on_Project.json"
+    },
+    {
+      "label" : "MyRASIC: Open Work Items",
+      "name" : "MyRASIC_Open_Work_Items",
+      "condition" : "${Variables.Overrides.createDataflow}",
+      "file" : "dataflow/MyRASIC_Open_Work_Items.json"
+    }
+  ],
+  "recipes" : [ ],
+  "datasetFiles" : [
+    {
+      "label" : "MyRASIC: Members with Project",
+      "name" : "MyRASICMemberswithProject_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/MyRASICMemberswithProject_XMD.json"
+    },
+    {
+      "label" : "My RASIC: Work Items",
+      "name" : "MyRASICWorkItems_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/MyRASICWorkItems_XMD.json"
+    }
+  ],
+  "storedQueries" : [ ],
+  "imageFiles" : [ ],
+  "extendedTypes" : { },
+  "templateDependencies" : [ ],
+  "icons" : {
+    "appBadge" : {
+      "name" : "16.png"
+    },
+    "templateBadge" : {
+      "name" : "default.png"
+    },
+    "templatePreviews" : [ ]
+  }
+}

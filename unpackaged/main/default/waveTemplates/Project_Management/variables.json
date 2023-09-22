@@ -1,0 +1,122 @@
+{
+  "Overrides" : {
+    "label" : "Overrides",
+    "description" : "Internal configuration to allow asset creation overrides, not to be displayed in UI.",
+    "defaultValue" : {
+      "createAllDashboards" : true,
+      "createAllLenses" : true,
+      "createAllExternalFiles" : true,
+      "createDataflow" : true,
+      "createAllDatasetFiles" : true,
+      "createAllImages" : true
+    },
+    "required" : true,
+    "excludeSelected" : false,
+    "excludes" : [ ],
+    "variableType" : {
+      "required" : [
+        "createAllExternalFiles",
+        "createAllDashboards",
+        "createAllImages",
+        "createAllDatasetFiles",
+        "createAllLenses",
+        "createDataflow"
+      ],
+      "type" : "ObjectType",
+      "properties" : {
+        "createAllDashboards" : {
+          "type" : "BooleanType",
+          "enums" : [
+            true,
+            false
+          ]
+        },
+        "createAllLenses" : {
+          "type" : "BooleanType",
+          "enums" : [
+            true,
+            false
+          ]
+        },
+        "createAllExternalFiles" : {
+          "type" : "BooleanType",
+          "enums" : [
+            true,
+            false
+          ]
+        },
+        "createDataflow" : {
+          "type" : "BooleanType",
+          "enums" : [
+            true,
+            false
+          ]
+        },
+        "createAllDatasetFiles" : {
+          "type" : "BooleanType",
+          "enums" : [
+            true,
+            false
+          ]
+        },
+        "createAllImages" : {
+          "type" : "BooleanType",
+          "enums" : [
+            true,
+            false
+          ]
+        }
+      },
+      "strictValidation" : true
+    }
+  },
+  "SPJDSRConfiguration": {
+    "label": "Select the SPJDSR: Configuration dataset",
+    "description": "The SPJDSR: Configuration freeze dataset that exists in this org.",
+     "variableType": {
+         "type": "DatasetType"
+     }
+ },
+ "SPJDSRProductSchedules": {
+  "label": "Select the SPJDSR: ProductSchedules dataset",
+  "description": "The SPJDSR: ProductSchedules freeze dataset that exists in this org.",
+   "variableType": {
+       "type": "DatasetType"
+   }
+},
+"SPJDSRServiceSchedules": {
+  "label": "Select the SPJDSR: ServiceSchedules dataset",
+  "description": "The SPJDSR: ServiceSchedules freeze dataset that exists in this org.",
+   "variableType": {
+       "type": "DatasetType"
+   }
+},
+"SPJDSRCredit": {
+  "label": "Select the SPJDSR: Credit dataset",
+  "description": "The SPJDSR: Credit freeze dataset that exists in this org.",
+   "variableType": {
+       "type": "DatasetType"
+   }
+},
+"SPJDSRToolings": {
+  "label": "Select the SPJDSR: Toolings dataset",
+  "description": "The SPJDSR: Toolings freeze dataset that exists in this org.",
+   "variableType": {
+       "type": "DatasetType"
+   }
+},
+"EBIT_Bridge_from_SAP": {
+  "label": "Select the EBIT Bridge from SAP (upload CSV here) dataset",
+  "description": "The EBIT Bridge from SAP (upload CSV here) dataset that exists in this org.",
+   "variableType": {
+       "type": "DatasetType"
+   }
+},
+"SPJDSRSaaSSchedules": {
+  "label": "Select the SPJDSR: SaaS dataset",
+  "description": "The SPJDSR: SaaS freeze dataset that exists in this org.",
+   "variableType": {
+       "type": "DatasetType"
+   }
+}
+}

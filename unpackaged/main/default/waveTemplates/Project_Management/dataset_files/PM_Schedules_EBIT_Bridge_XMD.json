@@ -1,0 +1,220 @@
+{
+    "dates": [],
+    "derivedDimensions": [],
+    "derivedMeasures": [{
+        "conditionalFormatting": {},
+        "field": "EBIT %",
+        "format": {
+            "customFormat": "[\"#,###.#%\",100]",
+            "delimiters": {}
+        },
+        "showInExplorer": true
+    }, {
+        "conditionalFormatting": {},
+        "field": "EBIT % Base",
+        "format": {
+            "customFormat": "[\"#,###.#%\",1]",
+            "delimiters": {
+                "decimal": ".",
+                "thousands": ","
+            }
+        },
+        "showInExplorer": true
+    }, {
+        "conditionalFormatting": {},
+        "field": "EBIT % Current",
+        "format": {
+            "customFormat": "[\"#,###.#%\",1]",
+            "delimiters": {
+                "decimal": ".",
+                "thousands": ","
+            }
+        },
+        "showInExplorer": true
+    }, {
+        "conditionalFormatting": {},
+        "field": "Sales increase",
+        "format": {
+            "customFormat": "[\"#,###.##%\",100]",
+            "delimiters": {}
+        },
+        "showInExplorer": true
+    }, {
+        "conditionalFormatting": {},
+        "field": "Ebit % Current",
+        "format": {
+            "customFormat": "[\"#,###.#%\",100]",
+            "delimiters": {
+                "decimal": ".",
+                "thousands": ","
+            }
+        },
+        "showInExplorer": true
+    }, {
+        "conditionalFormatting": {},
+        "field": "Ebit % SE4",
+        "format": {
+            "customFormat": "[\"#,###.#%\",100]",
+            "delimiters": {
+                "decimal": ".",
+                "thousands": ","
+            }
+        },
+        "showInExplorer": true
+    }],
+    "dimensions": [{
+        "conditionalFormatting": {},
+        "customActions": [],
+        "field": "CPj.lkp_SalesProject__c",
+        "linkTemplateEnabled": true,
+        "members": [],
+        "recordDisplayFields": [],
+        "recordIdField": "CPj.lkp_SalesProject__c",
+        "salesforceActions": [],
+        "salesforceActionsEnabled": false
+    }, {
+        "conditionalFormatting": {},
+        "customActions": [],
+        "field": "BudgetStatus",
+        "members": [{
+            "label": "Red",
+            "member": "1_Red"
+        }, {
+            "label": "Yellow",
+            "member": "2_Yellow"
+        }, {
+            "label": "Green",
+            "member": "3_Green"
+        }],
+        "recordDisplayFields": [],
+        "salesforceActions": []
+    }, {
+        "conditionalFormatting": {},
+        "customActions": [],
+        "field": "CustomerSatisfactionStatus",
+        "members": [{
+            "label": "Red",
+            "member": "1_Red"
+        }, {
+            "label": "Yellow",
+            "member": "2_Yellow"
+        }, {
+            "label": "Green",
+            "member": "3_Green"
+        }],
+        "recordDisplayFields": [],
+        "salesforceActions": []
+    }, {
+        "conditionalFormatting": {},
+        "customActions": [],
+        "field": "ProfitStatus",
+        "members": [{
+            "label": "Red",
+            "member": "1_Red"
+        }, {
+            "label": "Yellow",
+            "member": "2_Yellow"
+        }, {
+            "label": "Green",
+            "member": "3_Green"
+        }],
+        "recordDisplayFields": [],
+        "salesforceActions": []
+    }, {
+        "conditionalFormatting": {},
+        "customActions": [],
+        "field": "ResourcesStatus",
+        "members": [{
+            "label": "Red",
+            "member": "1_Red"
+        }, {
+            "label": "Green",
+            "member": "3_Green"
+        }],
+        "recordDisplayFields": [],
+        "salesforceActions": []
+    }, {
+        "conditionalFormatting": {},
+        "customActions": [],
+        "field": "SpecQualityStatus",
+        "members": [{
+            "label": "Red",
+            "member": "1_Red"
+        }, {
+            "label": "Yellow",
+            "member": "2_Yellow"
+        }, {
+            "label": "Green",
+            "member": "3_Green"
+        }],
+        "recordDisplayFields": [],
+        "salesforceActions": []
+    }, {
+        "conditionalFormatting": {},
+        "customActions": [],
+        "field": "TimeStatus",
+        "members": [{
+            "label": "Red",
+            "member": "1_Red"
+        }, {
+            "label": "Yellow",
+            "member": "2_Yellow"
+        }, {
+            "label": "Green",
+            "member": "3_Green"
+        }],
+        "recordDisplayFields": [],
+        "salesforceActions": []
+    }],
+    "measures": [{
+        "field": "PPCBase",
+        "format": {
+            "delimiters": {}
+        },
+        "label": "PPC Base (LC)"
+    }, {
+        "field": "SGATotal",
+        "format": {
+            "delimiters": {}
+        },
+        "label": "SG&A Total (%)"
+    }, {
+        "field": "Volume",
+        "format": {
+            "delimiters": {}
+        },
+        "label": "Volume"
+    }, {
+        "field": "TotalProductOneTimePaymentsTC",
+        "format": {
+            "delimiters": {}
+        },
+        "label": "Total Product One-Time Payments (TC)"
+    }, {
+        "field": "TotalOneTimeCostsWSGA",
+        "format": {
+            "delimiters": {}
+        },
+        "label": "Total One-Time Costs WSGA (TC)"
+    }, {
+        "field": "TotalCostsSGAAdderperPiece",
+        "format": {
+            "delimiters": {}
+        },
+        "label": "Total Costs SG&A Adder per Piece (TC)"
+    }, {
+        "field": "PiecePricewoAdder",
+        "format": {
+            "delimiters": {}
+        },
+        "label": "Piece Price w/o Adder (LC)"
+    }, {
+        "field": "PPCAdderTotal",
+        "format": {
+            "delimiters": {}
+        },
+        "label": "PPC Adder Total (TC)"
+    }],
+    "organizations": [],
+    "showDetailsDefaultFields": []
+}

@@ -1,0 +1,42 @@
+{
+    "dates": [],
+    "derivedDimensions": [{
+        "conditionalFormatting": {},
+        "customActions": [],
+        "field": "Source",
+        "members": [{
+            "label": "ProdS",
+            "member": "Service"
+        }, {
+            "label": "TechS",
+            "member": "SaaS"
+        }],
+        "recordDisplayFields": [],
+        "salesforceActions": [],
+        "showInExplorer": true
+    }],
+    "derivedMeasures": [],
+    "dimensions": [{
+        "conditionalFormatting": {},
+        "customActions": [],
+        "field": "SaaS.Source",
+        "members": [{
+            "label": "TechS",
+            "member": "SaaS"
+        }],
+        "recordDisplayFields": [],
+        "salesforceActions": []
+    },
+    {
+        "conditionalFormatting": {},
+        "customActions": [],
+        "field": "SaaS.Name",
+        "label": "TechS Name",
+        "members": [],
+        "recordDisplayFields": [],
+        "salesforceActions": []
+    }],
+    "measures": [],
+    "organizations": [],
+    "showDetailsDefaultFields": []
+}

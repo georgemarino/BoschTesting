@@ -1,0 +1,17 @@
+{
+  "pages" : [ 
+    {
+      "title": "Dataset selection",
+      "variables": [
+        {"name": "SPJDSRConfiguration"},
+        {"name": "SPJDSRProductSchedules"},
+        {"name": "SPJDSRSaaSSchedules"},
+        {"name": "SPJDSRServiceSchedules"},
+        {"name": "SPJDSRCredit"},
+        {"name": "SPJDSRToolings"},
+        {"name": "EBIT_Bridge_from_SAP"}
+      ]
+    }
+  ],
+  "displayMessages" : [ ]
+} 

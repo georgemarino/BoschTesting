@@ -1,0 +1,292 @@
+{
+  "templateType" : "app",
+  "label" : "Project Management",
+  "name" : "Project_Management",
+  "assetVersion" : 58.0,
+  "variableDefinition" : "variables.json",
+  "uiDefinition" : "ui.json",
+  "rules" : [
+    {
+      "type" : "templateToApp",
+      "file" : "template-to-app-rules.json"
+    },
+    {
+      "type" : "appToTemplate",
+      "file" : "app-to-template-rules.json"
+    }
+  ],
+  "releaseInfo" : {
+    "templateVersion" : "1.61",
+    "notesFile" : "releaseNotes.html"
+  },
+  "folderDefinition" : "folder.json",
+  "externalFiles" : [ ],
+  "lenses" : [ ],
+  "dashboards" : [
+    {
+      "label" : "Assessment Status Report",
+      "name" : "Assessment_Status_Report_tp",
+      "condition" : "${Variables.Overrides.createAllDashboards}",
+      "file" : "dashboards/Assessment_Status_Report.json"
+    },
+    {
+      "label" : "Decision Status Report",
+      "name" : "Decision_Status_Report_tp",
+      "condition" : "${Variables.Overrides.createAllDashboards}",
+      "file" : "dashboards/Decision_Status_Report.json"
+    },
+    {
+      "label" : "Decision Status Report - Live",
+      "name" : "Decision_Status_Report_Live1_tp",
+      "condition" : "${Variables.Overrides.createAllDashboards}",
+      "file" : "dashboards/Decision_Status_Report_Live1.json"
+    },
+    {
+      "label" : "Decision Status Report (ext. Assessment)",
+      "name" : "Decision_Status_Report_ext_Assessment_tp",
+      "condition" : "${Variables.Overrides.createAllDashboards}",
+      "file" : "dashboards/Decision_Status_Report_ext_Assessment.json"
+    },
+    {
+      "label" : "Decision Status Report (ext. Assessment) - Live",
+      "name" : "Decision_Status_Report_ext_Assessment_Live_tp",
+      "condition" : "${Variables.Overrides.createAllDashboards}",
+      "file" : "dashboards/Decision_Status_Report_ext_Assessment_Live.json"
+    }
+  ],
+  "components" : [ ],
+  "eltDataflows" : [
+    {
+      "label" : "CPj Decision Status Report (freezes)",
+      "name" : "CPj_Decision_Status_Report_freezes",
+      "condition" : "${Variables.Overrides.createDataflow}",
+      "file" : "dataflow/CPj_Decision_Status_Report_freezes.json"
+    },
+    {
+      "label" : "Schedules Data (EBIT Bridge)",
+      "name" : "Schedules_Data_EBIT_Bridge",
+      "condition" : "${Variables.Overrides.createDataflow}",
+      "file" : "dataflow/Schedules_Data_EBIT_Bridge.json"
+    },
+    {
+      "label" : "BBM Project Base Information",
+      "name" : "BBM_Project_Base_Information",
+      "condition" : "${Variables.Overrides.createDataflow}",
+      "file" : "dataflow/BBM_Project_Base_Information.json"
+    },
+    {
+      "label" : "PRD Schedules With PRD Information",
+      "name" : "PRD_Schedules_With_PRD_Information",
+      "condition" : "${Variables.Overrides.createDataflow}",
+      "file" : "dataflow/PRD_Schedules_With_PRD_Information.json"
+    },
+   {
+      "label" : "PACCRM: CPj QG & Risk Assessment (freezes)",
+      "name" : "PACCRM_CPj_QG_Risk_Assessment_freezes",
+      "condition" : "${Variables.Overrides.createDataflow}",
+      "file" : "dataflow/PACCRM_CPj_QG_Risk_Assessment_freezes.json"
+    },
+    {
+      "label" : "CPJ Decision Status Report (semi-live)",
+      "name" : "CPJ_Decision_Status_Report_semi_live",
+      "condition" : "${Variables.Overrides.createDataflow}",
+      "file" : "dataflow/CPJ_Decision_Status_Report_semi_live.json"
+    },
+    {
+      "label" : "PACCRM: CPj QG & Risk Assessment (semi-live)",
+      "name" : "PACCRM_CPj_QG_Risk_Assessment_semi_live",
+      "condition" : "${Variables.Overrides.createDataflow}",
+      "file" : "dataflow/PACCRM_CPj_QG_Risk_Assessment_semi_live.json"
+    }
+  ],
+  "recipes" : [ ],
+  "datasetFiles" : [
+    {
+      "label" : "Criterion With Measure",
+      "name" : "CriterionWithMeasure_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/CriterionWithMeasure_XMD.json"
+    },
+    {
+      "label" : "DSR: PRJ Risks",
+      "name" : "DSR_PRjRisks_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/DSR_PRjRisks_XMD.json"
+    },
+    {
+      "label" : "DSR: PRj Risks wo Freeze",
+      "name" : "DSR_PRjRisks_woFreeze_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/DSR_PRjRisks_woFreeze_XMD.json"
+    },
+    {
+      "label" : "DSR: Project",
+      "name" : "DSR_Project_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/DSR_Project_XMD.json"
+    },
+    {
+      "label" : "DSR: Project wo Freeze",
+      "name" : "DSR_Project_wo_Freeze_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/DSR_Project_wo_Freeze_XMD.json"
+    },
+    {
+      "label" : "DSR: Criterion",
+      "name" : "DSR_Register_Criterion_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/DSR_Register_Criterion_XMD.json"
+    },
+    {
+      "label" : "DSR: Criterion wo Freeze",
+      "name" : "DSR_Register_Criterion_wo_Freeze_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/DSR_Register_Criterion_wo_Freeze_XMD.json"
+    },
+    {
+      "label" : "DSR: Relevant Gates",
+      "name" : "DSR_Relevant_Gates_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/DSR_Relevant_Gates_XMD.json"
+    },
+    {
+      "label" : "DSR: Relevant Gates wo Freeze",
+      "name" : "DSR_Relevant_Gates_wo_Freeze_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/DSR_Relevant_Gates_wo_Freeze_XMD.json"
+    },
+    {
+      "label" : "EBIT_Bridge_from_SAP_1",
+      "name" : "EBIT_Bridge_from_SAP_1_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/EBIT_Bridge_from_SAP_1_XMD.json"
+    },
+    {
+      "label" : "PACCRM: Assessment Risk",
+      "name" : "PACCRM_AssessmentRisk_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/PACCRM_AssessmentRisk_XMD.json"
+    },
+    {
+      "label" : "PACCRM: Customer Project Risk",
+      "name" : "PACCRM_CPjRisk_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/PACCRM_CPjRisk_XMD.json"
+    },
+    {
+      "label" : "PACCRM: Meeting Freeze",
+      "name" : "PACCRM_Meeting_Freeze_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/PACCRM_Meeting_Freeze_XMD.json"
+    },
+    {
+      "label" : "PACCRM: PACC Freeze",
+      "name" : "PACCRM_PACC_Freeze_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/PACCRM_PACC_Freeze_XMD.json"
+    },
+    {
+      "label" : "PACCRM: PACCRM Freeze",
+      "name" : "PACCRM_PACCRM_Freeze_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/PACCRM_PACCRM_Freeze_XMD.json"
+    },
+    {
+      "label" : "Project Management Schedules for EBIT Bridge",
+      "name" : "PM_Schedules_EBIT_Bridge_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/PM_Schedules_EBIT_Bridge_XMD.json"
+    },
+    {
+      "label" : "PRD Schedules With PRD Information",
+      "name" : "PRD_Schedules_With_PRD_Information_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/PRD_Schedules_With_PRD_Information_tp_XMD.json"
+    },
+    {
+      "label" : "DSR: Project PRD Schedules",
+      "name" : "Project_PRD_Schedules_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/Project_PRD_Schedules_XMD.json"
+    },
+    {
+      "label" : "DSR: Project PRD Schedules wo Freeze",
+      "name" : "Project_PRD_Schedules_wo_Freeze_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/Project_PRD_Schedules_wo_Freeze_XMD.json"
+    },
+    {
+      "label" : "DSR: Project Quick Savings",
+      "name" : "Project_QuickSavings_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/Project_QuickSavings_XMD.json"
+    },
+    {
+      "label" : "DSR: Project Quick Savings wo Freeze",
+      "name" : "Project_Quicksavings_wo_Freeze_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/Project_Quicksavings_wo_Freeze_XMD.json"
+    },
+    {
+      "label" : "DSR: Project SaaS Schedules",
+      "name" : "Project_SaaS_Schedules_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/Project_SaaS_Schedules_XMD.json"
+    },
+    {
+      "label" : "DSR: Project SaaS Schedules wo Freeze",
+      "name" : "Project_SaaS_Schedules_wo_Freeze_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/Project_SaaS_Schedules_wo_Freeze_XMD.json"
+    },
+    {
+      "label" : "DSR: Project SER Schedules",
+      "name" : "Project_SER_Schedules_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/Project_SER_Schedules_XMD.json"
+    },
+    {
+      "label" : "DSR: Project SER Schedules wo Freeze",
+      "name" : "Project_SER_Schedules_wo_Freeze_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/Project_SER_Schedules_wo_Freeze_XMD.json"
+    },
+    {
+      "label" : "DSR: Project Tooling",
+      "name" : "Project_Tooling_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/Project_Tooling_XMD.json"
+    },
+    {
+      "label" : "DSR: Project Tooling wo Freeze",
+      "name" : "Project_Tooling_wo_Freeze_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/Project_Tooling_wo_Freeze_XMD.json"
+    },
+    {
+      "label" : "Riskmarker for Background",
+      "name" : "Riskmarker_for_Background_tp",
+      "condition" : "${Variables.Overrides.createAllDatasetFiles}",
+      "userXmd" : "dataset_files/Riskmarker_for_Background_XMD.json"
+    }
+  ],
+  "storedQueries" : [ ],
+  "imageFiles" : [
+    {
+      "name" : "cd_bosch_supergraphic2pngpng2png",
+      "condition" : "${Variables.Overrides.createAllImages}",
+      "file" : "images/cd_bosch_supergraphic2pngpng2.png"
+    }
+  ],
+  "extendedTypes" : { },
+  "templateDependencies" : [ ],
+  "icons" : {
+    "appBadge" : {
+      "name" : "16.png"
+    },
+    "templateBadge" : {
+      "name" : "default.png"
+    },
+    "templatePreviews" : [ ]
+  }
+}

@@ -1,0 +1,610 @@
+{
+  "notificationLevel": "",
+  "workflowDefinition": {
+    "computeKeepRisk": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "appendCurrent&AfterMeasureRiskMarkerWithCRL",
+        "mergeWithSource": true,
+        "computedFields": [{
+          "saqlExpression": "case when 'Risk.Risk.Id' != \"\" then \"true\" end",
+          "name": "keepRisk",
+          "label": "keepRisk",
+          "type": "Text"
+        }]
+      }
+    },
+    "getRisk": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "UP2GO_2T__pkl_Type__c"},
+          {"name": "chk_ExternalEffects__c"},
+          {"name": "cur_MonetaryValueAfterMeasure__c"},
+          {"name": "cur_MonetaryValueCurrent__c"},
+          {"name": "fcur_ExpectedMonetaryValueCurrent__c"},
+          {"name": "ftxt_Significance__c"},
+          {"name": "Id"},
+          {"name": "lkp_Project__c"},
+          {"name": "pkl_Category__c"},
+          {"name": "txr_Cause__c"},
+          {"name": "txr_Note__c"},
+          {"name": "txt_Indicator__c"},
+          {"name": "txt_RiskEffects__c"},
+          {"name": "txt_RiskEvent__c"},
+          {"name": "txt_Threshold__c"},
+          {"name": "UP2GO_2T__pkl_ImpactCurrent__c"},
+          {"name": "UP2GO_2T__pkl_ProbabilityCurrent__c"},
+          {"name": "Name"},
+          {"name": "ftxt_RiskOrigin__c"},
+          {"name": "fcur_ExpectedMonetaryValueAfterMeasure__c"},
+          {"name": "UP2GO_2T__pkl_ImpactAfterMeasure__c"},
+          {"name": "UP2GO_2T__pkl_ProbabilityAfterMeasure__c"},
+          {"name": "pkl_Top5Risk__c"}
+        ],
+        "object": "UP2GO_2T__Risk__c"
+      }
+    },
+    "tagAssessmentRisk": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "joinP&A&C&C2AssessmentRisk",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "RiskOrigin",
+            "saqlExpression": "\"QG\"",
+            "label": "Risk Origin",
+            "type": "Text"
+          },
+          {
+            "name": "Top5Risk",
+            "saqlExpression": "'Risk.Risk.pkl_Top5Risk__c'",
+            "label": "Top 5 Risk",
+            "type": "Text"
+          },
+          {
+            "name": "IsTop5Risk",
+            "saqlExpression": "case when ('Risk.Risk.pkl_Top5Risk__c' is not null) then \"yes\" else \"no\" end",
+            "label": "Is Top 5 Risk?",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "filterAfterMeasureRiskmarker": {
+      "action": "filter",
+      "parameters": {
+        "source": "joinRisk2Riskmarker",
+        "saqlFilter": "UP2GO_2T__pkl_CurrentOrAfterMeasure__c == \"After Measure\""
+      }
+    },
+    "filterCurrentAndAfterMeasureRiskMarker": {
+      "action": "filter",
+      "parameters": {
+        "filter": "keepRisk:EQ:true",
+        "source": "computeKeepRisk"
+      }
+    },
+    "getRiskMarker": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "fcur_ExpectedMonetaryValue__c"},
+          {"name": "fnum_Color__c"},
+          {"name": "ftxt_EAXAlphabetical__c"},
+          {"name": "ftxt_EAYAlphabetical__c"},
+          {"name": "UP2GO_2T__mdr_Risk__c"},
+          {"name": "UP2GO_2T__pkl_CurrentOrAfterMeasure__c"}
+        ],
+        "object": "UP2GO_2T__Riskmarker__c"
+      }
+    },
+    "joinAssessment2C&C": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "joinChapter2Criterion",
+        "left_key": ["Chapter.UP2GO_2T__mdr_Assessment__c"],
+        "right_select": [
+          "Name",
+          "Id"
+        ],
+        "right": "getAssessment",
+        "relationship": "Assessment",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "filterCPjRisks": {
+      "action": "filter",
+      "parameters": {
+        "source": "joinRisk2Riskmarker",
+        "saqlFilter": "'Risk.lkp_Project__c' is not null"
+      }
+    },
+    "getChapter": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "UP2GO_2T__mdr_Assessment__c"},
+          {"name": "Name"}
+        ],
+        "object": "UP2GO_2T__Chapter__c"
+      }
+    },
+    "getCPj": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "lkp_Assessment__c"},
+          {"name": "Name"},
+          {"name": "lkp_SalesProject__c"}
+        ],
+        "object": "UP2GO_CPRM_BM__Project__c"
+      }
+    },
+    "joinRisk2Riskmarker": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "getRiskMarker",
+        "left_key": ["UP2GO_2T__mdr_Risk__c"],
+        "right_select": [
+          "UP2GO_2T__pkl_Type__c",
+          "chk_ExternalEffects__c",
+          "cur_MonetaryValueAfterMeasure__c",
+          "cur_MonetaryValueCurrent__c",
+          "fcur_ExpectedMonetaryValueCurrent__c",
+          "ftxt_Significance__c",
+          "Id",
+          "lkp_Project__c",
+          "pkl_Category__c",
+          "txr_Cause__c",
+          "txr_Note__c",
+          "txt_Indicator__c",
+          "txt_RiskEffects__c",
+          "txt_RiskEvent__c",
+          "txt_Threshold__c",
+          "UP2GO_2T__pkl_ImpactCurrent__c",
+          "UP2GO_2T__pkl_ProbabilityCurrent__c",
+          "Name",
+          "ftxt_RiskOrigin__c",
+          "fcur_ExpectedMonetaryValueAfterMeasure__c",
+          "UP2GO_2T__pkl_ImpactAfterMeasure__c",
+          "UP2GO_2T__pkl_ProbabilityAfterMeasure__c",
+          "pkl_Top5Risk__c"
+        ],
+        "right": "getRisk",
+        "relationship": "Risk",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "joinRasicUser2Criterion": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "getCriterion",
+        "left_key": ["UP2GO_2T__lkp_AssignedTo__c"],
+        "right_select": [
+          "Name",
+          "Id",
+          "UP2GO_2T__lkp_User__c"
+        ],
+        "right": "getRasicUser",
+        "relationship": "AssignedTo",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "joinCurrentRiskMarker2CRL": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Risk.Id"],
+        "left": "getCRL",
+        "left_key": ["UP2GO_2T__mdr_Risk__c"],
+        "right_select": [
+          "fcur_ExpectedMonetaryValue__c",
+          "fnum_Color__c",
+          "ftxt_EAXAlphabetical__c",
+          "ftxt_EAYAlphabetical__c",
+          "UP2GO_2T__pkl_CurrentOrAfterMeasure__c",
+          "Risk.UP2GO_2T__pkl_Type__c",
+          "Risk.chk_ExternalEffects__c",
+          "Risk.cur_MonetaryValueAfterMeasure__c",
+          "Risk.cur_MonetaryValueCurrent__c",
+          "Risk.fcur_ExpectedMonetaryValueCurrent__c",
+          "Risk.ftxt_Significance__c",
+          "Risk.Id",
+          "Risk.pkl_Category__c",
+          "Risk.txr_Cause__c",
+          "Risk.txr_Note__c",
+          "Risk.txt_Indicator__c",
+          "Risk.txt_RiskEffects__c",
+          "Risk.txt_RiskEvent__c",
+          "Risk.txt_Threshold__c",
+          "Risk.UP2GO_2T__pkl_ImpactCurrent__c",
+          "Risk.UP2GO_2T__pkl_ProbabilityCurrent__c",
+          "Risk.Name",
+          "Risk.ftxt_RiskOrigin__c",
+          "Risk.fcur_ExpectedMonetaryValueAfterMeasure__c",
+          "Risk.UP2GO_2T__pkl_ImpactAfterMeasure__c",
+          "Risk.UP2GO_2T__pkl_ProbabilityAfterMeasure__c",
+          "Risk.pkl_Top5Risk__c"
+        ],
+        "right": "filterCurrentRiskmarker",
+        "relationship": "Risk",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "registerCPjRisk": {
+      "action": "sfdcRegister",
+      "parameters": {
+        "name": "PACCRM: Customer Project Risk",
+        "alias": "${App.Datasets.PACCRM_CPjRisk_tp.FullyQualifiedName}",
+        "source": "sliceProjectRisk"
+      }
+    },
+    "getRasicUser": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "UP2GO_2T__lkp_User__c"},
+          {"name": "Name"},
+          {"name": "Id"}
+        ],
+        "object": "UP2GO_2T__RasicUser__c"
+      }
+    },
+    "tagCPjRisk": {
+      "action": "computeExpression",
+      "parameters": {
+        "source": "joinCPj2Risk",
+        "mergeWithSource": true,
+        "computedFields": [
+          {
+            "name": "RiskOrigin",
+            "saqlExpression": "\"Prj\"",
+            "label": "Risk Origin",
+            "type": "Text"
+          },
+          {
+            "name": "Top5Risk",
+            "saqlExpression": "'Risk.pkl_Top5Risk__c'",
+            "label": "Top 5 Risk",
+            "type": "Text"
+          },
+          {
+            "name": "IsTop5Risk",
+            "saqlExpression": "case when ('Risk.pkl_Top5Risk__c' is not null) then \"yes\" else \"no\" end",
+            "label": "Is Top 5 Risk?",
+            "type": "Text"
+          }
+        ]
+      }
+    },
+    "sliceProjectRisk": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "select",
+        "source": "tagCPjRisk",
+        "fields": [
+          {"name": "fcur_ExpectedMonetaryValue__c"},
+          {"name": "fnum_Color__c"},
+          {"name": "ftxt_EAXAlphabetical__c"},
+          {"name": "ftxt_EAYAlphabetical__c"},
+          {"name": "UP2GO_2T__pkl_CurrentOrAfterMeasure__c"},
+          {"name": "Risk.UP2GO_2T__pkl_Type__c"},
+          {"name": "Risk.cur_MonetaryValueAfterMeasure__c"},
+          {"name": "Risk.cur_MonetaryValueCurrent__c"},
+          {"name": "Risk.fcur_ExpectedMonetaryValueCurrent__c"},
+          {"name": "Risk.lkp_Project__c"},
+          {"name": "Risk.pkl_Category__c"},
+          {"name": "Risk.UP2GO_2T__pkl_ImpactCurrent__c"},
+          {"name": "Risk.UP2GO_2T__pkl_ProbabilityCurrent__c"},
+          {"name": "Risk.Name"},
+          {"name": "Risk.ftxt_RiskOrigin__c"},
+          {"name": "Risk.fcur_ExpectedMonetaryValueAfterMeasure__c"},
+          {"name": "Risk.UP2GO_2T__pkl_ImpactAfterMeasure__c"},
+          {"name": "Risk.UP2GO_2T__pkl_ProbabilityAfterMeasure__c"},
+          {"name": "Top5Risk"},
+          {"name": "IsTop5Risk"},
+          {"name": "Project.Id"},
+          {"name": "Project.lkp_SalesProject__c"},
+          {"name": "Project.Name"},
+          {"name": "Project.SPJ.ftxt_AcquiCustomerRegion__c"},
+          {"name": "Project.SPJ.ftxt_AcquisitionCustomerGroup__c"},
+          {"name": "Project.SPJ.ftxt_PID__c"},
+          {"name": "Project.SPJ.Id"},
+          {"name": "Project.SPJ.Name"},
+          {"name": "Project.SPJ.pkl_AcquisitionLeadDivision__c"}
+        ]
+      }
+    },
+    "getCriterion": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "UP2GO_2T__pkl_Status__c"},
+          {"name": "fchk_RelevantInStage__c"},
+          {"name": "Id"},
+          {"name": "Name"},
+          {"name": "txl_Content__c"},
+          {"name": "txl_Description__c"},
+          {"name": "txl_Statement__c"},
+          {"name": "UP2GO_2T__lkp_AssignedTo__c"},
+          {"name": "UP2GO_2T__lkp_Chapter__c"},
+          {"name": "UP2GO_2T__pkl_Rating__c"},
+          {"name": "pkl_Relevance__c"},
+          {"name": "fdat_MeasureDueDate__c"}
+        ],
+        "object": "UP2GO_2T__Criterion__c"
+      }
+    },
+    "filterCurrentRiskmarker": {
+      "action": "filter",
+      "parameters": {
+        "source": "joinRisk2Riskmarker",
+        "saqlFilter": "UP2GO_2T__pkl_CurrentOrAfterMeasure__c == \"Current\""
+      }
+    },
+    "joinCPj2Risk": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "filterCPjRisks",
+        "left_key": ["Risk.lkp_Project__c"],
+        "right_select": [
+          "Id",
+          "lkp_SalesProject__c",
+          "Name",
+          "SPJ.ftxt_AcquiCustomerRegion__c",
+          "SPJ.ftxt_AcquisitionCustomerGroup__c",
+          "SPJ.ftxt_PID__c",
+          "SPJ.Id",
+          "SPJ.Name",
+          "SPJ.pkl_AcquisitionLeadDivision__c"
+        ],
+        "right": "augSPJtoCPJ",
+        "relationship": "Project",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "getAssessment": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "Id"},
+          {"name": "Name"}
+        ],
+        "object": "UP2GO_2T__Assessment__c"
+      }
+    },
+    "joinA&C&C2CPj": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["lkp_Assessment__c"],
+        "left": "joinAssessment2C&C",
+        "left_key": ["Assessment.Id"],
+        "right_select": [
+          "Id",
+          "Name",
+          "lkp_SalesProject__c",
+          "SPJ.ftxt_AcquiCustomerRegion__c",
+          "SPJ.ftxt_AcquisitionCustomerGroup__c",
+          "SPJ.ftxt_PID__c",
+          "SPJ.Name",
+          "SPJ.pkl_AcquisitionLeadDivision__c"
+        ],
+        "right": "augSPJtoCPJ",
+        "relationship": "Project",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "getCRL": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "UP2GO_2T__mdr_Risk__c"},
+          {"name": "UP2GO_2T__mdr_Criterion__c"},
+          {"name": "txt_RelevantGateOnCreation__c"}
+        ],
+        "object": "UP2GO_2T__CriterionRiskLinker2__c"
+      }
+    },
+    "registerAssessmentRisk": {
+      "action": "sfdcRegister",
+      "parameters": {
+        "name": "PACCRM: Assessment Risk",
+        "alias": "${App.Datasets.PACCRM_AssessmentRisk_tp.FullyQualifiedName}",
+        "source": "sliceAssessmentRisk"
+      }
+    },
+    "joinAfterMeasureRiskMarker2CRL": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Risk.Id"],
+        "left": "getCRL",
+        "left_key": ["UP2GO_2T__mdr_Risk__c"],
+        "right_select": [
+          "fcur_ExpectedMonetaryValue__c",
+          "fnum_Color__c",
+          "ftxt_EAXAlphabetical__c",
+          "ftxt_EAYAlphabetical__c",
+          "UP2GO_2T__pkl_CurrentOrAfterMeasure__c",
+          "Risk.UP2GO_2T__pkl_Type__c",
+          "Risk.chk_ExternalEffects__c",
+          "Risk.cur_MonetaryValueAfterMeasure__c",
+          "Risk.cur_MonetaryValueCurrent__c",
+          "Risk.fcur_ExpectedMonetaryValueCurrent__c",
+          "Risk.ftxt_Significance__c",
+          "Risk.Id",
+          "Risk.pkl_Category__c",
+          "Risk.txr_Cause__c",
+          "Risk.txr_Note__c",
+          "Risk.txt_Indicator__c",
+          "Risk.txt_RiskEffects__c",
+          "Risk.txt_RiskEvent__c",
+          "Risk.txt_Threshold__c",
+          "Risk.UP2GO_2T__pkl_ImpactCurrent__c",
+          "Risk.UP2GO_2T__pkl_ProbabilityCurrent__c",
+          "Risk.Name",
+          "Risk.ftxt_RiskOrigin__c",
+          "Risk.fcur_ExpectedMonetaryValueAfterMeasure__c",
+          "Risk.UP2GO_2T__pkl_ImpactAfterMeasure__c",
+          "Risk.UP2GO_2T__pkl_ProbabilityAfterMeasure__c",
+          "Risk.pkl_Top5Risk__c"
+        ],
+        "right": "filterAfterMeasureRiskmarker",
+        "relationship": "Risk",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "augSPJtoCPJ": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "getCPj",
+        "left_key": ["lkp_SalesProject__c"],
+        "right_select": [
+          "ftxt_AcquiCustomerRegion__c",
+          "ftxt_AcquisitionCustomerGroup__c",
+          "ftxt_PID__c",
+          "Id",
+          "Name",
+          "pkl_AcquisitionLeadDivision__c"
+        ],
+        "right": "getSPJ",
+        "relationship": "SPJ",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "joinP&A&C&C2AssessmentRisk": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "filterCurrentAndAfterMeasureRiskMarker",
+        "left_key": ["UP2GO_2T__mdr_Criterion__c"],
+        "right_select": [
+          "UP2GO_2T__pkl_Status__c",
+          "fchk_RelevantInStage__c",
+          "Id",
+          "Name",
+          "txl_Content__c",
+          "txl_Description__c",
+          "txl_Statement__c",
+          "UP2GO_2T__lkp_AssignedTo__c",
+          "UP2GO_2T__lkp_Chapter__c",
+          "UP2GO_2T__pkl_Rating__c",
+          "pkl_Relevance__c",
+          "fdat_MeasureDueDate__c",
+          "AssignedTo.UP2GO_2T__lkp_User__c",
+          "AssignedTo.Name",
+          "AssignedTo.Id",
+          "Chapter.UP2GO_2T__mdr_Assessment__c",
+          "Chapter.Name",
+          "Assessment.Id",
+          "Assessment.Name",
+          "Project.Id",
+          "Project.Name",
+          "Project.lkp_SalesProject__c",
+          "Project.SPJ.ftxt_AcquiCustomerRegion__c",
+          "Project.SPJ.ftxt_AcquisitionCustomerGroup__c",
+          "Project.SPJ.ftxt_PID__c",
+          "Project.SPJ.Name",
+          "Project.SPJ.pkl_AcquisitionLeadDivision__c"
+        ],
+        "right": "joinA&C&C2CPj",
+        "relationship": "Criterion",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "joinChapter2Criterion": {
+      "action": "augment",
+      "parameters": {
+        "right_key": ["Id"],
+        "left": "joinRasicUser2Criterion",
+        "left_key": ["UP2GO_2T__lkp_Chapter__c"],
+        "right_select": [
+          "Name",
+          "UP2GO_2T__mdr_Assessment__c"
+        ],
+        "right": "getChapter",
+        "relationship": "Chapter",
+        "operation": "LookupSingleValue"
+      }
+    },
+    "sliceAssessmentRisk": {
+      "action": "sliceDataset",
+      "parameters": {
+        "mode": "select",
+        "source": "tagAssessmentRisk",
+        "fields": [
+          {"name": "Risk.fcur_ExpectedMonetaryValue__c"},
+          {"name": "Risk.fnum_Color__c"},
+          {"name": "Risk.ftxt_EAXAlphabetical__c"},
+          {"name": "Risk.ftxt_EAYAlphabetical__c"},
+          {"name": "Risk.UP2GO_2T__pkl_CurrentOrAfterMeasure__c"},
+          {"name": "Risk.Risk.UP2GO_2T__pkl_Type__c"},
+          {"name": "Risk.Risk.cur_MonetaryValueAfterMeasure__c"},
+          {"name": "Risk.Risk.cur_MonetaryValueCurrent__c"},
+          {"name": "Risk.Risk.fcur_ExpectedMonetaryValueCurrent__c"},
+          {"name": "Risk.Risk.pkl_Category__c"},
+          {"name": "Risk.Risk.UP2GO_2T__pkl_ImpactCurrent__c"},
+          {"name": "Risk.Risk.UP2GO_2T__pkl_ProbabilityCurrent__c"},
+          {"name": "Risk.Risk.Name"},
+          {"name": "Risk.Risk.ftxt_RiskOrigin__c"},
+          {"name": "Risk.Risk.fcur_ExpectedMonetaryValueAfterMeasure__c"},
+          {"name": "Risk.Risk.UP2GO_2T__pkl_ImpactAfterMeasure__c"},
+          {"name": "Risk.Risk.UP2GO_2T__pkl_ProbabilityAfterMeasure__c"},
+          {"name": "Criterion.Assessment.Id"},
+          {"name": "Criterion.Project.Id"},
+          {"name": "Top5Risk"},
+          {"name": "IsTop5Risk"},
+          {"name": "Criterion.Project.lkp_SalesProject__c"},
+          {"name": "Criterion.Project.Name"},
+          {"name": "Criterion.Project.SPJ.ftxt_AcquiCustomerRegion__c"},
+          {"name": "Criterion.Project.SPJ.ftxt_AcquisitionCustomerGroup__c"},
+          {"name": "Criterion.Project.SPJ.ftxt_PID__c"},
+          {"name": "Criterion.Project.SPJ.Name"},
+          {"name": "Criterion.Project.SPJ.pkl_AcquisitionLeadDivision__c"}
+        ]
+      }
+    },
+    "appendCurrent&AfterMeasureRiskMarkerWithCRL": {
+      "action": "append",
+      "parameters": {
+        "enableDisjointedSchemaMerge": false,
+        "sources": [
+          "joinAfterMeasureRiskMarker2CRL",
+          "joinCurrentRiskMarker2CRL"
+        ]
+      }
+    },
+    "getSPJ": {
+      "action": "sfdcDigest",
+      "parameters": {
+        "fields": [
+          {"name": "ftxt_PID__c"},
+          {"name": "Id"},
+          {"name": "Name"},
+          {"name": "pkl_AcquisitionLeadDivision__c"},
+          {"name": "ftxt_AcquisitionCustomerGroup__c"},
+          {"name": "ftxt_AcquiCustomerRegion__c"}
+        ],
+        "object": "UP2GO_CPRM_BM__SalesProject__c"
+      }
+    }
+  },
+  "_type": "dataflow",
+  "description": "PACCRM: CPj QG & Risk Assessment (semi-live)",
+  "MasterLabel": "PACCRM: CPj QG & Risk Assessment (semi-live)",
+  "nextRun": "",
+  "WorkflowStatus": "Inactive",
+  "isDeletable": true,
+  "longRunningAlertInMins": "",
+  "DataflowType": "USER",
+  "name": "PACCRM_CPj_QG_Risk_Assessment_semi_live",
+  "_url": "/insights/internal_api/v1.0/esObject/workflow//json",
+  "_uid": ""
+}
